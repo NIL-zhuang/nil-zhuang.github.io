@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-wheel.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-wheel.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-wheel.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nil-zhuang.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"always"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Python 函数式编程Functions are Fist-Class: functions can be manipulated as values in programming language.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Structure and Interpretation of Computer Programs">
+<meta property="og:url" content="https://nil-zhuang.github.io/2020/01/11/SICP/index.html">
+<meta property="og:site_name" content="庄子元的个人博客">
+<meta property="og:description" content="Python 函数式编程Functions are Fist-Class: functions can be manipulated as values in programming language.">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-01-11T06:01:41.000Z">
+<meta property="article:modified_time" content="2020-03-17T05:38:16.000Z">
+<meta property="article:author" content="NIL_Zhuang">
+<meta property="article:tag" content="代码">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://nil-zhuang.github.io/2020/01/11/SICP/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Structure and Interpretation of Computer Programs | 庄子元的个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">庄子元的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">朝闻道，夕睡觉</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://nil-zhuang.github.io/2020/01/11/SICP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="NIL_Zhuang">
+      <meta itemprop="description" content="目前是一个菜菜的NJUer，欢迎大家一起来交流学习">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庄子元的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Structure and Interpretation of Computer Programs
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-11 14:01:41" itemprop="dateCreated datePublished" datetime="2020-01-11T14:01:41+08:00">2020-01-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-17 13:38:16" itemprop="dateModified" datetime="2020-03-17T13:38:16+08:00">2020-03-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">好好学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Python-函数式编程"><a href="#Python-函数式编程" class="headerlink" title="Python 函数式编程"></a>Python 函数式编程</h2><p><strong>Functions are Fist-Class</strong>: functions can be manipulated as values in programming language.<br><a id="more"></a></p>
+<h3 id="High-Order-Function"><a href="#High-Order-Function" class="headerlink" title="High Order Function"></a>High Order Function</h3><p>A function that takes a function as an argument value or returns a function as a return value.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_adder</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    return a function that takes one arguement k and returns k + n</span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; add_three = make_adder(3)</span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; add_three(4)</span></span><br><span class="line"><span class="string">    7</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">adder</span>(<span class="params">k</span>):</span></span><br><span class="line">        <span class="keyword">return</span> k + n</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> adder</span><br></pre></td></tr></table></figure>
+<p>Functions defined within other functions bodies are bound to names in a local frame.</p>
+<p>it’s okay to do <code>print(make_adder(3)(4))</code></p>
+<h3 id="Lambda-Expressions"><a href="#Lambda-Expressions" class="headerlink" title="Lambda Expressions"></a>Lambda Expressions</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">square = <span class="keyword">lambda</span> x: x * x</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x * x</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Both create a function with the same domain, range and behavior</li>
+<li>Both functions have as their parent the frame in which they were defined</li>
+<li>Both bind that function to the name square</li>
+<li>Only the def statement gives the function an intrinsic name.</li>
+</ul>
+<h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><ul>
+<li>An environment is a sequence of frames</li>
+<li>The environment created by calling a top-level function consists local frame followed by the global frame</li>
+</ul>
+<h2 id="Function-Currying"><a href="#Function-Currying" class="headerlink" title="Function Currying"></a>Function Currying</h2><p>These two functions below do the same, a function can take several parameters.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">curry2</span>(<span class="params">f</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">g</span>(<span class="params">X</span>):</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">h</span>(<span class="params">y</span>):</span></span><br><span class="line">            <span class="keyword">return</span> f(x, y)</span><br><span class="line">        <span class="keyword">return</span> h</span><br><span class="line">    <span class="keyword">return</span> g</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curry = <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: <span class="keyword">lambda</span> y: f(x, y)</span><br></pre></td></tr></table></figure>
+<h3 id="Decorators"><a href="#Decorators" class="headerlink" title="Decorators"></a>Decorators</h3><p>Decorates are a feature of python that utilizes higher-order functions.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trace</span>(<span class="params">f</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    :param f: a function of 1 argument</span></span><br><span class="line"><span class="string">    :return: a version of f that first parameter is called</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">traced</span>(<span class="params">x</span>):</span></span><br><span class="line">        print(<span class="string">&quot;Calling&quot;</span>, f, <span class="string">&quot;on argument&quot;</span>, x)</span><br><span class="line">        <span class="keyword">return</span> f(x)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> traced</span><br></pre></td></tr></table></figure>
+<p>These two usages have the same meaning but use a decorator is more natural and beautiful.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x * x</span><br><span class="line"></span><br><span class="line">square = trace(square)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@trace</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span>(<span class="params">x</span>)：</span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">x</span> * <span class="title">x</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="Data-Abstraction"><a href="#Data-Abstraction" class="headerlink" title="Data Abstraction"></a>Data Abstraction</h2><p>Data abstraction: A methodology by which functions enforce an abstraction barrier between <strong>representation</strong> and <strong>use</strong></p>
+<h3 id="Abstraction-Barriers"><a href="#Abstraction-Barriers" class="headerlink" title="Abstraction Barriers"></a>Abstraction Barriers</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">parts of the program</th>
+<th style="text-align:center">treat rational as</th>
+<th style="text-align:center">using</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">perform computation</td>
+<td style="text-align:center">whole data values</td>
+<td style="text-align:center">add, mul, equal, print</td>
+</tr>
+<tr>
+<td style="text-align:center">create or implement</td>
+<td style="text-align:center">numerators or denominators</td>
+<td style="text-align:center">rational, numer, denom</td>
+</tr>
+<tr>
+<td style="text-align:center">selectors and constructor</td>
+<td style="text-align:center">two-element lists</td>
+<td style="text-align:center">list literal and element selection</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">implementation of lists</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Data-Representation"><a href="#Data-Representation" class="headerlink" title="Data Representation"></a>Data Representation</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rational</span>(<span class="params">n, d</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">select</span>(<span class="params">name</span>):</span></span><br><span class="line">        <span class="keyword">if</span> name == <span class="string">&#x27;n&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> n</span><br><span class="line">        <span class="keyword">elif</span> name == <span class="string">&#x27;d&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> d</span><br><span class="line">    <span class="keyword">return</span> select</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">numer</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x(<span class="string">&#x27;n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">denom</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x(<span class="string">&#x27;d&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Container"><a href="#Container" class="headerlink" title="Container"></a>Container</h2><ul>
+<li>we can use <code>operator.getitem(list, index)</code> to get the index-th element in the list</li>
+</ul>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>List can contain other values even a list.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">digits = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>digits * <span class="number">2</span> + [<span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">1</span> <span class="keyword">in</span> digits</span><br><span class="line"><span class="literal">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[<span class="number">1</span>, <span class="number">2</span>] <span class="keyword">in</span> digits</span><br><span class="line"><span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h4 id="Ranges"><a href="#Ranges" class="headerlink" title="Ranges"></a>Ranges</h4><p>A range is a sequence of consecutive integers.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>range(<span class="number">-2</span>, <span class="number">2</span>)</span><br><span class="line">range(<span class="number">-2</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># this is because range(-2, 2) is a range rather than a list</span></span><br><span class="line"><span class="comment"># but you can still use `for i in range(5)`</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">-2</span>, <span class="number">2</span>))</span><br><span class="line">[<span class="number">-2</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(range(<span class="number">4</span>))</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>When you are using a <em>for</em> loop, and the index is not important at all, just name it <code>_</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    print(<span class="string">&quot;不要回答!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="List-comprehension"><a href="#List-comprehension" class="headerlink" title="List comprehension"></a>List comprehension</h4><p>We can use such a interesting way to build a list:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>[x + <span class="number">1</span> <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">and</span> <span class="number">25</span> % x == <span class="number">0</span>]</span><br><span class="line">[<span class="number">2</span>,, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>We can write code as a <em>string</em> and use <code>exec()</code> to execute it.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;curry = lambda f: lambda x: lambda y: f(x, y)&#x27;</span></span><br><span class="line"><span class="string">&#x27;curry = lambda f: lambda x: lambda y: f(x, y)&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">lambda</span> f: <span class="keyword">lambda</span> x: <span class="keyword">lambda</span> y: f(x, y)</span><br><span class="line">&lt;function &lt;<span class="keyword">lambda</span>&gt; at <span class="number">0x0000017354B3D940</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>exec(<span class="string">&#x27;curry = lambda f: lambda x: lambda y: f(x, y)&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>curry</span><br><span class="line">&lt;function &lt;<span class="keyword">lambda</span>&gt; at <span class="number">0x0000017354B3D940</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>Length and element selection are similar to all sequences.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>city = <span class="string">&#x27;Berkeley&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>city[<span class="number">3</span>]</span><br><span class="line"><span class="string">&#x27;k&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>the <code>in</code> and <code>not in</code> operators match substrings.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;here&#x27;</span> <span class="keyword">in</span> <span class="string">&quot;Where is my girlfriend?&quot;</span></span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h3 id="Dictionaries"><a href="#Dictionaries" class="headerlink" title="Dictionaries"></a>Dictionaries</h3><p>A dictionary allows you to associate a value with keys.</p>
+<ul>
+<li>Dictionaries are unordered collections of key-value pairs</li>
+<li>A key of a dictionary cannot be a list or a dictionary (or any mutable type)</li>
+<li>Two keys cannot be equal; There can be at most one value for a given key</li>
+</ul>
+<p>If you want to associate multiple values with a key, store them all in a sequence value.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>numerals = &#123;<span class="string">&#x27;I&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;V&#x27;</span>: <span class="number">5</span>, <span class="string">&#x27;X&#x27;</span>: <span class="number">10</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>numerals[<span class="string">&#x27;X&#x27;</span>]</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>numerals.keys()</span><br><span class="line">dict_keys([<span class="string">&#x27;I&#x27;</span>, <span class="string">&#x27;V&#x27;</span>, <span class="string">&#x27;X&#x27;</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>numerals.items()</span><br><span class="line">dict_items([(<span class="string">&#x27;I&#x27;</span>, <span class="number">1</span>), (<span class="string">&#x27;V&#x27;</span>, <span class="number">5</span>), (<span class="string">&#x27;X&#x27;</span>, <span class="number">10</span>)])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>items = [(<span class="string">&#x27;I&#x27;</span>, <span class="number">1</span>), (<span class="string">&#x27;V&#x27;</span>, <span class="number">5</span>), (<span class="string">&#x27;X&#x27;</span>, <span class="number">10</span>)]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>dict(items)</span><br><span class="line">&#123;<span class="string">&#x27;I&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;V&#x27;</span>: <span class="number">5</span>, <span class="string">&#x27;X&#x27;</span>: <span class="number">10</span>&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>dict(items)[<span class="string">&#x27;X&#x27;</span>]</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">&#x27;X&#x27;</span> <span class="keyword">in</span> numerals</span><br><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<p>Create a dictionary:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;x: x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">5</span>)&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Mutable-Values"><a href="#Mutable-Values" class="headerlink" title="Mutable Values"></a>Mutable Values</h2><p>Mutable values can be  changed without a non-local statement.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_withdraw</span>(<span class="params">balance</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">withdraw</span>(<span class="params">amount</span>):</span></span><br><span class="line">    <span class="comment"># this balance is unbounded local error</span></span><br><span class="line">        <span class="keyword">if</span> amount &gt; balance:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Insufficient funds&quot;</span></span><br><span class="line">        balance = balance - amount</span><br><span class="line">        <span class="keyword">return</span> balance</span><br><span class="line">    <span class="keyword">return</span> withdraw</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BB%A3%E7%A0%81/" rel="tag"># 代码</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/10/Blog-And-OneDrive/" rel="prev" title="Blog-And-OneDrive">
+      <i class="fa fa-chevron-left"></i> Blog-And-OneDrive
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/11/Python%E7%BC%96%E7%A8%8B-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E8%B7%B5/" rel="next" title="Python编程-从入门到实践">
+      Python编程-从入门到实践 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">Python 函数式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#High-Order-Function"><span class="nav-number">1.1.</span> <span class="nav-text">High Order Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda-Expressions"><span class="nav-number">1.2.</span> <span class="nav-text">Lambda Expressions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Environment"><span class="nav-number">1.3.</span> <span class="nav-text">Environment</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Currying"><span class="nav-number">2.</span> <span class="nav-text">Function Currying</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Decorators"><span class="nav-number">2.1.</span> <span class="nav-text">Decorators</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Abstraction"><span class="nav-number">3.</span> <span class="nav-text">Data Abstraction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstraction-Barriers"><span class="nav-number">3.1.</span> <span class="nav-text">Abstraction Barriers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Representation"><span class="nav-number">3.2.</span> <span class="nav-text">Data Representation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Container"><span class="nav-number">4.</span> <span class="nav-text">Container</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#List"><span class="nav-number">4.1.</span> <span class="nav-text">List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ranges"><span class="nav-number">4.1.1.</span> <span class="nav-text">Ranges</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-comprehension"><span class="nav-number">4.1.2.</span> <span class="nav-text">List comprehension</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">4.2.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dictionaries"><span class="nav-number">4.3.</span> <span class="nav-text">Dictionaries</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mutable-Values"><span class="nav-number">5.</span> <span class="nav-text">Mutable Values</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">NIL_Zhuang</p>
+  <div class="site-description" itemprop="description">目前是一个菜菜的NJUer，欢迎大家一起来交流学习</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NIL-zhuang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NIL-zhuang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/NIL-zhuang" title="https:&#x2F;&#x2F;github.com&#x2F;NIL-zhuang" rel="noopener" target="_blank">我的GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NIL_Zhuang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

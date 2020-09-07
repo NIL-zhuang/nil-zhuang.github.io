@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-wheel.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-wheel.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-wheel.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nil-zhuang.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"always"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Introduction teacher 何铁科 主页 http:&#x2F;&#x2F;hetieke.ml email hetieke@nju.edu.cn  图灵机 一个抽象的机器 一个无限长纸带(tape)分成了一个个的小方格(cell) 一个读写头(head)在纸带上移来移去 读写头有一组内部状态(state)，还有一些固定的程序(action table)。在每个时刻，机器头都要从当前纸带上读入一个方格信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算系统基础">
+<meta property="og:url" content="https://nil-zhuang.github.io/2019/12/03/%E8%AE%A1%E7%AE%97%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="庄子元的个人博客">
+<meta property="og:description" content="Introduction teacher 何铁科 主页 http:&#x2F;&#x2F;hetieke.ml email hetieke@nju.edu.cn  图灵机 一个抽象的机器 一个无限长纸带(tape)分成了一个个的小方格(cell) 一个读写头(head)在纸带上移来移去 读写头有一组内部状态(state)，还有一些固定的程序(action table)。在每个时刻，机器头都要从当前纸带上读入一个方格信">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-12-03T06:01:19.000Z">
+<meta property="article:modified_time" content="2020-01-10T04:56:30.000Z">
+<meta property="article:author" content="NIL_Zhuang">
+<meta property="article:tag" content="计算机">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://nil-zhuang.github.io/2019/12/03/%E8%AE%A1%E7%AE%97%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>计算系统基础 | 庄子元的个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">庄子元的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">朝闻道，夕睡觉</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://nil-zhuang.github.io/2019/12/03/%E8%AE%A1%E7%AE%97%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="NIL_Zhuang">
+      <meta itemprop="description" content="目前是一个菜菜的NJUer，欢迎大家一起来交流学习">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庄子元的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算系统基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-03 14:01:19" itemprop="dateCreated datePublished" datetime="2019-12-03T14:01:19+08:00">2019-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-10 12:56:30" itemprop="dateModified" datetime="2020-01-10T12:56:30+08:00">2020-01-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">好好学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<li>teacher 何铁科</li>
+<li>主页 <a target="_blank" rel="noopener" href="http://hetieke.ml">http://hetieke.ml</a></li>
+<li>email <a href="hetieke@nju.edu.cn">hetieke@nju.edu.cn</a></li>
+</ul>
+<h3 id="图灵机"><a href="#图灵机" class="headerlink" title="图灵机"></a>图灵机</h3><ul>
+<li>一个抽象的机器</li>
+<li>一个无限长纸带(tape)分成了一个个的小方格(cell)</li>
+<li>一个读写头(head)在纸带上移来移去</li>
+<li>读写头有一组内部状态(state)，还有一些固定的程序(action table)。在每个<br>时刻，机器头都要从当前纸带上读入一个方格信息（symbol），然后结合自己的内<br>部状态查找程序表，根据程序输出信息到纸带方格上，并转换自己的内部状态，然<br>后进行移动。</li>
+</ul>
+<h4 id="五元组表示"><a href="#五元组表示" class="headerlink" title="五元组表示"></a>五元组表示</h4><p>$&lt;q,b,a,m,q’&gt;$表示图灵机的五元组</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">变元</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">q</td>
+<td style="text-align:center">当前状态</td>
+</tr>
+<tr>
+<td style="text-align:center">b</td>
+<td style="text-align:center">当前方格原符号</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td style="text-align:center">修改后符号</td>
+</tr>
+<tr>
+<td style="text-align:center">m</td>
+<td style="text-align:center">机器头移动方向</td>
+</tr>
+<tr>
+<td style="text-align:center">q’</td>
+<td style="text-align:center">下一状态</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="程序表-f-x-x-1"><a href="#程序表-f-x-x-1" class="headerlink" title="程序表 $f(x)=x+1$"></a>程序表 $f(x)=x+1$</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">当前状态</th>
+<th style="text-align:center">方格原符号</th>
+<th style="text-align:center">修改后符号</th>
+<th style="text-align:center">移动方向</th>
+<th style="text-align:center">下一状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$q_1$</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">L</td>
+<td style="text-align:center">$q_2$</td>
+</tr>
+<tr>
+<td style="text-align:center">$q_1$</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">L</td>
+<td style="text-align:center">$q_3$</td>
+</tr>
+<tr>
+<td style="text-align:center">$q_1$</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">$q_4$</td>
+</tr>
+<tr>
+<td style="text-align:center">$q_2$</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">L</td>
+<td style="text-align:center">$q_2$</td>
+</tr>
+<tr>
+<td style="text-align:center">$q_2$</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">L</td>
+<td style="text-align:center">$q_2$</td>
+</tr>
+<tr>
+<td style="text-align:center">$q_2$</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">$q_4$</td>
+</tr>
+<tr>
+<td style="text-align:center">$q_3$</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">L</td>
+<td style="text-align:center">$q_2$</td>
+</tr>
+<tr>
+<td style="text-align:center">$q_3$</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">L</td>
+<td style="text-align:center">$q_3$</td>
+</tr>
+<tr>
+<td style="text-align:center">$q_3$</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">b</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">$q_4$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中</p>
+<ul>
+<li>$q1$是起始状态；</li>
+<li>$q2$表示没有进位；</li>
+<li>$q3$表示有进位；</li>
+<li>$q4$表示读到了空白位置，停机；</li>
+<li>$b$就是blank，空白。</li>
+</ul>
+<h4 id="可计算性"><a href="#可计算性" class="headerlink" title="可计算性"></a>可计算性</h4><p>如果找到一组确定的规则，按照这组规则能在有限步内求出结果，就是可计算的。图灵机存在停机问题。</p>
+<p>图灵机不是通用的。通用图灵机是将action table和输入都写在纸带上。</p>
+<h3 id="计算机组成"><a href="#计算机组成" class="headerlink" title="计算机组成"></a>计算机组成</h3><p>指令是计算机程序中规定的可执行的最小工作单位。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ol>
+<li>通过“逐层转换”，C语言程序通过电子的流动得以实现</li>
+<li>在解决实际问题时，不必陷入“逐层转换”的细节之中：当设计一个复杂的计算机应用程序时，如设计一个文字处理软件，不需要考虑以上9个抽象层次的每一处细节，而应该集中考虑问题的本质，更多地关注从问题到算法，从算法到程序的转换</li>
+<li>如果文字处理软件在工作时出现问题，此时，就需要了解这些细节</li>
+</ol>
+<h2 id="Introduction-to-the-C-PL"><a href="#Introduction-to-the-C-PL" class="headerlink" title="Introduction to the C PL"></a>Introduction to the C PL</h2><ul>
+<li>预处理指令不以分号结尾。<code>#include&lt;stdio.h&gt;</code></li>
+</ul>
+<h2 id="Data-Type-and-Variable"><a href="#Data-Type-and-Variable" class="headerlink" title="Data Type and Variable"></a>Data Type and Variable</h2><h2 id="Structured-Programming-and-Control-Structure"><a href="#Structured-Programming-and-Control-Structure" class="headerlink" title="Structured Programming and Control Structure"></a>Structured Programming and Control Structure</h2><h2 id="Testing-and-Debugging"><a href="#Testing-and-Debugging" class="headerlink" title="Testing and Debugging"></a>Testing and Debugging</h2><h3 id="软件开发过程"><a href="#软件开发过程" class="headerlink" title="软件开发过程"></a>软件开发过程</h3><ul>
+<li>软件需求分析<ul>
+<li>了解客户需求、决定软件产品应该具备哪些功能</li>
+<li>将产品的功能、外观写成文档，需求规格说明</li>
+</ul>
+</li>
+<li>软件设计<ul>
+<li>对如何实现需求进行设计，形成设计文档(包含程序流程图)</li>
+</ul>
+</li>
+<li>程序编码</li>
+<li>软件测试</li>
+<li>软件维护</li>
+</ul>
+<h3 id="缺陷、测试、调试"><a href="#缺陷、测试、调试" class="headerlink" title="缺陷、测试、调试"></a>缺陷、测试、调试</h3><h2 id="Data-Representation-in-Computer-System"><a href="#Data-Representation-in-Computer-System" class="headerlink" title="Data Representation in Computer System"></a>Data Representation in Computer System</h2><h3 id="Integer"><a href="#Integer" class="headerlink" title="Integer"></a>Integer</h3><ol>
+<li>首先将N的绝对值通过“除2取余”的方法，得到其绝对值的二进制表<br>示；</li>
+<li>如果原来的十进制数为正，则在二进制数前加0，得到k位结果；</li>
+<li>如果原来的十进制数为负，在二进制数前加0 ，得到k位，然后再计算<br>出这个补码的负数（即“取反加1”），得到结果。</li>
+</ol>
+<h3 id="Float-IEEE-754标准"><a href="#Float-IEEE-754标准" class="headerlink" title="Float IEEE-754标准"></a>Float IEEE-754标准</h3><ul>
+<li>符号位(S)<ul>
+<li>0表示正数，1表示负数</li>
+</ul>
+</li>
+<li>指数exponent 8位</li>
+<li>分数fraction 23位</li>
+</ul>
+<h4 id="1-lt-exponent-lt-254"><a href="#1-lt-exponent-lt-254" class="headerlink" title="1 &lt;= exponent &lt;= 254"></a>1 &lt;= exponent &lt;= 254</h4><p>$N = (-1)^s \times 1.fraction \times 2^{exponent - 127}$</p>
+<ul>
+<li>指数表示从-126到127<ul>
+<li>为了表示负数，被表示的指数是该无符号整数减去<strong>127</strong>后得到的数值</li>
+</ul>
+</li>
+<li>分数<ul>
+<li>规格化，实际表示的是24位的精度</li>
+<li>v包括23位分数和二进制小数点左端的没有明确表示出来的一位1</li>
+</ul>
+</li>
+</ul>
+<h4 id="exponent-00000000"><a href="#exponent-00000000" class="headerlink" title="exponent = 00000000"></a>exponent = 00000000</h4><script type="math/tex; mode=display">N = (-1)^S \times 0.fraction \times 2^{-126}</script><ul>
+<li>指数是-126，得到的有效数字以0开头</li>
+<li>后面是23位二进制分数部分<ul>
+<li>分数部分全是0时，表示数值0</li>
+</ul>
+</li>
+</ul>
+<h4 id="exponent-11111111"><a href="#exponent-11111111" class="headerlink" title="exponent = 11111111"></a>exponent = 11111111</h4><ul>
+<li>符号位为0，分数域全为0，表示正无穷</li>
+<li>符号位为1，分数域全为0，表示负无穷</li>
+<li>分数域不全为0，表示NaN(非数)</li>
+</ul>
+<h4 id="加法运算"><a href="#加法运算" class="headerlink" title="加法运算"></a>加法运算</h4><ol>
+<li>对指数操作：首先使二数的指数相等(小数右移，避免舍入误差)</li>
+<li>分数运算：经指数相等操作后，即可直接对分数做加法运算</li>
+<li>结果规格化：对运算结果进行规格化处理</li>
+<li>舍入操作：对丢失的位进行舍入处理</li>
+<li>判断溢出：判断指数是否溢出</li>
+</ol>
+<h3 id="输入输出格式"><a href="#输入输出格式" class="headerlink" title="输入输出格式"></a>输入输出格式</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">转义字符</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">%d</td>
+<td style="text-align:center">integer 整型</td>
+</tr>
+<tr>
+<td style="text-align:center">%x</td>
+<td style="text-align:center">十六进制数</td>
+</tr>
+<tr>
+<td style="text-align:center">%o</td>
+<td style="text-align:center">八进制数</td>
+</tr>
+<tr>
+<td style="text-align:center">%c</td>
+<td style="text-align:center">char 类型</td>
+</tr>
+<tr>
+<td style="text-align:center">%f</td>
+<td style="text-align:center">float浮点<br>其中%.2f是保留两位小数</td>
+</tr>
+<tr>
+<td style="text-align:center">%lf</td>
+<td style="text-align:center">double类型</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><ul>
+<li>局部变量，在程序块的开头声明，只能在被声明的程序块中访问。</li>
+<li>全局变量，在整个程序被访问，不属于任何程序块</li>
+</ul>
+<h3 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h3><p>浮点数可以通过省略小数部分被舍为整数值</p>
+<p>结合性：算术运算符的结合性是自左向右运算。例如赋值<code>x=y=3</code>先执行y=3。</p>
+<h2 id="Digital-Logic-Circuits"><a href="#Digital-Logic-Circuits" class="headerlink" title="Digital Logic Circuits"></a>Digital Logic Circuits</h2><h3 id="二极管和门电路"><a href="#二极管和门电路" class="headerlink" title="二极管和门电路"></a>二极管和门电路</h3><ul>
+<li>N型晶体管</li>
+<li><p>P型晶体管</p>
+</li>
+<li><p>译码器</p>
+</li>
+<li>多路选择器</li>
+<li>全加法器</li>
+</ul>
+<h2 id="Von-Neumann-Architecture"><a href="#Von-Neumann-Architecture" class="headerlink" title="Von Neumann Architecture"></a>Von Neumann Architecture</h2><ul>
+<li>由指令组成的程序和程序所需的数据位于<strong>存储器</strong>中</li>
+<li>指令的执行由<strong>处理单元</strong>完成</li>
+<li>指令执行的顺序由<strong>控制单元</strong>来控制</li>
+<li><strong>输入输出设备</strong></li>
+</ul>
+<p>处理单元和控制单元是CPU的主要组成部分</p>
+<h3 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h3><p>存储器是能够存储信息的二维阵列。每一行存储单元可以用唯一的标识符进行识别，地址包含一定大小的内容：指令、数据。</p>
+<p>表示方式：$2^32 \times 8$—一共有$2^32$个存储单元，每个单元8bit.也就是有$2^32$个不同存储单元的地址空间和8位的寻址能力。可以成为4GB的存储器。</p>
+<h3 id="处理单元"><a href="#处理单元" class="headerlink" title="处理单元"></a>处理单元</h3><p>计算机里的信息处理是处理单元执行的。</p>
+<h4 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h4><p>Reg，在ALU附近临时存取数据。</p>
+<h2 id="Chapter12-输入和输出"><a href="#Chapter12-输入和输出" class="headerlink" title="Chapter12 输入和输出"></a>Chapter12 输入和输出</h2><h3 id="I-O-基础"><a href="#I-O-基础" class="headerlink" title="I/O 基础"></a>I/O 基础</h3><p>I/O设备至少包含两个设备寄存器：</p>
+<ul>
+<li>计算机和设备之间传输的数据</li>
+<li>设备的状态—可用 / 忙于执行最近的I/O任务</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" rel="tag"># 计算机</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/02/CUMCM%E7%AE%97%E6%B3%95/" rel="prev" title="CUMCM算法">
+      <i class="fa fa-chevron-left"></i> CUMCM算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/04/Core-JAVA/" rel="next" title="Core-JAVA">
+      Core-JAVA <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%81%B5%E6%9C%BA"><span class="nav-number">1.1.</span> <span class="nav-text">图灵机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%94%E5%85%83%E7%BB%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">五元组表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E8%A1%A8-f-x-x-1"><span class="nav-number">1.1.2.</span> <span class="nav-text">程序表 $f(x)&#x3D;x+1$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E8%AE%A1%E7%AE%97%E6%80%A7"><span class="nav-number">1.1.3.</span> <span class="nav-text">可计算性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90"><span class="nav-number">1.2.</span> <span class="nav-text">计算机组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction-to-the-C-PL"><span class="nav-number">2.</span> <span class="nav-text">Introduction to the C PL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Type-and-Variable"><span class="nav-number">3.</span> <span class="nav-text">Data Type and Variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Structured-Programming-and-Control-Structure"><span class="nav-number">4.</span> <span class="nav-text">Structured Programming and Control Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Testing-and-Debugging"><span class="nav-number">5.</span> <span class="nav-text">Testing and Debugging</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B"><span class="nav-number">5.1.</span> <span class="nav-text">软件开发过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7%E3%80%81%E6%B5%8B%E8%AF%95%E3%80%81%E8%B0%83%E8%AF%95"><span class="nav-number">5.2.</span> <span class="nav-text">缺陷、测试、调试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Representation-in-Computer-System"><span class="nav-number">6.</span> <span class="nav-text">Data Representation in Computer System</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Integer"><span class="nav-number">6.1.</span> <span class="nav-text">Integer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Float-IEEE-754%E6%A0%87%E5%87%86"><span class="nav-number">6.2.</span> <span class="nav-text">Float IEEE-754标准</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-lt-exponent-lt-254"><span class="nav-number">6.2.1.</span> <span class="nav-text">1 &lt;&#x3D; exponent &lt;&#x3D; 254</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#exponent-00000000"><span class="nav-number">6.2.2.</span> <span class="nav-text">exponent &#x3D; 00000000</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#exponent-11111111"><span class="nav-number">6.2.3.</span> <span class="nav-text">exponent &#x3D; 11111111</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E6%B3%95%E8%BF%90%E7%AE%97"><span class="nav-number">6.2.4.</span> <span class="nav-text">加法运算</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F"><span class="nav-number">6.3.</span> <span class="nav-text">输入输出格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">6.4.</span> <span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">6.5.</span> <span class="nav-text">表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Digital-Logic-Circuits"><span class="nav-number">7.</span> <span class="nav-text">Digital Logic Circuits</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E6%9E%81%E7%AE%A1%E5%92%8C%E9%97%A8%E7%94%B5%E8%B7%AF"><span class="nav-number">7.1.</span> <span class="nav-text">二极管和门电路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Von-Neumann-Architecture"><span class="nav-number">8.</span> <span class="nav-text">Von Neumann Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">8.1.</span> <span class="nav-text">存储器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%8D%95%E5%85%83"><span class="nav-number">8.2.</span> <span class="nav-text">处理单元</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">8.2.1.</span> <span class="nav-text">寄存器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter12-%E8%BE%93%E5%85%A5%E5%92%8C%E8%BE%93%E5%87%BA"><span class="nav-number">9.</span> <span class="nav-text">Chapter12 输入和输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O-%E5%9F%BA%E7%A1%80"><span class="nav-number">9.1.</span> <span class="nav-text">I&#x2F;O 基础</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">NIL_Zhuang</p>
+  <div class="site-description" itemprop="description">目前是一个菜菜的NJUer，欢迎大家一起来交流学习</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NIL-zhuang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NIL-zhuang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/NIL-zhuang" title="https:&#x2F;&#x2F;github.com&#x2F;NIL-zhuang" rel="noopener" target="_blank">我的GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NIL_Zhuang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
