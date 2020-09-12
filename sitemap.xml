@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://nil-zhuang.github.io/2020/09/08/manjaro%E9%85%8D%E7%BD%AE/</loc>
+    
+    <lastmod>2020-09-12</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://nil-zhuang.github.io/2020/09/12/%E4%BB%BB%E6%A1%91%E7%9A%84%E6%95%99%E8%AF%B2/</loc>
     
     <lastmod>2020-09-12</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://nil-zhuang.github.io/2020/09/10/Program-in-Scala/</loc>
     
     <lastmod>2020-09-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://nil-zhuang.github.io/2020/09/08/manjaro%E9%85%8D%E7%BD%AE/</loc>
-    
-    <lastmod>2020-09-10</lastmod>
     
   </url>
   
