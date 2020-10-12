@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-wheel.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-wheel.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-wheel.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"nil-zhuang.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"always"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="[toc] 写在前面本文档是俩叫nil和mark的靓仔和yyds李传艺老师，在yyds的办公室倒腾一整个下午之后，总结出的血泪教训。 本文是在manjaro和Ubuntu两个Linux发行版的个人PC上，启动hadoop hdfs集群和spark集群的操作过程。涉及到不同username和不同hostname的物理机，在真实网络情况下(宿舍路由器局域网)的配置操作，仅供参考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spark集群搭建">
+<meta property="og:url" content="https://nil-zhuang.github.io/2020/10/12/spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="庄子元的个人博客">
+<meta property="og:description" content="[toc] 写在前面本文档是俩叫nil和mark的靓仔和yyds李传艺老师，在yyds的办公室倒腾一整个下午之后，总结出的血泪教训。 本文是在manjaro和Ubuntu两个Linux发行版的个人PC上，启动hadoop hdfs集群和spark集群的操作过程。涉及到不同username和不同hostname的物理机，在真实网络情况下(宿舍路由器局域网)的配置操作，仅供参考。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-10-12T14:10:26.000Z">
+<meta property="article:modified_time" content="2020-10-12T15:51:17.528Z">
+<meta property="article:author" content="NIL_Zhuang">
+<meta property="article:tag" content="NJU">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://nil-zhuang.github.io/2020/10/12/spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>spark集群搭建 | 庄子元的个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/NIL-zhuang" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">庄子元的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">朝闻道，夕睡觉</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://nil-zhuang.github.io/2020/10/12/spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="NIL_Zhuang">
+      <meta itemprop="description" content="目前是一个菜菜的NJUer，欢迎大家一起来交流学习">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="庄子元的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          spark集群搭建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-10-12 22:10:26 / Modified: 23:51:17" itemprop="dateCreated datePublished" datetime="2020-10-12T22:10:26+08:00">2020-10-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[toc]</p>
+<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>本文档是俩叫nil和mark的靓仔和yyds李传艺老师，在yyds的办公室倒腾一整个下午之后，总结出的血泪教训。</p>
+<p>本文是在manjaro和Ubuntu两个Linux发行版的个人PC上，启动hadoop hdfs集群和spark集群的操作过程。涉及到不同<strong>username</strong>和不同<strong>hostname</strong>的物理机，在真实网络情况下(宿舍路由器局域网)的配置操作，仅供参考。</p>
+<a id="more"></a>
+<p>其中DataNode机器的配置如下（夹带私货，欢迎加入manjaro邪教）。本文档所有命令都可以在manjaro/ArchLinux下执行，Ubuntu或其他系统请自行寻找对照命令</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">OS: Manjaro 20.1.1 Mikah</span><br><span class="line">Kernel: x86_64 Linux 5.8.11-1-MANJARO</span><br><span class="line">Shell: zsh 5.8</span><br><span class="line">CPU: Intel Core i7-8550U @ 8x 4GHz</span><br><span class="line">Disk: 196G / 482G (42%)</span><br><span class="line">GPU: Mesa Intel(R) UHD Graphics 620 (KBL GT2)</span><br><span class="line">RAM: 5227MiB / 15896MiB</span><br></pre></td></tr></table></figure>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">机器类型</th>
+<th style="text-align:center">局域网IP</th>
+<th style="text-align:center">hostname</th>
+<th style="text-align:center">username</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">master/slaver</td>
+<td style="text-align:center">192.168.1.103</td>
+<td style="text-align:center">mark-pc</td>
+<td style="text-align:center">mark</td>
+</tr>
+<tr>
+<td style="text-align:center">slaver</td>
+<td style="text-align:center">192.168.1.104</td>
+<td style="text-align:center">nil-PC</td>
+<td style="text-align:center">nil</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>集群环境是</p>
+<ul>
+<li>Hadoop 2.7.7</li>
+<li>Spark version 3.0.1</li>
+<li>Scala version 2.12.10</li>
+<li>OpenJDK 64-Bit Server VM, Java 1.8.0_265</li>
+</ul>
+<h2 id="操作流程"><a href="#操作流程" class="headerlink" title="操作流程"></a>操作流程</h2><ol>
+<li>创建镜像 or 还原点 (可选，推荐)</li>
+<li>搭建ssh环境</li>
+<li>修改hosts文件</li>
+<li>安装java环境</li>
+<li>安装hadoop</li>
+<li>安装spark</li>
+<li>启动集群，运行命令</li>
+<li>开汽水庆祝</li>
+</ol>
+<h2 id="搭建ssh环境"><a href="#搭建ssh环境" class="headerlink" title="搭建ssh环境"></a>搭建ssh环境</h2><p>首先配置好自己的ssh环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">文件目录如下</span><br><span class="line">.ssh</span><br><span class="line">├── authorized_keys</span><br><span class="line">├── config</span><br><span class="line">├── id_rsa</span><br><span class="line">├── id_rsa.pub</span><br><span class="line">└── known_hosts</span><br></pre></td></tr></table></figure>
+<p>用<code>ifconfig</code>或<code>ip address show</code>查看ip地址后，ping一下你要连接的电脑的ip，保证网络通畅。</p>
+<ul>
+<li>免密登录： 将其他机器的id_rsa.pub里的内容添加到本机的authorized_keys里(用<code>cat &gt;&gt;</code>追加)</li>
+</ul>
+<p>测试ssh连接。如果出现<code>ssh：connect to host port 22： Connection refused</code>，那记得运行命令<code>systemctl start sshd</code>打开sshd.sevice。</p>
+<p>如果我在nil-PC上连接mark-pc，直接<code>ssh 192.168.1.103</code>会失败，因为的登录用户名是nil，而mark-pc里没有nil这个用户。正确做法是<code>ssh mark@192.168.1.103</code>，接收对方fingerprint到known_hosts里后，就可以免密登录。</p>
+<h2 id="修改hosts文件"><a href="#修改hosts文件" class="headerlink" title="修改hosts文件"></a>修改hosts文件</h2><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">这是个栗子</span><br><span class="line"># Host addresses</span><br><span class="line"># 127.0.0.1  localhost</span><br><span class="line"># 127.0.1.1  nil-PC</span><br><span class="line">::1        localhost ip6-localhost ip6-loopback</span><br><span class="line">ff02::1    ip6-allnodes</span><br><span class="line">ff02::2    ip6-allrouters</span><br><span class="line"></span><br><span class="line">192.168.1.103 mark-pc</span><br><span class="line">192.168.1.104 nil-PC</span><br></pre></td></tr></table></figure>
+<p>Notice：</p>
+<ol>
+<li>将127.0.0.1和127.0.1.1的路径都去掉，否则在hadoop启动的时候，会优先在localhost提交出错</li>
+<li>在ip后面，要写的是<strong>hostname</strong>，可以执行<code>hostname</code>看到，<strong>不是username</strong></li>
+<li>在修改完后，一定要刷新hosts，运行命令<code>systemctl restart NetworkManager</code>或是注销重启</li>
+</ol>
+<p>修改后检查：</p>
+<ol>
+<li>ping mark-pc成功</li>
+<li>ssh mark@mark-pc可以登录</li>
+</ol>
+<h2 id="安装java环境"><a href="#安装java环境" class="headerlink" title="安装java环境"></a>安装java环境</h2><p>正常安装java8，java home不出意外在<code>/usr/lib/jvm/</code>下，本机路径是<code>/usr/lib/jvm/java-8-openjdk/</code>，可以在bin目录下执行<code>./javac -version</code>看到java版本是javac 1.8.0_265(好像1.8.0后的小小版本不影响，mark是261也运行正常)</p>
+<p>将java添加至环境变量，在/etc/profile文件追加如下内容(具体内容因人而异)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/java-8-openjdk</span><br><span class="line">export CLASSPATH=:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$CLASSPATH</span><br><span class="line">export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH</span><br></pre></td></tr></table></figure>
+<p>每一次修改后都要<code>source /etc/profile</code>刷新环境变量。在命令行输入<code>echo $JAVA_HOME</code>进行检验</p>
+<h2 id="安装hadoop"><a href="#安装hadoop" class="headerlink" title="安装hadoop"></a>安装hadoop</h2><ol>
+<li>选择了hadoop-2.7.7，也可以选最新文件。我将其解压在了/usr/lib/hadoop-2.7.7下（这个随便，但是不建议放在/home里面，涉及到用户权限）</li>
+</ol>
+<p>notice:<strong>所有机器上，hadoop和spark的绝对位置和内容要保持严格一致</strong></p>
+<ol>
+<li>将hadoop添加到环境变量，追加了（具体内容因人而异）</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/usr/lib/hadoop-2.7.7</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+<ol>
+<li>验证安装，执行<code>hadoop version</code></li>
+</ol>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>注意，这里的<strong>mark-pc都要改成期望作为master的电脑的hostname</strong>，<strong>绝对路径也要做相应的修改</strong></p>
+<ol>
+<li><p>在$HADOOP_HOME下添加目录tmp, hdfs, hdfs/name, hdfs/data</p>
+</li>
+<li><p>$HADOOP_HOME/etc/hadoop/core-site.xml</p>
+</li>
+</ol>
+<p>注意，在集群模式下，<strong>fs.defaultFS要写集群里namenode的ip和端口</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 指定namenode的地址 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://mark-pc:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 用来指定使用hadoop时产生文件的存放目录 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/lib/hadoop-2.7.7/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>$HADOOP_HOME/etc/hadoop/hdfs-site.xml</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.secondary.http-address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>mark-pc:50090<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 指定hdfs保存数据的副本数量 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/usr/lib/hadoop-2.7.7/hdfs/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/usr/lib/hadoop-2.7.7/hdfs/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>$HADOOP_HOME/etc/hadoop/slaves</li>
+</ol>
+<p>注意，只有这里是要写<strong>用户名@主机名</strong>的，否则namenode在登录datanode的时候，用的是namenode当前的用户名，造成出错</p>
+<p>注意，slaves文件只存datanode的host，当然鉴于namenode都不干啥事，建议把master主机也作为slaver一起执行计算任务，符合社会主义核心价值观（雾）</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mark@mark-pc</span><br><span class="line">nil@nil-PC</span><br></pre></td></tr></table></figure>
+<h3 id="验证hadoop集群安装成功"><a href="#验证hadoop集群安装成功" class="headerlink" title="验证hadoop集群安装成功"></a>验证hadoop集群安装成功</h3><ol>
+<li>格式化文件系统 <code>hdfs namenode -format</code>，看到最后几行有ExitCode=0这样的字眼就说明格式化成功了，如果有误，可以检查一下xml文件的配置</li>
+<li>在$HADOOP_HOME/sbin下运行start-all.sh，唤起namenode和datanode，分别在master和slaver上执行<code>jps</code>，如果看到以下内容就说明成功了</li>
+</ol>
+<p>master上看到：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xxxx Jps</span><br><span class="line">xxxx SecondaryNameNode</span><br><span class="line">xxxx NameNode</span><br><span class="line">xxxx DataNode</span><br><span class="line">xxxx NodeManager</span><br><span class="line">xxxx ResourceManager (似乎这个是可有可无)</span><br></pre></td></tr></table></figure>
+<p>slaver上看到</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xxxx Jps</span><br><span class="line">xxxx DataNode</span><br><span class="line">xxxx NodeManager</span><br></pre></td></tr></table></figure>
+<p>这样就说明hadoop集群运行成功了</p>
+<p>Notice：如果在start-all的时候发现datanode没有被唤起，大概率是datanode的id和master上的id不同，因为你执行format命令多次。解决方案是在所有的机器上都删除$HADOOP_HOME/hdfs/data/current文件夹，重新format即可。</p>
+<h3 id="验证hadoop集群运行状态"><a href="#验证hadoop集群运行状态" class="headerlink" title="验证hadoop集群运行状态"></a>验证hadoop集群运行状态</h3><ol>
+<li>访问 <code>http://192.168.1.103:50070</code> (这里的ip是master的ip地址)，看到DataNodes数量符合</li>
+<li>在master上运行<code>hdfs dfs -mkdir /hadoop</code>后，可以在网页的文件管理页面上找到新建的目录，就大功告成了！</li>
+</ol>
+<h2 id="安装spark"><a href="#安装spark" class="headerlink" title="安装spark"></a>安装spark</h2><ol>
+<li>先装一个scala，配置好SCALA_HOME，运行<code>scala</code>看到repl即可</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export SCALA_HOME=/usr/lib/scala-2.13.3</span><br><span class="line">export PATH=$PATH:$SCALA_HOME/bin</span><br></pre></td></tr></table></figure>
+<ol>
+<li>将spark一样的解压到/usr/lib下，配置SPARK_HOME</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export SPARK_HOME=/usr/lib/spark-3.0.1-bin-hadoop2.7</span><br><span class="line">export PATH=$PATH:$SPARK_HOME/bin</span><br></pre></td></tr></table></figure>
+<ol>
+<li>$SPARK_HOME/conf/slaves</li>
+</ol>
+<p>和$HADOOP_HOME/etc/hadoop/slaves内容是一样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mark@mark-pc</span><br><span class="line">nil@nil-PC</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p><strong>先启动hadoop!</strong>启动Spark，在SPARK_HOME的sbin目录下执行start-all.sh，会唤起所有的节点，此时master中运行jps在原有基础上新增了Master，slaver里新增了Worker</p>
+</li>
+<li><p>进入<code>http://192.168.1.103:8080</code>看到spark监控网页，并且slaver数量正常，就说明正常启动</p>
+</li>
+</ol>
+<h2 id="启动集群，运行命令"><a href="#启动集群，运行命令" class="headerlink" title="启动集群，运行命令"></a>启动集群，运行命令</h2><ol>
+<li><p>运行代码<code>$SPARK_HOME/bin/run-example SparkPi 10</code>，能够正确执行计算出$\pi$，说明本地运行是ok的</p>
+</li>
+<li><p>向集群提交任务，执行</p>
+</li>
+</ol>
+<p><code>./spark-submit --class org.apache.spark.examples.JavaSparkPi --master spark://mark-pc:7077 ../examples/jars/spark-examples_2.12-3.0.1.jar</code></p>
+<p>在8088端口看到application和运行的机器，那就大功告成啦</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/12/%E4%BB%BB%E6%A1%91%E7%9A%84%E6%95%99%E8%AF%B2/" rel="prev" title="任桑的教诲">
+      <i class="fa fa-chevron-left"></i> 任桑的教诲
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">操作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BAssh%E7%8E%AF%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">搭建ssh环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9hosts%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">修改hosts文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85java%E7%8E%AF%E5%A2%83"><span class="nav-number">5.</span> <span class="nav-text">安装java环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85hadoop"><span class="nav-number">6.</span> <span class="nav-text">安装hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">6.1.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81hadoop%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="nav-number">6.2.</span> <span class="nav-text">验证hadoop集群安装成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81hadoop%E9%9B%86%E7%BE%A4%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81"><span class="nav-number">6.3.</span> <span class="nav-text">验证hadoop集群运行状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85spark"><span class="nav-number">7.</span> <span class="nav-text">安装spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E9%9B%86%E7%BE%A4%EF%BC%8C%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">启动集群，运行命令</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">NIL_Zhuang</p>
+  <div class="site-description" itemprop="description">目前是一个菜菜的NJUer，欢迎大家一起来交流学习</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NIL-zhuang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NIL-zhuang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/NIL-zhuang" title="https:&#x2F;&#x2F;github.com&#x2F;NIL-zhuang" rel="noopener" target="_blank">我的GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">NIL_Zhuang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
