@@ -20,31 +20,33 @@
     var CONFIG = {"hostname":"nil-zhuang.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"always"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="目前是一个菜菜的NJUer，欢迎大家一起来交流学习">
-<meta property="og:type" content="website">
-<meta property="og:title" content="庄子元的个人博客">
-<meta property="og:url" content="https://nil-zhuang.github.io/index.html">
+  <meta name="description" content="这篇文章记录了zzy因为在git操作上疯狂翻车最后选择去过一遍Learn Git Branching 基础篇CommitGit 仓库中的提交记录保存的是你的目录下所有文件的快照，就像是把整个目录复制，然后再粘贴一样，但比复制粘贴优雅许多！ Git 希望提交记录尽可能地轻量，因此在你每次进行提交时，它并不会盲目地复制整个目录。条件允许的情况下，它会将当前版本与仓库中的上一个版本进行对比，并把所有的差">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GIT">
+<meta property="og:url" content="https://nil-zhuang.github.io/2020/12/13/GIT/index.html">
 <meta property="og:site_name" content="庄子元的个人博客">
-<meta property="og:description" content="目前是一个菜菜的NJUer，欢迎大家一起来交流学习">
+<meta property="og:description" content="这篇文章记录了zzy因为在git操作上疯狂翻车最后选择去过一遍Learn Git Branching 基础篇CommitGit 仓库中的提交记录保存的是你的目录下所有文件的快照，就像是把整个目录复制，然后再粘贴一样，但比复制粘贴优雅许多！ Git 希望提交记录尽可能地轻量，因此在你每次进行提交时，它并不会盲目地复制整个目录。条件允许的情况下，它会将当前版本与仓库中的上一个版本进行对比，并把所有的差">
 <meta property="og:locale">
+<meta property="article:published_time" content="2020-12-13T06:51:38.000Z">
+<meta property="article:modified_time" content="2020-12-13T15:27:02.458Z">
 <meta property="article:author" content="NIL_Zhuang">
 <meta property="article:tag" content="NJU">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://nil-zhuang.github.io/">
+<link rel="canonical" href="https://nil-zhuang.github.io/2020/12/13/GIT/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-Hans'
   };
 </script>
 
-  <title>庄子元的个人博客</title>
+  <title>GIT | 庄子元的个人博客</title>
   
 
 
@@ -159,9 +161,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
@@ -177,10 +180,9 @@
       <meta itemprop="name" content="庄子元的个人博客">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/13/GIT/" class="post-title-link" itemprop="url">GIT</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          GIT
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -204,7 +206,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>这篇文章记录了zzy因为在git操作上疯狂翻车最后选择去过一遍Learn Git Branching</p>
+        <p>这篇文章记录了zzy因为在git操作上疯狂翻车最后选择去过一遍Learn Git Branching</p>
 <h2 id="基础篇"><a href="#基础篇" class="headerlink" title="基础篇"></a>基础篇</h2><h3 id="Commit"><a href="#Commit" class="headerlink" title="Commit"></a>Commit</h3><p>Git 仓库中的提交记录保存的是你的目录下所有文件的快照，就像是把整个目录复制，然后再粘贴一样，但比复制粘贴优雅许多！</p>
 <p>Git 希望提交记录尽可能地轻量，因此在你每次进行提交时，它并不会盲目地复制整个目录。条件允许的情况下，它会将当前版本与仓库中的上一个版本进行对比，并把所有的差异打包到一起作为一个提交记录。</p>
 <p>Git 还保存了提交的历史记录。这也是为什么大多数提交记录的上面都有父节点的原因 —— 我们会在图示中用箭头来表示这种关系。对于项目组的成员来说，维护提交历史对大家都有好处。</p>
@@ -364,299 +366,31 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -u o&#x2F;master foo</span><br></pre></td></tr></table></figure>
 <p>这样 <code>foo</code> 就会跟踪 <code>o/master</code> 了。如果当前就在 foo 分支上, 还可以省略 foo：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -u o&#x2F;master</span><br></pre></td></tr></table></figure>
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://nil-zhuang.github.io/2020/11/09/zotero-NJUBox/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="NIL_Zhuang">
-      <meta itemprop="description" content="目前是一个菜菜的NJUer，欢迎大家一起来交流学习">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="庄子元的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/09/zotero-NJUBox/" class="post-title-link" itemprop="url">zotero+NJUBox</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-11-09 09:12:56 / Modified: 09:18:00" itemprop="dateCreated datePublished" datetime="2020-11-09T09:12:56+08:00">2020-11-09</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>WebDAV是Web Distributed Authoring and Versioning的缩写，是基于HTTP的通信拓展协议。可以使用云盘提供服务。目前国外提供的有OneDrive, Google Drive, DropBox等都支持WebDAV，国内有坚果云。</p>
-<p>在小破南，可以使用NJU BOX进行同步。(yaoge123 yyds)</p>
-<p>在云盘根目录下创建zotero资料卡库，在zotero的首选项-同步中，使用<a target="_blank" rel="noopener" href="https:///box.nju.edu.cn/seafdav，用户名是学号@nju.edu.cn，密码统一认证。然后同步就完成了。">https:///box.nju.edu.cn/seafdav，用户名是学号@nju.edu.cn，密码统一认证。然后同步就完成了。</a></p>
-<p>同时也可以使用<strong>zotfile</strong>提供文件的同步，在zotfile中同步到box盘中就可以快乐玩耍。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://nil-zhuang.github.io/2020/10/12/spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="NIL_Zhuang">
-      <meta itemprop="description" content="目前是一个菜菜的NJUer，欢迎大家一起来交流学习">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="庄子元的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/12/spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">spark集群搭建</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-10-12 22:10:26 / Modified: 23:51:17" itemprop="dateCreated datePublished" datetime="2020-10-12T22:10:26+08:00">2020-10-12</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[toc]</p>
-<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>本文档是俩叫nil和mark的靓仔和yyds李传艺老师，在yyds的办公室倒腾一整个下午之后，总结出的血泪教训。</p>
-<p>本文是在manjaro和Ubuntu两个Linux发行版的个人PC上，启动hadoop hdfs集群和spark集群的操作过程。涉及到不同<strong>username</strong>和不同<strong>hostname</strong>的物理机，在真实网络情况下(宿舍路由器局域网)的配置操作，仅供参考。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/12/spark%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://nil-zhuang.github.io/2020/09/12/%E4%BB%BB%E6%A1%91%E7%9A%84%E6%95%99%E8%AF%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="NIL_Zhuang">
-      <meta itemprop="description" content="目前是一个菜菜的NJUer，欢迎大家一起来交流学习">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="庄子元的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/12/%E4%BB%BB%E6%A1%91%E7%9A%84%E6%95%99%E8%AF%B2/" class="post-title-link" itemprop="url">任桑的教诲</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-09-12 11:05:37 / Modified: 11:08:10" itemprop="dateCreated datePublished" datetime="2020-09-12T11:05:37+08:00">2020-09-12</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>读博失败的十大原因：</p>
-<ol>
-<li>过度在意成绩或课程作业</li>
-<li>什么都想学</li>
-<li>完美主义</li>
-<li>拖延症</li>
-<li>“独立”的过早或过晚</li>
-<li>把读博当成是上学或工作</li>
-<li>不把委员会当回事</li>
-<li>目标定的太低</li>
-<li>目标定的过高</li>
-<li>误解了真正的里程碑</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://nil-zhuang.github.io/2020/09/10/Program-in-Scala/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="NIL_Zhuang">
-      <meta itemprop="description" content="目前是一个菜菜的NJUer，欢迎大家一起来交流学习">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="庄子元的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/10/Program-in-Scala/" class="post-title-link" itemprop="url">Program-in-Scala</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-09-10 16:45:19" itemprop="dateCreated datePublished" datetime="2020-09-10T16:45:19+08:00">2020-09-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-11 14:11:34" itemprop="dateModified" datetime="2020-09-11T14:11:34+08:00">2020-09-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[TOC]</p>
-<p>这是一个记录zzy阅读Scala程序设计时，读到的一些内容，常读常新，O’Relly yyds！函数式yyds！</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/09/10/Program-in-Scala/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/09/zotero-NJUBox/" rel="prev" title="zotero+NJUBox">
+      <i class="fa fa-chevron-left"></i> zotero+NJUBox
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
 
 
 
@@ -708,6 +442,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Commit"><span class="nav-number">1.1.</span> <span class="nav-text">Commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Branch"><span class="nav-number">1.2.</span> <span class="nav-text">Branch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Merge"><span class="nav-number">1.3.</span> <span class="nav-text">Merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rebase"><span class="nav-number">1.4.</span> <span class="nav-text">Rebase</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">高级篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%A6%BBHEAD"><span class="nav-number">2.1.</span> <span class="nav-text">分离HEAD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E5%BC%95%E7%94%A8"><span class="nav-number">2.2.</span> <span class="nav-text">相对引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%A4%E9%94%80%E5%8F%98%E6%9B%B4"><span class="nav-number">2.3.</span> <span class="nav-text">撤销变更</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95"><span class="nav-number">3.</span> <span class="nav-text">移动提交记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cherry-pick"><span class="nav-number">3.1.</span> <span class="nav-text">Cherry-pick</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E5%BC%8Frebase"><span class="nav-number">3.2.</span> <span class="nav-text">交互式rebase</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82%E9%A1%B9"><span class="nav-number">4.</span> <span class="nav-text">杂项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AA%E5%8F%96%E4%B8%80%E4%B8%AA%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95"><span class="nav-number">4.1.</span> <span class="nav-text">只取一个提交记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E7%9A%84%E6%8A%80%E5%B7%A7-1"><span class="nav-number">4.2.</span> <span class="nav-text">提交的技巧#1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="nav-number">4.3.</span> <span class="nav-text">提交的技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-Tag"><span class="nav-number">4.4.</span> <span class="nav-text">Git Tag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-Describe"><span class="nav-number">4.5.</span> <span class="nav-text">Git Describe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E7%88%B6%E8%8A%82%E7%82%B9"><span class="nav-number">4.6.</span> <span class="nav-text">两个父节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">远程仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clone"><span class="nav-number">5.1.</span> <span class="nav-text">clone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF"><span class="nav-number">5.2.</span> <span class="nav-text">远程分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fetch"><span class="nav-number">5.3.</span> <span class="nav-text">Fetch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fetch%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">5.3.1.</span> <span class="nav-text">fetch做了什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fetch%E4%B8%8D%E5%81%9A%E4%BB%80%E4%B9%88"><span class="nav-number">5.3.2.</span> <span class="nav-text">fetch不做什么</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pull"><span class="nav-number">5.4.</span> <span class="nav-text">Pull</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Push"><span class="nav-number">5.5.</span> <span class="nav-text">Push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%86%B2%E7%AA%81%E7%9A%84push"><span class="nav-number">5.6.</span> <span class="nav-text">有冲突的push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E5%AE%9A%E7%9A%84Master"><span class="nav-number">5.7.</span> <span class="nav-text">锁定的Master</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E9%AB%98%E7%BA%A7%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">Git 远程仓库高级操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E4%B8%BB%E5%88%86%E6%94%AF"><span class="nav-number">6.1.</span> <span class="nav-text">推送主分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">6.2.</span> <span class="nav-text">合并远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E8%BF%BD%E8%B8%AA"><span class="nav-number">6.3.</span> <span class="nav-text">远程追踪</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E6%A3%80%E5%87%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%88%86%E6%94%AF"><span class="nav-number">6.3.1.</span> <span class="nav-text">通过远程分支检出一个新的分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%BF%9C%E7%A8%8B%E8%BF%BD%E8%B8%AA%E5%88%86%E6%94%AF"><span class="nav-number">6.3.2.</span> <span class="nav-text">设置远程追踪分支</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -835,59 +570,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 

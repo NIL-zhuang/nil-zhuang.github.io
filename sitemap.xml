@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://nil-zhuang.github.io/2020/12/13/GIT/</loc>
+    
+    <lastmod>2020-12-13</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://nil-zhuang.github.io/2020/11/09/zotero-NJUBox/</loc>
     
     <lastmod>2020-11-09</lastmod>
@@ -193,7 +200,7 @@
 
   <url>
     <loc>https://nil-zhuang.github.io/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -201,49 +208,49 @@
   
   <url>
     <loc>https://nil-zhuang.github.io/tags/%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://nil-zhuang.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://nil-zhuang.github.io/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://nil-zhuang.github.io/tags/JAVA/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://nil-zhuang.github.io/tags/Python/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://nil-zhuang.github.io/tags/%E4%BB%A3%E7%A0%81/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://nil-zhuang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -252,28 +259,28 @@
   
   <url>
     <loc>https://nil-zhuang.github.io/categories/%E8%BD%AF%E4%BB%B6/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://nil-zhuang.github.io/categories/%E5%A5%BD%E5%A5%BD%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://nil-zhuang.github.io/categories/%E4%BB%A3%E7%A0%81/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://nil-zhuang.github.io/categories/%E6%97%A5%E5%B8%B8/</loc>
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-12-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
