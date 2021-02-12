@@ -28,7 +28,7 @@
 <meta property="og:description" content="写在前面free is a matter of liberty, not price 为什么弃win10呢，因为Windows是硬gbk16编码，在很多的地方会有诸多不便，例如环境变量。而且在一些软件上会非常狗屎，例如anaconda安装上，对安装目录有路径长度要求。 进入了开源世界，用好GitHub的issue和StackOverflow，多去查找提问，贡献力量 血 泪 教 训 一定要养成良好的">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-09-08T02:11:35.000Z">
-<meta property="article:modified_time" content="2020-09-13T02:48:51.003Z">
+<meta property="article:modified_time" content="2021-02-12T10:56:10.565Z">
 <meta property="article:author" content="NIL_Zhuang">
 <meta property="article:tag" content="NJU">
 <meta name="twitter:card" content="summary">
@@ -198,7 +198,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-13 10:48:51" itemprop="dateModified" datetime="2020-09-13T10:48:51+08:00">2020-09-13</time>
+                <time title="Modified: 2021-02-12 18:56:10" itemprop="dateModified" datetime="2021-02-12T18:56:10+08:00">2021-02-12</time>
               </span>
 
           
@@ -238,9 +238,13 @@
 <li>使用<code>sudo pacman-mirrors -i -c China -m rank</code>，选择国内源，（对于小破南来说我安利tuna和ustc）</li>
 <li><code>sudo pacman -Syyu</code>更新系统软件</li>
 <li><code>sudo pacman -S yay</code> 使用arch软件仓库</li>
-<li>使用ArchlinuxCN的tuna源(当然了抽风的时候可以用ustc源)<ol>
-<li>在<code>/etc/pacman.conf</code>文件末尾添加以下两行  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">Server &#x3D; https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;archlinuxcn&#x2F;$arch</span><br></pre></td></tr></table></figure></li>
-<li>安装<code>archlinuxcn-keyring</code>导入GPG key</li>
+<li><p>使用ArchlinuxCN的tuna源(当然了抽风的时候可以用ustc源)</p>
+<ol>
+<li><p>在<code>/etc/pacman.conf</code>文件末尾添加以下两行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装<code>archlinuxcn-keyring</code>导入GPG key</p>
+</li>
 </ol>
 </li>
 </ol>
@@ -265,8 +269,11 @@
 </ol>
 <h3 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h3><ol>
 <li>安装<code>fcitx, fcitx-im, fcitx-configtool, fcitx-qt4, fcitx-qt5</code></li>
-<li>在~目录下新建.xprofile文件，添加以下内容，然后重启<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GTK_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> QT_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">&quot;@im=fcitx&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li>安装<a target="_blank" rel="noopener" href="https://gitee.com/laomocode/fcitx-sogouimebs/releases">搜狗输入法优麒麟</a></li>
+<li><p>在~目录下新建.xprofile文件，添加以下内容，然后重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GTK_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> QT_IM_MODULE=fcitx</span><br><span class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">&quot;@im=fcitx&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装<a target="_blank" rel="noopener" href="https://gitee.com/laomocode/fcitx-sogouimebs/releases">搜狗输入法优麒麟</a></p>
+</li>
 <li>对于这种tar.xz包，当然是<code>pacman -U</code>安装啦</li>
 <li>然后重启就vans了</li>
 </ol>
@@ -285,7 +292,7 @@
 <tbody>
 <tr>
 <td style="text-align:center">全局主题</td>
-<td style="text-align:center">Layan</td>
+<td style="text-align:center">Arc Dark</td>
 </tr>
 <tr>
 <td style="text-align:center">Plasma样式</td>
@@ -293,15 +300,15 @@
 </tr>
 <tr>
 <td style="text-align:center">应用程序风格-应用样式</td>
-<td style="text-align:center">微风</td>
+<td style="text-align:center">Oxygen</td>
 </tr>
 <tr>
 <td style="text-align:center">应用程序风格-窗口装饰</td>
-<td style="text-align:center">McMojave-1.5x</td>
+<td style="text-align:center">McMojave-1.5x 无边框</td>
 </tr>
 <tr>
 <td style="text-align:center">颜色</td>
-<td style="text-align:center">McMojave</td>
+<td style="text-align:center">Arc Dark</td>
 </tr>
 <tr>
 <td style="text-align:center">图标</td>
@@ -313,26 +320,25 @@
 </tr>
 <tr>
 <td style="text-align:center">光标</td>
-<td style="text-align:center">McMojave Cursors</td>
+<td style="text-align:center">Breeze微风</td>
+</tr>
+<tr>
+<td style="text-align:center">字体</td>
+<td style="text-align:center">苹方简</td>
+</tr>
+<tr>
+<td style="text-align:center">开机</td>
+<td style="text-align:center">McMojave</td>
+</tr>
+<tr>
+<td style="text-align:center">欢迎屏幕</td>
+<td style="text-align:center">whiteSur-dark</td>
 </tr>
 </tbody>
 </table>
 </div>
-<ul>
-<li>全局主题 Layan</li>
-<li>Plasma样式 Arc Dark</li>
-<li>应用</li>
-</ul>
 <h2 id="奇怪的软件们"><a href="#奇怪的软件们" class="headerlink" title="奇怪的软件们"></a>奇怪的软件们</h2><h3 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h3><p>如果要使用remote-ssh等remote组件的话，记得去安装visual-studio-code-bin，也就是那个commercial license版本的，不然不给你用remote套件</p>
 <p>如果之前有用过vscode的话，可以用<code>settings sync</code>插件，同步你的系统配置和插件等</p>
-<ul>
-<li>python插件的IPython插件<code>Unable to start session for kernel Python 3.8.5 32-bit</code><ul>
-<li>安装jupyter <code>pip install notebook</code></li>
-<li><code>python -m pip install &#39;traitlets==4.3.3&#39; --force-reinstall</code></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/vscode-python/issues/13701#issuecomment-684994934">solution-issue</a> 不要忘了点个赞</li>
-</ul>
-</li>
-</ul>
 <h3 id="Intellij-IDEA"><a href="#Intellij-IDEA" class="headerlink" title="Intellij IDEA"></a>Intellij IDEA</h3><p>IDEA可以使用settings sync根据登录账号同步</p>
 <p>对没错，因为窗口主题翻车的就是我</p>
 <h3 id="chrome"><a href="#chrome" class="headerlink" title="chrome"></a>chrome</h3><p>去安装chrome而不是chromium，在open-in-browser插件里，修改成google-chrome-stable就可以使用插件。具体操作是在<code>~/.vscode/extensions/techer.open-in-browser-2.0.0/out/config.js</code>中，将所有的<strong>google-chrome</strong>修改为<strong>google-chrome-stable</strong>，reload vscode就可以正常运行。（当然了，大佬安利：<strong>Live Server</strong>）</p>
@@ -340,17 +346,12 @@
 <h4 id="TIM"><a href="#TIM" class="headerlink" title="TIM"></a>TIM</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装tim</span></span><br><span class="line"><span class="comment"># 在应用商店里安装deepin-wine-tim-arch</span></span><br><span class="line"><span class="comment"># 切换到deepin-wine</span></span><br><span class="line">sudo /opt/deepinwine/apps/Deepin-TIM/run.sh -d</span><br><span class="line"><span class="comment"># 修改高分屏</span></span><br><span class="line">env WINEPREFIX=<span class="string">&quot;<span class="variable">$HOME</span>/.deepinwine/Deepin-TIM&quot;</span> deepin-wine winecfg</span><br><span class="line"><span class="comment"># 放大到128应该就可以了</span></span><br></pre></td></tr></table></figure>
 <h4 id="WeChat"><a href="#WeChat" class="headerlink" title="WeChat"></a>WeChat</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在应用商店里安装deepin-wine-wechat-arch</span></span><br><span class="line"><span class="comment"># 切换到deepin-wine</span></span><br><span class="line">sudo /opt/deepinwine/apps/Deepin-WeChat/run.sh -d</span><br><span class="line"><span class="comment"># 修改高分屏</span></span><br><span class="line">env WINEPREFIX=<span class="string">&quot;<span class="variable">$HOME</span>/.deepinwine/Deepin-WeChat&quot;</span> deepin-wine winecfg</span><br><span class="line"><span class="comment"># 同样放大到128</span></span><br></pre></td></tr></table></figure>
 <h3 id="其他的软件list"><a href="#其他的软件list" class="headerlink" title="其他的软件list"></a>其他的软件list</h3><ul>
-<li>openJDK</li>
-<li>go</li>
-<li>chez-scheme</li>
-<li>python-<ul>
-<li>torch</li>
-<li>numpy</li>
-<li>opencv</li>
-<li>matplotlib</li>
-</ul>
-</li>
 <li>flameshot</li>
+<li>qBittorrent</li>
+<li>OBS studio</li>
+<li>网易云</li>
+<li>typora</li>
+<li>anaconda</li>
 </ul>
 
     </div>
@@ -501,7 +502,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
