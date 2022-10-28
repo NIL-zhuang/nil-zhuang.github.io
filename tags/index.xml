@@ -1,0 +1,8 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags - Tag - 抓鱼</title>
+        <link>https://nil-zhuang.github.io/tags/</link>
+        <description>Tags - Tag - 抓鱼</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor>
+            <webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><atom:link href="https://nil-zhuang.github.io/tags/" rel="self" type="application/rss+xml" /></channel>
+</rss>
