@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "style.min.css",
-	"sourceRoot": "/Users/nil/Documents/code/catch_fish_blog",
+	"sourceRoot": "/home/runner/work/catch_fish_blog/catch_fish_blog",
 	"sources": [
 		"themes/LoveIt/assets/css/style.scss",
 		"themes/LoveIt/assets/lib/normalize/normalize.css",

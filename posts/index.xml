@@ -1,16 +1,4 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>All Posts - 抓鱼</title>
-        <link>https://nil-zhuang.github.io/posts/</link>
-        <description>All Posts | 抓鱼</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor>
-            <webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 15:12:56 &#43;0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>Spark集群搭建</title>
-    <link>https://nil-zhuang.github.io/2022/10/spark_build/</link>
-    <pubDate>Fri, 28 Oct 2022 15:12:56 &#43;0800</pubDate>
-    <author>Nil Zhuang</author>
-    <guid>https://nil-zhuang.github.io/2022/10/spark_build/</guid>
-    <description><![CDATA[<h2 id="写在前面">写在前面</h2>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>All Posts - 抓鱼</title><link>https://nil-zhuang.github.io/posts/</link><description>All Posts | 抓鱼</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 15:12:56 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/posts/" rel="self" type="application/rss+xml"/><item><title>Spark集群搭建</title><link>https://nil-zhuang.github.io/2022/10/spark_build/</link><pubDate>Fri, 28 Oct 2022 15:12:56 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/spark_build/</guid><description><![CDATA[<h2 id="写在前面">写在前面</h2>
 <p>本文档是俩叫nil和mark的靓仔和yyds李传艺老师，在yyds的办公室倒腾一整个下午之后，总结出的血泪教训。</p>
 <p>本文是在manjaro和Ubuntu两个Linux发行版的个人PC上，启动hadoop hdfs集群和spark集群的操作过程。涉及到不同<strong>username</strong>和不同<strong>hostname</strong>的物理机，在真实网络情况下(宿舍路由器局域网)的配置操作，仅供参考。</p>
 <!-- more -->
@@ -399,15 +387,7 @@
 </ol>
 <p><code>./spark-submit --class org.apache.spark.examples.JavaSparkPi --master spark://mark-pc:7077 ../examples/jars/spark-examples_2.12-3.0.1.jar</code></p>
 <p>在8088端口看到application和运行的机器，那就大功告成啦</p>
-]]></description>
-</item>
-<item>
-    <title>Git使用教程</title>
-    <link>https://nil-zhuang.github.io/2022/10/git/</link>
-    <pubDate>Fri, 28 Oct 2022 15:12:02 &#43;0800</pubDate>
-    <author>Nil Zhuang</author>
-    <guid>https://nil-zhuang.github.io/2022/10/git/</guid>
-    <description><![CDATA[<p>这篇文章记录了zzy因为在git操作上疯狂翻车最后选择去过一遍Learn Git Branching</p>
+]]></description></item><item><title>Git使用教程</title><link>https://nil-zhuang.github.io/2022/10/git/</link><pubDate>Fri, 28 Oct 2022 15:12:02 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/git/</guid><description><![CDATA[<p>这篇文章记录了zzy因为在git操作上疯狂翻车最后选择去过一遍Learn Git Branching</p>
 <h2 id="基础篇">基础篇</h2>
 <h3 id="commit">Commit</h3>
 <p>Git 仓库中的提交记录保存的是你的目录下所有文件的快照，就像是把整个目录复制，然后再粘贴一样，但比复制粘贴优雅许多！</p>
@@ -743,15 +723,7 @@
 </div>
 </div><p>将foo^解析为一个位置，上传所有未被包含到远程仓库的master分支的提交记录。</p>
 <p>如果你要推送到的目的分支不存在会怎么样呢？没问题！Git 会在远程仓库中根据你提供的名称帮你创建这个分支！<code>git push origin master:newBranch</code></p>
-]]></description>
-</item>
-<item>
-    <title>Cpp读写记录</title>
-    <link>https://nil-zhuang.github.io/2022/10/cpp_io/</link>
-    <pubDate>Fri, 28 Oct 2022 15:08:05 &#43;0800</pubDate>
-    <author>Nil Zhuang</author>
-    <guid>https://nil-zhuang.github.io/2022/10/cpp_io/</guid>
-    <description><![CDATA[<h2 id="输入输出流iostream">输入输出流iostream</h2>
+]]></description></item><item><title>Cpp读写记录</title><link>https://nil-zhuang.github.io/2022/10/cpp_io/</link><pubDate>Fri, 28 Oct 2022 15:08:05 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/cpp_io/</guid><description><![CDATA[<h2 id="输入输出流iostream">输入输出流iostream</h2>
 <h3 id="标准输入流">标准输入流</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -895,15 +867,7 @@
 </span></span><span class="line"><span class="cl"><span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">stof</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div>]]></description>
-</item>
-<item>
-    <title>项目开发守则</title>
-    <link>https://nil-zhuang.github.io/2022/10/project_rule/</link>
-    <pubDate>Fri, 28 Oct 2022 15:06:28 &#43;0800</pubDate>
-    <author>Nil Zhuang</author>
-    <guid>https://nil-zhuang.github.io/2022/10/project_rule/</guid>
-    <description><![CDATA[<p>本项目是南京大学软件学院2018级软件工程与计算III课程设计项目</p>
+</div>]]></description></item><item><title>项目开发守则</title><link>https://nil-zhuang.github.io/2022/10/project_rule/</link><pubDate>Fri, 28 Oct 2022 15:06:28 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/project_rule/</guid><description><![CDATA[<p>本项目是南京大学软件学院2018级软件工程与计算III课程设计项目</p>
 <h2 id="1-总体规约">1. 总体规约</h2>
 <ol>
 <li>开发工具：Intellij IDEA</li>
@@ -1081,7 +1045,4 @@
 <ol>
 <li>谁提交了.idea或者.vscode文件夹，谁请喝奶茶</li>
 </ol>
-]]></description>
-</item>
-</channel>
-</rss>
+]]></description></item></channel></rss>
