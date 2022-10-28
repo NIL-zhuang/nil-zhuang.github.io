@@ -2,9 +2,12 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://nil-zhuang.github.io/posts/</loc><lastmod>2022-10-28T15:17:18&#43;08:00</lastmod></url><url>
+            <loc>https://nil-zhuang.github.io/2022/10/spark_build/</loc><lastmod>2022-10-28T15:17:18&#43;08:00</lastmod></url><url>
+            <loc>https://nil-zhuang.github.io/</loc><lastmod>2022-10-28T15:17:18&#43;08:00</lastmod></url><url>
+            <loc>https://nil-zhuang.github.io/2022/10/git/</loc><lastmod>2022-10-28T15:17:18&#43;08:00</lastmod></url><url>
+            <loc>https://nil-zhuang.github.io/2022/10/cpp_io/</loc><lastmod>2022-10-28T15:17:18&#43;08:00</lastmod></url><url>
+            <loc>https://nil-zhuang.github.io/2022/10/project_rule/</loc><lastmod>2022-10-28T15:17:18&#43;08:00</lastmod></url><url>
             <loc>https://nil-zhuang.github.io/about/</loc><lastmod>2022-10-28T14:37:19&#43;08:00</lastmod></url><url>
-            <loc>https://nil-zhuang.github.io/2022/10/first_post/</loc><lastmod>2022-10-28T13:37:29&#43;08:00</lastmod></url><url>
-            <loc>https://nil-zhuang.github.io/posts/</loc><lastmod>2022-10-28T13:37:29&#43;08:00</lastmod></url><url>
-            <loc>https://nil-zhuang.github.io/</loc><lastmod>2022-10-28T13:37:29&#43;08:00</lastmod></url><url>
             <loc>https://nil-zhuang.github.io/categories/</loc></url><url>
             <loc>https://nil-zhuang.github.io/tags/</loc></url></urlset>
