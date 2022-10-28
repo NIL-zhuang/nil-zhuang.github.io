@@ -1,4 +1,184 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>All Posts - 抓鱼</title><link>https://nil-zhuang.github.io/posts/</link><description>All Posts | 抓鱼</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 15:12:56 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/posts/" rel="self" type="application/rss+xml"/><item><title>Spark集群搭建</title><link>https://nil-zhuang.github.io/2022/10/spark_build/</link><pubDate>Fri, 28 Oct 2022 15:12:56 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/spark_build/</guid><description><![CDATA[<h2 id="写在前面">写在前面</h2>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>All Posts - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/posts/</link><description>All Posts | 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 16:16:54 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/posts/" rel="self" type="application/rss+xml"/><item><title>Hugo个人博客搭建</title><link>https://nil-zhuang.github.io/2022/10/hugo/</link><pubDate>Fri, 28 Oct 2022 16:16:54 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/10/hugo/</guid><description><![CDATA[<div class="featured-image">
+                <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202210281638413.png" referrerpolicy="no-referrer">
+            </div><p>使用<a href="https://gohugo.io/" target="_blank" rel="noopener noreffer ">The world’s fastest framework for building websites | Hugo</a> 结合<a href="https://hugoloveit.com/" target="_blank" rel="noopener noreffer ">LoveIt</a> 主题，部署自己的GitPage博客 <a href="https://nil-zhuang.github.io/" target="_blank" rel="noopener noreffer ">抓鱼</a></p>
+<p>方案核心部分：</p>
+<ol>
+<li>在Github托管个人博客源仓库，对所有的博客文章进行版本管理，并使用GitHub Action进行CI/CD部署，自动向GitHub Pages仓库进行静态页面的发布</li>
+<li>GitHub Pages通过 <code>github.io</code> 网址进行博客网页托管和发布</li>
+<li>Hugo主题仓库，使用 <code>git submodule</code> 方法链接到博客源仓库</li>
+</ol>
+<h2 id="前言">前言</h2>
+<blockquote>
+<p>Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again.</p>
+</blockquote>
+<p>Hugo是基于Go的博客工具，用markdown进行文章编辑。</p>
+<p>相较于使用node的Hexo而言，具有编译更快、模块更轻量（众所周知，node_modules是地球上最重的东西）、发布更简单的优点。而且更不需要使用愚蠢的node和npm进行管理，实在是令人心动。</p>
+<h2 id="安装--配置">安装 &amp; 配置</h2>
+<p>本文基于macos系统描述，其他操作系统请参考项目源文档。</p>
+<h3 id="基本安装方法">基本安装方法</h3>
+<p>对hugo程序的安装，使用mac最标准的<code>homebrew</code>进行程序安装和管理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">brew install hugo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后可以使用<code>hugo version</code>验证安装成功。</p>
+<p>完成安装后，可以用下列命令进行网页的创建</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo new site blog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="主题配置">主题配置</h3>
+<p>选择 <a href="https://hugoloveit.com/" target="_blank" rel="noopener noreffer ">LoveIt</a> 主题进行主题配置，参考<a href="https://hugoloveit.com/theme-documentation-basics/" target="_blank" rel="noopener noreffer ">Theme Documentation - Basics - LoveIt</a>j进行细节配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> blog
+</span></span><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">git submodule add https://github.com/dillonzq/LoveIt.git themes/LoveIt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>[!note]
+动态资源放在 asserts下方，例如头像 <code>avatar.jpeg</code>
+静态资源放在 static下方，例如params.app.svgFavicon，</p>
+</blockquote>
+<h4 id="更新主题">更新主题</h4>
+<p>如果需要对主题仓库进行同步和更新，可以使用<code>git submodule update --remote</code></p>
+<h4 id="文章发布">文章发布</h4>
+<p>hugo创建文章使用<code>hugo new posts/POST_NAME.md</code>进行发布，使用<code>archetype/default.md</code>的默认配置，参考<a href="https://hugoloveit.com/theme-documentation-content/" target="_blank" rel="noopener noreffer ">Theme Documentation - Content - LoveIt</a></p>
+<h4 id="本地调试">本地调试</h4>
+<p>Hugo会生成静态网页，本地可以使用<code>hugo server</code>进行实时调试预览，无须每次重新生成。注意，post文件里，<code>draft=true</code> 的post不会被渲染，需要使用 <code>hugo server -D</code> 才能显示出来。</p>
+<p>运行服务后，可以通过浏览器 <code>http://localhost:1313</code> 访问预览网页</p>
+<h2 id="gitpage发布">GitPage发布</h2>
+<h3 id="仓库构建">仓库构建</h3>
+<p>在github中创建一个&lt;USER_NAME&gt;.github.io的特殊仓库，然后将配置文件<code>config.toml</code>中的<code>baseURL</code> 改为自己的自定义域名，这样博客就能访问对应的gitpage网页。</p>
+<p>完成上述准备工作后，我们现在已经可以通过自定义域名来访问我们的 GitHub Pages 页面了，目前因为项目仓库是空的，访问后会报 <code>404</code> 页面。</p>
+<p>我们希望 Hugo 生成的静态网站能通过 GitHub Pages 服务进行托管，而无需自己维护服务，更稳定、安全，因此我们需要上传 Hugo 生成的静态网页文件至 GitHub Page 项目仓库。</p>
+<h3 id="手动发布">手动发布</h3>
+<p>可以执行 <code>hugo</code> 在本地的public目录下创建静态网页，通过将 <code>public</code> 目录初始化为git仓库，并关联gitpage远程仓库，就可以推送网页静态文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">git remote add origin git@github.com:&lt;username&gt;/&lt;username&gt;.github.io
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;add test&#34;</span>
+</span></span><span class="line"><span class="cl">git push origin main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="自动发布">自动发布</h3>
+<p>我们的博客基于 GitHub 与 GitHub Pages，可以通过官方提供的 GitHub Action 进行 CI 自动发布。</p>
+<p>在仓库目录下建立<code>.github/workflows/deploy.yml</code>，自动发布示例如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">github pages</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">main </span><span class="w"> </span><span class="c"># Set a branch to deploy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-22.04</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">submodules</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c"># Fetch Hugo themes (true OR recursive)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">    </span><span class="c"># Fetch all history for .GitInfo and .Lastmod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Setup Hugo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-hugo@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">hugo-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;latest&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">extended</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/cache@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">/tmp/hugo_cache</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ runner.os }}-hugomod-${{ hashFiles(&#39;**/go.sum&#39;) }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">restore-keys</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            </span><span class="w">            </span><span class="l">${{ runner.os }}-hugomod-</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build Web</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">hugo --minify</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy Web</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">PERSONAL_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.PERSONAL_TOKEN }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">external_repository</span><span class="p">:</span><span class="w"> </span><span class="l">NIL-zhuang/nil-zhuang.github.io</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_branch</span><span class="p">:</span><span class="w"> </span><span class="l">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">commit_message</span><span class="p">:</span><span class="w"> </span><span class="l">${{ github.event.head_commit.message }}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后我们需要建立一个<code>PERSONAL_TOKEN</code>，开启 <code>repo</code> 与 <code>workflow</code> 权限，在仓库的Action Secrets中添加对应Token，就可以触发推送了。</p>
+]]></description></item><item><title>Spark集群搭建</title><link>https://nil-zhuang.github.io/2022/10/spark_build/</link><pubDate>Fri, 28 Oct 2022 15:12:56 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/spark_build/</guid><description><![CDATA[<h2 id="写在前面">写在前面</h2>
 <p>本文档是俩叫nil和mark的靓仔和yyds李传艺老师，在yyds的办公室倒腾一整个下午之后，总结出的血泪教训。</p>
 <p>本文是在manjaro和Ubuntu两个Linux发行版的个人PC上，启动hadoop hdfs集群和spark集群的操作过程。涉及到不同<strong>username</strong>和不同<strong>hostname</strong>的物理机，在真实网络情况下(宿舍路由器局域网)的配置操作，仅供参考。</p>
 <!-- more -->
