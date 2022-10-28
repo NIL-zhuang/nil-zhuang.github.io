@@ -2,9 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://nil-zhuang.github.io/2022/10/first_post/</loc><lastmod>2022-10-27T20:02:04&#43;08:00</lastmod></url><url>
-            <loc>https://nil-zhuang.github.io/posts/</loc><lastmod>2022-10-27T20:02:04&#43;08:00</lastmod></url><url>
-            <loc>https://nil-zhuang.github.io/</loc><lastmod>2022-10-27T20:02:04&#43;08:00</lastmod></url><url>
             <loc>https://nil-zhuang.github.io/about/</loc><priority>0</priority></url><url>
             <loc>https://nil-zhuang.github.io/categories/</loc></url><url>
-            <loc>https://nil-zhuang.github.io/tags/</loc></url></urlset>
+            <loc>https://nil-zhuang.github.io/tags/</loc></url><url>
+            <loc>https://nil-zhuang.github.io/</loc></url></urlset>
