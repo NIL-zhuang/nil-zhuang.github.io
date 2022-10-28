@@ -1,12 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>抓鱼</title>
-        <link>https://nil-zhuang.github.io/</link>
-        <description>ZZY的博客</description>
+        <title>All Posts - 抓鱼</title>
+        <link>https://nil-zhuang.github.io/posts/</link>
+        <description>All Posts | 抓鱼</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor>
-            <webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Thu, 27 Oct 2022 20:02:04 &#43;0800</lastBuildDate>
-            <atom:link href="https://nil-zhuang.github.io/index.xml" rel="self" type="application/rss+xml" />
-        <item>
+            <webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Thu, 27 Oct 2022 20:02:04 &#43;0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>First_post</title>
     <link>https://nil-zhuang.github.io/2022/10/first_post/</link>
     <pubDate>Thu, 27 Oct 2022 20:02:04 &#43;0800</pubDate>
