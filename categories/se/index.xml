@@ -1,0 +1,180 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>SE - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/se/</link><description>SE - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 15:06:28 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/se/" rel="self" type="application/rss+xml"/><item><title>项目开发守则</title><link>https://nil-zhuang.github.io/2022/10/project_rule/</link><pubDate>Fri, 28 Oct 2022 15:06:28 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/project_rule/</guid><description><![CDATA[<h1 id="project_rule">project_rule</h1>
+<p>本项目是南京大学软件学院 2018 级软件工程与计算 III 课程设计项目</p>
+<h2 id="1-总体规约">1. 总体规约</h2>
+<ol>
+<li>开发工具：Intellij IDEA</li>
+<li>数据库管理工具：Navicat</li>
+<li>项目文档和沟通管理：飞书</li>
+<li>项目版本管理工具：git</li>
+<li>接口管理工具：Apifox</li>
+</ol>
+<h2 id="2-编程规约">2. 编程规约</h2>
+<blockquote>
+<p>Craftsmanship and the Problem of Productivity: Secrets for Going Fast without Making a Mess</p>
+</blockquote>
+<h3 id="21-代码规范">2.1 代码规范</h3>
+<p>JAVA 代码规范参照 IDEA 插件 <strong>Alibaba Java Coding Guidelines</strong>，尽量减少 warning，不能存在 error</p>
+<h4 id="211-软工设计原则">2.1.1 软工设计原则</h4>
+<ol>
+<li>
+<p>单一职责原则</p>
+<p>对类来说，一个类应该只负责一项职责。如果一个类负责两个职责，可能存在职责 1 变化，引起职责 2 的变化情况。可以基于抽象逻辑，或者业务逻辑对类进行细化。</p>
+</li>
+<li>
+<p>接口隔离原则</p>
+<p>客户端不应该依赖它不需要的接口，一个类对另外一个类的依赖，应该建立在最小的接口上。</p>
+</li>
+<li>
+<p>依赖倒置原则</p>
+<p>高层模块不应该依赖低层模块，两者应依赖其抽象；抽象不应该依赖细节，细节应该依赖抽象；中心思想是面向接口编程。</p>
+</li>
+<li>
+<p>里氏替换原则</p>
+<p>如果将所有类型为 T1 的对象 O1 都替换成类型 T2de 对象 O2，程序的行为不发生改变。那么类型 T2 是类型 T1 的子类型。换句话说说有引用基类的地方必须能透明的使用其子类的对象。</p>
+</li>
+<li>
+<p>开闭原则</p>
+<p>在代码结构的设计设计时，应该考虑对扩展开放，对修改关闭，抽象思维搭建结构，具体实现扩展细节。</p>
+</li>
+<li>
+<p>迪米特法则</p>
+<p>一个类对自己依赖的类知道的越要越好。也就是说，对于依赖的类不管多么复杂，都尽量将逻辑封装在类的内部。对外除了提供的 public 方法，不对外开放任何信息</p>
+</li>
+</ol>
+<h3 id="22-注释规范">2.2 注释规范</h3>
+<ol>
+<li><strong>代码是用来读的</strong>，代码的意图应该由代码自身阐述，优先考虑写更可读的代码</li>
+<li>代码意图明显的情况下，不要加注释重复说明</li>
+<li>临时注释标记：TODO, FIXME, OPTIMIZE, REVIEW</li>
+<li>注释应该随着代码更新</li>
+</ol>
+<h4 id="221-必须要写注释的情况">2.2.1 必须要写注释的情况</h4>
+<p>为什么，而非是什么</p>
+<ol>
+<li>纲要性的注释：简洁清晰的描述一个文件、类或一个流程</li>
+<li>复杂的业务逻辑、算法</li>
+<li>代码的作用不直观时，解释这样做的原因</li>
+<li>存在多种可选方案时，解释这样选择的原因</li>
+<li>因为某些限制导致代码不一致、不优雅、存在副作用时，注明原因及后果</li>
+<li>参考了外部资料时，要注明链接方便查看</li>
+<li>所有的抽象方法</li>
+</ol>
+<h2 id="3-日志规约">3. 日志规约</h2>
+<p>使用 slf4j 框架记录项目运行日志，不要用系统原生 log</p>
+<h2 id="4-测试规约">4. 测试规约</h2>
+<p>AIR 原则：单元测试在运行时，要感觉像 AIR 一样并不存在 &ndash;Automatic, Independent, Repeatable</p>
+<h2 id="5-安全规约">5. 安全规约</h2>
+<ol>
+<li>用户请求传入的任何参数必须做有效性验证，忽略参数校验可能导致
+<ol>
+<li>page size 过大导致内存溢出</li>
+<li>恶意 order 导致数据库安全风险或慢查询</li>
+</ol>
+</li>
+<li>用户敏感数据必须要放在数据库中，账号密码等强安全数据需要使用彩虹表等进行加密处理</li>
+<li>用户传入的 SQL 参数严格使用参数绑定或 metadata 字段限定，防止 SQL 注入，禁止字符串拼接 SQL 访问数据库 (还记得华为的 drop database 吗)</li>
+<li>隶属于用户个人的页面或者功能必须进行权限控制校验</li>
+<li>在使用平台资源 (短信、邮件、电话等) 必须实现防重复限制，如数量限制、疲劳度控制、验证码校验等，避免被滥用</li>
+</ol>
+<h2 id="6-数据库规约">6. 数据库规约</h2>
+<h3 id="61-建表规约">6.1 建表规约</h3>
+<ol>
+<li>表达是否概念的字段必须使用 is_xxx 方式命名，数据类型是 <code>unsigned tinyint</code>(1 表示是，0 表示否)</li>
+<li>如果用字符串来表示有限个状态 (例如 status)，必须在后端使用枚举类型传入参数</li>
+<li>表名、字段名必须使用小写字母或数字，禁止数字开头，禁止两个下划线间只有数字。数据库字段名的修改代价很大，字段名的命名需要慎重考虑。
+<ul>
+<li>Mysql 在 Windows 下不区分大小写，而 Linux 下默认区分，因此不允许出现任何大写字母</li>
+</ul>
+</li>
+<li>表名不使用复数名词
+<ul>
+<li>表名应该仅仅表示表里面的实体内容，不应该表示实体数量，对应于 DO 类名也是单数形式，符合表达习惯</li>
+</ul>
+</li>
+<li>小数类型为 decimal，禁止使用 float 和 double
+<ul>
+<li>float 和 double 在存储的时候，存在精度损失的问题，很可能在值的比较时，得到不正确的结果。如果存储的数据范围超过 decimal 的范围，建议将数据拆成整数和小数分开存储</li>
+</ul>
+</li>
+<li>如果存储的字符串长度几乎相等，使用 char 定长字符串类型</li>
+<li>varchar 是可变长字符串，不预先分配存储空间，长度不要超过 5000，如果存储长度大于此值，定义字段类型为 text，独立出来一张表，用主键来对应，避免影响其它字段索引效率</li>
+<li>表必备三字段：id, gmt_create, gmt_modified。
+<ul>
+<li>其中 id 必为主键，类型为 unsigned bigint、单表时自增、步长为 1。gmt_create, gmt_modified 的类型均为 timestamp 类型，前者现在时表示主动创建，后者过去分词表示被动更新</li>
+</ul>
+</li>
+<li>表的命名最好以 <code>业务名称_表的作用</code> 作为开头</li>
+<li>字段允许适当冗余，以提高查询性能，但必须考虑数据一致。冗余字段应遵循
+<ol>
+<li>不是频繁修改的字段。</li>
+<li>不是 varchar 超长字段，更不能是 text 字段。</li>
+</ol>
+</li>
+<li>所有字符的存储与表示都要以 <code>utf-8</code> 编码
+<ul>
+<li>字符统计函数在不同编码有区别，因此统一编码</li>
+</ul>
+</li>
+</ol>
+<h3 id="62-sql-规范">6.2 SQL 规范</h3>
+<ol>
+<li>不要使用 <code>count(列名)</code> 或 <code>count(常量)</code> 来替代 <code>count(*)</code>，<code>count</code> 是统计行数的语法，和数据库无关，和 NULL 非 NULL 无关
+<ul>
+<li><code>count(*)</code> 会统计值为 NULL 的行，而 <code>count(列名)</code> 不会统计为 NULL 的行</li>
+</ul>
+</li>
+<li>使用 <code>ISNULL()</code> 来判断是否为 NULL，因为 <code>NULL&lt;&gt;NULL, NULL=NULL, NULL&lt;&gt;1</code> 的结果都是 NULL 而不是 true</li>
+</ol>
+<h2 id="7-版本控制规约">7. 版本控制规约</h2>
+<p>乱动 origin/main 者，狗头打掉！</p>
+<blockquote>
+<p><a href="https://ourai.ws/posts/working-with-git-in-team/" target="_blank" rel="noopener noreffer ">git团队实践</a>
+<a href="http://www.ruanyifeng.com/blog/2015/08/git-use-process.html" target="_blank" rel="noopener noreffer ">阮一峰git规范</a></p>
+</blockquote>
+<h3 id="71-commit-规则">7.1 Commit 规则</h3>
+<ol>
+<li>commit 记录以 commit 类型作为开头：
+<ol>
+<li>feat 新特性</li>
+<li>fix bug 修复</li>
+<li>hotfix 对生产代码的紧急修复</li>
+<li>docs 文档改动</li>
+<li>style 格式化</li>
+<li>refactor 重构代码</li>
+<li>test 项目测试</li>
+</ol>
+</li>
+<li>commit 的粒度是一个小功能点或一个 bugfix，将恢复的误伤操作降到最低</li>
+<li>commit 记录中，用一句简练的话概括，然后空一行阐述提交增加或修改的地方</li>
+<li>commit 要有独立性，如果是多个功能相同或相近的 commit 可以使用 rebase -i 合并或调整；如果是对上一个 commit 的修正可以用 amend 修复；<strong>禁止无意义的 commit</strong></li>
+<li>如果有临时但暂时不需要提交的改动，可以用 stash 暂存代码</li>
+<li>在有多个 commit，功能开发到达一个里程碑节点或是完成功能再 push，以整洁 origin/master，尽可能一个 push 就是一个 feat</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">    feat: 完成用户注册接口
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    UserController 添加了用户注册接口 /user/register
+</span></span><span class="line"><span class="cl">    UserService 用户注册接口 userRegister(UserVO)，用户密码提供了彩虹表校验
+</span></span><span class="line"><span class="cl">    UserMapper  userRegister(UserPO)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="72-开发规则">7.2 开发规则</h3>
+<p>我们需要一个干净整洁的 work tree</p>
+<ol>
+<li>所有的项目开发都会在 dev 分支上进行，生产代码会保留在 master 分支上，非 hotfix 等紧急情况禁止向 master 分支提交</li>
+<li>所有新 feature 的开发都需要建立一个新的、以该 feature 命名的分支，然后在该分支上进行提交后，将其 <code>merge</code> 到 dev 分支上</li>
+<li>项目更新一律使用 rebase，即 <code>git pull --rebase</code></li>
+</ol>
+<h3 id="73-其余规范">7.3 其余规范</h3>
+<ol>
+<li>谁提交了.idea 或者.vscode 文件夹，谁请喝奶茶</li>
+</ol>
+]]></description></item></channel></rss>

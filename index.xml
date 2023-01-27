@@ -1,6 +1,22 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/</link><description>ZZY的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Mon, 14 Nov 2022 11:50:04 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>⚡️+🤗：Transformers + Pytorch Lightning 最佳实战</title><link>https://nil-zhuang.github.io/2022/11/hf_pl/</link><pubDate>Mon, 14 Nov 2022 11:50:04 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/11/hf_pl/</guid><description><![CDATA[<div class="featured-image">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/</link><description>ZZY的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 27 Jan 2023 14:59:43 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Mac软件安装的斗智斗勇</title><link>https://nil-zhuang.github.io/2023/01/mac_software_install/</link><pubDate>Fri, 27 Jan 2023 14:59:43 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/01/mac_software_install/</guid><description><![CDATA[<div class="featured-image">
+                <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202301271540904.png" referrerpolicy="no-referrer">
+            </div><h1 id="mac-安装软件的斗智斗勇">Mac 安装软件的斗智斗勇</h1>
+<p>mac 最标准的软件安装渠道是 App Store，然而上面要么软件不全，要么对应软件功能比官网下载版本有缺失（如 parallel desktop），因此大多数软件的安装我会选择 <code>brew</code> 或官网下载，这种方法本质是 dmg 安装。
+感谢 <a href="https://b23.tv/GFmJgTa" target="_blank" rel="noopener noreffer ">在 Mac 上装软件，要学会和苹果斗智斗勇</a> 提供的指导，推荐大家从 <a href="https://macapp.org.cn/" target="_blank" rel="noopener noreffer ">MacApp分享频道</a> 搞一些破解软件。</p>
+<p>通常遇到的一些问题来自 <a href="https://en.wikipedia.org/wiki/Gatekeeper_%28macOS%29" target="_blank" rel="noopener noreffer ">Gatekeeper (macOS) - Wikipedia</a>，对应解决方法如下。</p>
+<p>无法打开 XXX，因为无法验证开发者 → 因为开发者没有给软件做公证</p>
+<ol>
+<li>系统 → 隐私与安全性 → 仍要打开 XXX 软件</li>
+<li><code>/Application/XXX</code> 右键仍要打开</li>
+<li>开启系统 → 隐私与安全性 → 任何来源 <code>sudo spctl --master-disable</code>，如果任何来源权限切换回去，又会被关掉</li>
+</ol>
+<p>软件已损坏，因为对应的隔离属性和本机信息对不上</p>
+<ol>
+<li>删除软件隔离属性 <code>sudo xattr -r -d com.apple.quarantine /Application/XXX</code></li>
+</ol>
+]]></description></item><item><title>⚡️+🤗：Transformers + Pytorch Lightning 最佳实战</title><link>https://nil-zhuang.github.io/2022/11/hf_pl/</link><pubDate>Mon, 14 Nov 2022 11:50:04 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/11/hf_pl/</guid><description><![CDATA[<div class="featured-image">
                 <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202211141605838.png" referrerpolicy="no-referrer">
-            </div><h1 id="hf_pl">hf_pl</h1>
+            </div><h1 id="transformers--pytorch-lightning-最佳实战">⚡️+🤗：Transformers + Pytorch Lightning 最佳实战</h1>
 <h2 id="背景">背景</h2>
 <p>Pytorch Lightning 是 pytorch 的一个上层封装，类似于 Keras 之于 tensorflow。我们希望使用这样一个优秀的框架来实现对 huggingface 模型的快速训练和开发测试。</p>
 <h2 id="数据集-dataset">数据集 Dataset</h2>
@@ -612,7 +628,7 @@
 </div>
 </div>]]></description></item><item><title>Hugo个人博客搭建</title><link>https://nil-zhuang.github.io/2022/10/hugo/</link><pubDate>Fri, 28 Oct 2022 16:16:54 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/10/hugo/</guid><description><![CDATA[<div class="featured-image">
                 <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202210281638413.png" referrerpolicy="no-referrer">
-            </div><h1 id="hugo">Hugo</h1>
+            </div><h1 id="hugo-个人博客搭建">Hugo 个人博客搭建</h1>
 <p>使用 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer ">The world’s fastest framework for building websites | Hugo</a> 结合 <a href="https://hugoloveit.com/" target="_blank" rel="noopener noreffer ">LoveIt</a> 主题，部署自己的 GitPage 博客 <a href="https://nil-zhuang.github.io/" target="_blank" rel="noopener noreffer ">抓鱼</a></p>
 <p>方案核心部分：</p>
 <ol>
@@ -791,11 +807,12 @@
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后我们需要建立一个 <code>PERSONAL_TOKEN</code>，开启 <code>repo</code> 与 <code>workflow</code> 权限，在仓库的 Action Secrets 中添加对应 Token，就可以触发推送了。</p>
-]]></description></item><item><title>Spark集群搭建</title><link>https://nil-zhuang.github.io/2022/10/spark_build/</link><pubDate>Fri, 28 Oct 2022 15:12:56 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/spark_build/</guid><description><![CDATA[<h2 id="写在前面">写在前面</h2>
-<p>本文档是俩叫nil和mark的靓仔和yyds李传艺老师，在yyds的办公室倒腾一整个下午之后，总结出的血泪教训。</p>
-<p>本文是在manjaro和Ubuntu两个Linux发行版的个人PC上，启动hadoop hdfs集群和spark集群的操作过程。涉及到不同<strong>username</strong>和不同<strong>hostname</strong>的物理机，在真实网络情况下(宿舍路由器局域网)的配置操作，仅供参考。</p>
+]]></description></item><item><title>Spark集群搭建</title><link>https://nil-zhuang.github.io/2022/10/spark_build/</link><pubDate>Fri, 28 Oct 2022 15:12:56 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/spark_build/</guid><description><![CDATA[<h1 id="spark_build">spark_build</h1>
+<h2 id="写在前面">写在前面</h2>
+<p>本文档是俩叫 nil 和 mark 的靓仔和 yyds 李传艺老师，在 yyds 的办公室倒腾一整个下午之后，总结出的血泪教训。</p>
+<p>本文是在 manjaro 和 Ubuntu 两个 Linux 发行版的个人 PC 上，启动 hadoop hdfs 集群和 spark 集群的操作过程。涉及到不同 <strong>username</strong> 和不同 <strong>hostname</strong> 的物理机，在真实网络情况下 (宿舍路由器局域网) 的配置操作，仅供参考。</p>
 <!-- more -->
-<p>其中DataNode机器的配置如下（夹带私货，欢迎加入manjaro邪教）。本文档所有命令都可以在manjaro/ArchLinux下执行，Ubuntu或其他系统请自行寻找对照命令</p>
+<p>其中 DataNode 机器的配置如下（夹带私货，欢迎加入 manjaro 邪教）。本文档所有命令都可以在 manjaro/ArchLinux 下执行，Ubuntu 或其他系统请自行寻找对照命令</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -820,7 +837,7 @@
 <thead>
 <tr>
 <th style="text-align:center">机器类型</th>
-<th style="text-align:center">局域网IP</th>
+<th style="text-align:center">局域网 IP</th>
 <th style="text-align:center">hostname</th>
 <th style="text-align:center">username</th>
 </tr>
@@ -850,16 +867,16 @@
 <h2 id="操作流程">操作流程</h2>
 <ol>
 <li>创建镜像 or 还原点 (可选，推荐)</li>
-<li>搭建ssh环境</li>
-<li>修改hosts文件</li>
-<li>安装java环境</li>
-<li>安装hadoop</li>
-<li>安装spark</li>
+<li>搭建 ssh 环境</li>
+<li>修改 hosts 文件</li>
+<li>安装 java 环境</li>
+<li>安装 hadoop</li>
+<li>安装 spark</li>
 <li>启动集群，运行命令</li>
 <li>开汽水庆祝</li>
 </ol>
-<h2 id="搭建ssh环境">搭建ssh环境</h2>
-<p>首先配置好自己的ssh环境</p>
+<h2 id="搭建-ssh-环境">搭建 ssh 环境</h2>
+<p>首先配置好自己的 ssh 环境</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -892,13 +909,13 @@
 </span></span><span class="line"><span class="cl">└── known_hosts
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>用<code>ifconfig</code>或<code>ip address show</code>查看ip地址后，ping一下你要连接的电脑的ip，保证网络通畅。</p>
+</div><p>用 <code>ifconfig</code> 或 <code>ip address show</code> 查看 ip 地址后，ping 一下你要连接的电脑的 ip，保证网络通畅。</p>
 <ul>
-<li>免密登录： 将其他机器的id_rsa.pub里的内容添加到本机的authorized_keys里(用<code>cat &gt;&gt;</code>追加)</li>
+<li>免密登录：将其他机器的 id_rsa.pub 里的内容添加到本机的 authorized_keys 里 (用 <code>cat &gt;&gt;</code> 追加)</li>
 </ul>
-<p>测试ssh连接。如果出现<code>ssh：connect to host port 22： Connection refused</code>，那记得运行命令<code>systemctl start sshd</code>打开sshd.sevice。</p>
-<p>如果我在nil-PC上连接mark-pc，直接<code>ssh 192.168.1.103</code>会失败，因为的登录用户名是nil，而mark-pc里没有nil这个用户。正确做法是<code>ssh mark@192.168.1.103</code>，接收对方fingerprint到known_hosts里后，就可以免密登录。</p>
-<h2 id="修改hosts文件">修改hosts文件</h2>
+<p>测试 ssh 连接。如果出现 <code>ssh：connect to host port 22：Connection refused</code>，那记得运行命令 <code>systemctl start sshd</code> 打开 sshd.service。</p>
+<p>如果我在 nil-PC 上连接 mark-pc，直接 <code>ssh 192.168.1.103</code> 会失败，因为的登录用户名是 nil，而 mark-pc 里没有 nil 这个用户。正确做法是 <code>ssh mark@192.168.1.103</code>，接收对方 fingerprint 到 known_hosts 里后，就可以免密登录。</p>
+<h2 id="修改-hosts-文件">修改 hosts 文件</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -927,18 +944,18 @@
 </div>
 </div><p>Notice：</p>
 <ol>
-<li>将127.0.0.1和127.0.1.1的路径都去掉，否则在hadoop启动的时候，会优先在localhost提交出错</li>
-<li>在ip后面，要写的是<strong>hostname</strong>，可以执行<code>hostname</code>看到，<strong>不是username</strong></li>
-<li>在修改完后，一定要刷新hosts，运行命令<code>systemctl restart NetworkManager</code>或是注销重启</li>
+<li>将 127.0.0.1 和 127.0.1.1 的路径都去掉，否则在 hadoop 启动的时候，会优先在 localhost 提交出错</li>
+<li>在 ip 后面，要写的是 <strong>hostname</strong>，可以执行 <code>hostname</code> 看到，<strong>不是 username</strong></li>
+<li>在修改完后，一定要刷新 hosts，运行命令 <code>systemctl restart NetworkManager</code> 或是注销重启</li>
 </ol>
 <p>修改后检查：</p>
 <ol>
-<li>ping mark-pc成功</li>
-<li>ssh mark@mark-pc可以登录</li>
+<li>ping mark-pc 成功</li>
+<li>ssh mark@mark-pc 可以登录</li>
 </ol>
-<h2 id="安装java环境">安装java环境</h2>
-<p>正常安装java8，java home不出意外在<code>/usr/lib/jvm/</code>下，本机路径是<code>/usr/lib/jvm/java-8-openjdk/</code>，可以在bin目录下执行<code>./javac -version</code>看到java版本是javac 1.8.0_265(好像1.8.0后的小小版本不影响，mark是261也运行正常)</p>
-<p>将java添加至环境变量，在/etc/profile文件追加如下内容(具体内容因人而异)</p>
+<h2 id="安装-java-环境">安装 java 环境</h2>
+<p>正常安装 java8，java home 不出意外在 <code>/usr/lib/jvm/</code> 下，本机路径是 <code>/usr/lib/jvm/java-8-openjdk/</code>，可以在 bin 目录下执行 <code>./javac -version</code> 看到 java 版本是 javac 1.8.0_265(好像 1.8.0 后的小小版本不影响，mark 是 261 也运行正常)</p>
+<p>将 java 添加至环境变量，在/etc/profile 文件追加如下内容 (具体内容因人而异)</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -951,14 +968,14 @@
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$JAVA_HOME</span>/jre/bin:<span class="nv">$PATH</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>每一次修改后都要<code>source /etc/profile</code>刷新环境变量。在命令行输入<code>echo $JAVA_HOME</code>进行检验</p>
-<h2 id="安装hadoop">安装hadoop</h2>
+</div><p>每一次修改后都要 <code>source /etc/profile</code> 刷新环境变量。在命令行输入 <code>echo $JAVA_HOME</code> 进行检验</p>
+<h2 id="安装-hadoop">安装 hadoop</h2>
 <ol>
-<li>选择了hadoop-2.7.7，也可以选最新文件。我将其解压在了/usr/lib/hadoop-2.7.7下（这个随便，但是不建议放在/home里面，涉及到用户权限）</li>
+<li>选择了 hadoop-2.7.7，也可以选最新文件。我将其解压在了/usr/lib/hadoop-2.7.7 下（这个随便，但是不建议放在/home 里面，涉及到用户权限）</li>
 </ol>
-<p>notice:<strong>所有机器上，hadoop和spark的绝对位置和内容要保持严格一致</strong></p>
-<ol start="2">
-<li>将hadoop添加到环境变量，追加了（具体内容因人而异）</li>
+<p>notice:<strong>所有机器上，hadoop 和 spark 的绝对位置和内容要保持严格一致</strong></p>
+<ol>
+<li>将 hadoop 添加到环境变量，追加了（具体内容因人而异）</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -970,20 +987,16 @@
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/bin:<span class="nv">$HADOOP_HOME</span>/sbin
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ol start="3">
-<li>验证安装，执行<code>hadoop version</code></li>
+</div><ol>
+<li>验证安装，执行 <code>hadoop version</code></li>
 </ol>
 <h3 id="修改配置文件">修改配置文件</h3>
-<p>注意，这里的<strong>mark-pc都要改成期望作为master的电脑的hostname</strong>，<strong>绝对路径也要做相应的修改</strong></p>
+<p>注意，这里的 <strong>mark-pc 都要改成期望作为 master 的电脑的 hostname</strong>，<strong>绝对路径也要做相应的修改</strong></p>
 <ol>
-<li>
-<p>在$HADOOP_HOME下添加目录tmp, hdfs, hdfs/name, hdfs/data</p>
-</li>
-<li>
-<p>$HADOOP_HOME/etc/hadoop/core-site.xml</p>
-</li>
+<li>在 $HADOOP_HOME 下添加目录 tmp, hdfs, hdfs/name, hdfs/data</li>
+<li>$HADOOP_HOME/etc/hadoop/core-site.xml</li>
 </ol>
-<p>注意，在集群模式下，<strong>fs.defaultFS要写集群里namenode的ip和端口</strong></p>
+<p>注意，在集群模式下，<strong>fs.defaultFS 要写集群里 namenode 的 ip 和端口</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1014,7 +1027,7 @@
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/configuration&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ol start="3">
+</div><ol>
 <li>$HADOOP_HOME/etc/hadoop/hdfs-site.xml</li>
 </ol>
 <div class="highlight"><div class="chroma">
@@ -1061,11 +1074,11 @@
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/configuration&gt;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ol start="4">
+</div><ol>
 <li>$HADOOP_HOME/etc/hadoop/slaves</li>
 </ol>
-<p>注意，只有这里是要写<strong>用户名@主机名</strong>的，否则namenode在登录datanode的时候，用的是namenode当前的用户名，造成出错</p>
-<p>注意，slaves文件只存datanode的host，当然鉴于namenode都不干啥事，建议把master主机也作为slaver一起执行计算任务，符合社会主义核心价值观（雾）</p>
+<p>注意，只有这里是要写 <strong>用户名@主机名</strong> 的，否则 namenode 在登录 datanode 的时候，用的是 namenode 当前的用户名，造成出错</p>
+<p>注意，slaves 文件只存 datanode 的 host，当然鉴于 namenode 都不干啥事，建议把 master 主机也作为 slaver 一起执行计算任务，符合社会主义核心价值观（雾）</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1076,12 +1089,12 @@
 </span></span><span class="line"><span class="cl">nil@nil-PC
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="验证hadoop集群安装成功">验证hadoop集群安装成功</h3>
+</div><h3 id="验证-hadoop-集群安装成功">验证 hadoop 集群安装成功</h3>
 <ol>
-<li>格式化文件系统 <code>hdfs namenode -format</code>，看到最后几行有ExitCode=0这样的字眼就说明格式化成功了，如果有误，可以检查一下xml文件的配置</li>
-<li>在$HADOOP_HOME/sbin下运行start-all.sh，唤起namenode和datanode，分别在master和slaver上执行<code>jps</code>，如果看到以下内容就说明成功了</li>
+<li>格式化文件系统 <code>hdfs namenode -format</code>，看到最后几行有 ExitCode=0 这样的字眼就说明格式化成功了，如果有误，可以检查一下 xml 文件的配置</li>
+<li>在 $HADOOP_HOME/sbin 下运行 start-all.sh，唤起 namenode 和 datanode，分别在 master 和 slaver 上执行 <code>jps</code>，如果看到以下内容就说明成功了</li>
 </ol>
-<p>master上看到：</p>
+<p>master 上看到：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1100,7 +1113,7 @@
 </span></span><span class="line"><span class="cl">xxxx ResourceManager (似乎这个是可有可无)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>slaver上看到</p>
+</div><p>slaver 上看到</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1113,16 +1126,16 @@
 </span></span><span class="line"><span class="cl">xxxx NodeManager
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这样就说明hadoop集群运行成功了</p>
-<p>Notice：如果在start-all的时候发现datanode没有被唤起，大概率是datanode的id和master上的id不同，因为你执行format命令多次。解决方案是在所有的机器上都删除$HADOOP_HOME/hdfs/data/current文件夹，重新format即可。</p>
-<h3 id="验证hadoop集群运行状态">验证hadoop集群运行状态</h3>
+</div><p>这样就说明 hadoop 集群运行成功了</p>
+<p>Notice：如果在 start-all 的时候发现 datanode 没有被唤起，大概率是 datanode 的 id 和 master 上的 id 不同，因为你执行 format 命令多次。解决方案是在所有的机器上都删除 $HADOOP_HOME/hdfs/data/current 文件夹，重新 format 即可。</p>
+<h3 id="验证-hadoop-集群运行状态">验证 hadoop 集群运行状态</h3>
 <ol>
-<li>访问 <code>http://192.168.1.103:50070</code> (这里的ip是master的ip地址)，看到DataNodes数量符合</li>
-<li>在master上运行<code>hdfs dfs -mkdir /hadoop</code>后，可以在网页的文件管理页面上找到新建的目录，就大功告成了！</li>
+<li>访问 <code>http://192.168.1.103:50070</code> (这里的 ip 是 master 的 ip 地址)，看到 DataNodes 数量符合</li>
+<li>在 master 上运行 <code>hdfs dfs -mkdir /hadoop</code> 后，可以在网页的文件管理页面上找到新建的目录，就大功告成了！</li>
 </ol>
-<h2 id="安装spark">安装spark</h2>
+<h2 id="安装-spark">安装 spark</h2>
 <ol>
-<li>先装一个scala，配置好SCALA_HOME，运行<code>scala</code>看到repl即可</li>
+<li>先装一个 scala，配置好 SCALA_HOME，运行 <code>scala</code> 看到 repl 即可</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1134,8 +1147,8 @@
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SCALA_HOME</span>/bin
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ol start="2">
-<li>将spark一样的解压到/usr/lib下，配置SPARK_HOME</li>
+</div><ol>
+<li>将 spark 一样的解压到/usr/lib 下，配置 SPARK_HOME</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1147,10 +1160,10 @@
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SPARK_HOME</span>/bin
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ol start="3">
+</div><ol>
 <li>$SPARK_HOME/conf/slaves</li>
 </ol>
-<p>和$HADOOP_HOME/etc/hadoop/slaves内容是一样的</p>
+<p>和 $HADOOP_HOME/etc/hadoop/slaves 内容是一样的</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1161,26 +1174,18 @@
 </span></span><span class="line"><span class="cl">nil@nil-PC
 </span></span></code></pre></td></tr></table>
 </div>
-</div><ol start="4">
-<li>
-<p>**先启动hadoop!**启动Spark，在SPARK_HOME的sbin目录下执行start-all.sh，会唤起所有的节点，此时master中运行jps在原有基础上新增了Master，slaver里新增了Worker</p>
-</li>
-<li>
-<p>进入<code>http://192.168.1.103:8080</code>看到spark监控网页，并且slaver数量正常，就说明正常启动</p>
-</li>
+</div><ol>
+<li>**先启动 hadoop!**启动 Spark，在 SPARK_HOME 的 sbin 目录下执行 start-all.sh，会唤起所有的节点，此时 master 中运行 jps 在原有基础上新增了 Master，slaver 里新增了 Worker</li>
+<li>进入 <code>http://192.168.1.103:8080</code> 看到 spark 监控网页，并且 slaver 数量正常，就说明正常启动</li>
 </ol>
 <h2 id="启动集群运行命令">启动集群，运行命令</h2>
 <ol>
-<li>
-<p>运行代码<code>$SPARK_HOME/bin/run-example SparkPi 10</code>，能够正确执行计算出$\pi$，说明本地运行是ok的</p>
-</li>
-<li>
-<p>向集群提交任务，执行</p>
-</li>
+<li>运行代码 <code>$SPARK_HOME/bin/run-example SparkPi 10</code>，能够正确执行计算出 $\pi$，说明本地运行是 ok 的</li>
+<li>向集群提交任务，执行</li>
 </ol>
 <p><code>./spark-submit --class org.apache.spark.examples.JavaSparkPi --master spark://mark-pc:7077 ../examples/jars/spark-examples_2.12-3.0.1.jar</code></p>
-<p>在8088端口看到application和运行的机器，那就大功告成啦</p>
-]]></description></item><item><title>Git使用教程</title><link>https://nil-zhuang.github.io/2022/10/git/</link><pubDate>Fri, 28 Oct 2022 15:12:02 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/git/</guid><description><![CDATA[<h1 id="git">Git</h1>
+<p>在 8088 端口看到 application 和运行的机器，那就大功告成啦</p>
+]]></description></item><item><title>Git使用教程</title><link>https://nil-zhuang.github.io/2022/10/git/</link><pubDate>Fri, 28 Oct 2022 15:12:02 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/git/</guid><description><![CDATA[<h1 id="git-使用教程">Git 使用教程</h1>
 <p>这篇文章记录了 zzy 因为在 git 操作上疯狂翻车最后选择去过一遍 Learn Git Branching</p>
 <h2 id="基础篇">基础篇</h2>
 <h3 id="commit">Commit</h3>
@@ -1519,7 +1524,7 @@
 </div>
 </div><p>将 foo^解析为一个位置，上传所有未被包含到远程仓库的 master 分支的提交记录。</p>
 <p>如果你要推送到的目的分支不存在会怎么样呢？没问题！Git 会在远程仓库中根据你提供的名称帮你创建这个分支！<code>git push origin master:newBranch</code></p>
-]]></description></item><item><title>Cpp读写记录</title><link>https://nil-zhuang.github.io/2022/10/cpp_io/</link><pubDate>Fri, 28 Oct 2022 15:08:05 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/cpp_io/</guid><description><![CDATA[<h1 id="cpp_io">cpp_io</h1>
+]]></description></item><item><title>C++读写方法</title><link>https://nil-zhuang.github.io/2022/10/cpp_io/</link><pubDate>Fri, 28 Oct 2022 15:08:05 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/cpp_io/</guid><description><![CDATA[<h1 id="c-读写方法">C++ 读写方法</h1>
 <h2 id="输入输出流-iostream">输入输出流 Iostream</h2>
 <h3 id="标准输入流">标准输入流</h3>
 <div class="highlight"><div class="chroma">
@@ -1663,7 +1668,8 @@
 </span></span><span class="line"><span class="cl"><span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">stof</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div>]]></description></item><item><title>项目开发守则</title><link>https://nil-zhuang.github.io/2022/10/project_rule/</link><pubDate>Fri, 28 Oct 2022 15:06:28 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/project_rule/</guid><description><![CDATA[<p>本项目是南京大学软件学院2018级软件工程与计算III课程设计项目</p>
+</div>]]></description></item><item><title>项目开发守则</title><link>https://nil-zhuang.github.io/2022/10/project_rule/</link><pubDate>Fri, 28 Oct 2022 15:06:28 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/project_rule/</guid><description><![CDATA[<h1 id="project_rule">project_rule</h1>
+<p>本项目是南京大学软件学院 2018 级软件工程与计算 III 课程设计项目</p>
 <h2 id="1-总体规约">1. 总体规约</h2>
 <ol>
 <li>开发工具：Intellij IDEA</li>
@@ -1677,12 +1683,12 @@
 <p>Craftsmanship and the Problem of Productivity: Secrets for Going Fast without Making a Mess</p>
 </blockquote>
 <h3 id="21-代码规范">2.1 代码规范</h3>
-<p>JAVA代码规范参照IDEA插件 <strong>Alibaba Java Coding Guidelines</strong>，尽量减少warning，不能存在error</p>
+<p>JAVA 代码规范参照 IDEA 插件 <strong>Alibaba Java Coding Guidelines</strong>，尽量减少 warning，不能存在 error</p>
 <h4 id="211-软工设计原则">2.1.1 软工设计原则</h4>
 <ol>
 <li>
 <p>单一职责原则</p>
-<p>对类来说，一个类应该只负责一项职责。如果一个类负责两个职责，可能存在职责1变化，引起职责2的变化情况。可以基于抽象逻辑，或者业务逻辑对类进行细化。</p>
+<p>对类来说，一个类应该只负责一项职责。如果一个类负责两个职责，可能存在职责 1 变化，引起职责 2 的变化情况。可以基于抽象逻辑，或者业务逻辑对类进行细化。</p>
 </li>
 <li>
 <p>接口隔离原则</p>
@@ -1694,7 +1700,7 @@
 </li>
 <li>
 <p>里氏替换原则</p>
-<p>如果将所有类型为T1的对象O1都替换成类型T2de对象O2，程序的行为不发生改变。那么类型T2是类型T1的子类型。换句话说说有引用基类的地方必须能透明的使用其子类的对象。</p>
+<p>如果将所有类型为 T1 的对象 O1 都替换成类型 T2de 对象 O2，程序的行为不发生改变。那么类型 T2 是类型 T1 的子类型。换句话说说有引用基类的地方必须能透明的使用其子类的对象。</p>
 </li>
 <li>
 <p>开闭原则</p>
@@ -1702,7 +1708,7 @@
 </li>
 <li>
 <p>迪米特法则</p>
-<p>一个类对自己依赖的类知道的越要越好。也就是说，对于依赖的类不管多么复杂，都尽量将逻辑封装在类的内部。对外除了提供的public方法，不对外开放任何信息</p>
+<p>一个类对自己依赖的类知道的越要越好。也就是说，对于依赖的类不管多么复杂，都尽量将逻辑封装在类的内部。对外除了提供的 public 方法，不对外开放任何信息</p>
 </li>
 </ol>
 <h3 id="22-注释规范">2.2 注释规范</h3>
@@ -1724,95 +1730,95 @@
 <li>所有的抽象方法</li>
 </ol>
 <h2 id="3-日志规约">3. 日志规约</h2>
-<p>使用slf4j框架记录项目运行日志，不要用系统原生log</p>
+<p>使用 slf4j 框架记录项目运行日志，不要用系统原生 log</p>
 <h2 id="4-测试规约">4. 测试规约</h2>
-<p>AIR原则：单元测试在运行时，要感觉像AIR一样并不存在&ndash;Automatic, Independent, Repeatable</p>
+<p>AIR 原则：单元测试在运行时，要感觉像 AIR 一样并不存在 &ndash;Automatic, Independent, Repeatable</p>
 <h2 id="5-安全规约">5. 安全规约</h2>
 <ol>
 <li>用户请求传入的任何参数必须做有效性验证，忽略参数校验可能导致
 <ol>
-<li>page size过大导致内存溢出</li>
-<li>恶意order导致数据库安全风险或慢查询</li>
+<li>page size 过大导致内存溢出</li>
+<li>恶意 order 导致数据库安全风险或慢查询</li>
 </ol>
 </li>
 <li>用户敏感数据必须要放在数据库中，账号密码等强安全数据需要使用彩虹表等进行加密处理</li>
-<li>用户传入的SQL参数严格使用参数绑定或metadata字段限定，防止SQL注入，禁止字符串拼接SQL访问数据库(还记得华为的drop databse吗)</li>
+<li>用户传入的 SQL 参数严格使用参数绑定或 metadata 字段限定，防止 SQL 注入，禁止字符串拼接 SQL 访问数据库 (还记得华为的 drop database 吗)</li>
 <li>隶属于用户个人的页面或者功能必须进行权限控制校验</li>
-<li>在使用平台资源(短信、邮件、电话等)必须实现防重复限制，如数量限制、疲劳度控制、验证码校验等，避免被滥用</li>
+<li>在使用平台资源 (短信、邮件、电话等) 必须实现防重复限制，如数量限制、疲劳度控制、验证码校验等，避免被滥用</li>
 </ol>
 <h2 id="6-数据库规约">6. 数据库规约</h2>
 <h3 id="61-建表规约">6.1 建表规约</h3>
 <ol>
-<li>表达是否概念的字段必须使用is_xxx方式命名，数据类型是<code>unsigned tinyint</code>(1表示是，0表示否)</li>
-<li>如果用字符串来表示有限个状态(例如status)，必须在后端使用枚举类型传入参数</li>
+<li>表达是否概念的字段必须使用 is_xxx 方式命名，数据类型是 <code>unsigned tinyint</code>(1 表示是，0 表示否)</li>
+<li>如果用字符串来表示有限个状态 (例如 status)，必须在后端使用枚举类型传入参数</li>
 <li>表名、字段名必须使用小写字母或数字，禁止数字开头，禁止两个下划线间只有数字。数据库字段名的修改代价很大，字段名的命名需要慎重考虑。
 <ul>
-<li>Mysql在Windows下不区分大小写，而Linux下默认区分，因此不允许出现任何大写字母</li>
+<li>Mysql 在 Windows 下不区分大小写，而 Linux 下默认区分，因此不允许出现任何大写字母</li>
 </ul>
 </li>
 <li>表名不使用复数名词
 <ul>
-<li>表名应该仅仅表示表里面的实体内容，不应该表示实体数量，对应于DO类名也是单数形式，符合表达习惯</li>
+<li>表名应该仅仅表示表里面的实体内容，不应该表示实体数量，对应于 DO 类名也是单数形式，符合表达习惯</li>
 </ul>
 </li>
-<li>小数类型为decimal，禁止使用float和double
+<li>小数类型为 decimal，禁止使用 float 和 double
 <ul>
-<li>float和double在存储的时候，存在精度损失的问题，很可能在值的比较时，得到不正确的结果。如果存储的数据范围超过decimal的范围，建议将数据拆成整数和小数分开存储</li>
+<li>float 和 double 在存储的时候，存在精度损失的问题，很可能在值的比较时，得到不正确的结果。如果存储的数据范围超过 decimal 的范围，建议将数据拆成整数和小数分开存储</li>
 </ul>
 </li>
-<li>如果存储的字符串长度几乎相等，使用char定长字符串类型</li>
-<li>varchar是可变长字符串，不预先分配存储空间，长度不要超过5000，如果存储长度大于此值，定义字段类型为text，独立出来一张表，用主键来对应，避免影响其它字段索引效率</li>
+<li>如果存储的字符串长度几乎相等，使用 char 定长字符串类型</li>
+<li>varchar 是可变长字符串，不预先分配存储空间，长度不要超过 5000，如果存储长度大于此值，定义字段类型为 text，独立出来一张表，用主键来对应，避免影响其它字段索引效率</li>
 <li>表必备三字段：id, gmt_create, gmt_modified。
 <ul>
-<li>其中id必为主键，类型为unsigned bigint、单表时自增、步长为 1。gmt_create, gmt_modified的类型均为timestamp类型，前者现在时表示主动创建，后者过去分词表示被动更新</li>
+<li>其中 id 必为主键，类型为 unsigned bigint、单表时自增、步长为 1。gmt_create, gmt_modified 的类型均为 timestamp 类型，前者现在时表示主动创建，后者过去分词表示被动更新</li>
 </ul>
 </li>
-<li>表的命名最好以<code>业务名称_表的作用</code>作为开头</li>
+<li>表的命名最好以 <code>业务名称_表的作用</code> 作为开头</li>
 <li>字段允许适当冗余，以提高查询性能，但必须考虑数据一致。冗余字段应遵循
 <ol>
 <li>不是频繁修改的字段。</li>
-<li>不是varchar超长字段，更不能是text字段。</li>
+<li>不是 varchar 超长字段，更不能是 text 字段。</li>
 </ol>
 </li>
-<li>所有字符的存储与表示都要以<code>utf-8</code>编码
+<li>所有字符的存储与表示都要以 <code>utf-8</code> 编码
 <ul>
 <li>字符统计函数在不同编码有区别，因此统一编码</li>
 </ul>
 </li>
 </ol>
-<h3 id="62-sql规范">6.2 SQL规范</h3>
+<h3 id="62-sql-规范">6.2 SQL 规范</h3>
 <ol>
-<li>不要使用<code>count(列名)</code>或<code>count(常量)</code>来替代<code>count(*)</code>，<code>count</code>是统计行数的语法，和数据库无关，和NULL非NULL无关
+<li>不要使用 <code>count(列名)</code> 或 <code>count(常量)</code> 来替代 <code>count(*)</code>，<code>count</code> 是统计行数的语法，和数据库无关，和 NULL 非 NULL 无关
 <ul>
-<li><code>count(*)</code>会统计值为NULL的行，而<code>count(列名)</code>不会统计为NULL的行</li>
+<li><code>count(*)</code> 会统计值为 NULL 的行，而 <code>count(列名)</code> 不会统计为 NULL 的行</li>
 </ul>
 </li>
-<li>使用<code>ISNULL()</code>来判断是否为NULL，因为<code>NULL&lt;&gt;NULL, NULL=NULL, NULL&lt;&gt;1</code>的结果都是NULL而不是true</li>
+<li>使用 <code>ISNULL()</code> 来判断是否为 NULL，因为 <code>NULL&lt;&gt;NULL, NULL=NULL, NULL&lt;&gt;1</code> 的结果都是 NULL 而不是 true</li>
 </ol>
 <h2 id="7-版本控制规约">7. 版本控制规约</h2>
-<p>乱动origin/main者，狗头打掉！</p>
+<p>乱动 origin/main 者，狗头打掉！</p>
 <blockquote>
 <p><a href="https://ourai.ws/posts/working-with-git-in-team/" target="_blank" rel="noopener noreffer ">git团队实践</a>
 <a href="http://www.ruanyifeng.com/blog/2015/08/git-use-process.html" target="_blank" rel="noopener noreffer ">阮一峰git规范</a></p>
 </blockquote>
-<h3 id="71-commit规则">7.1 commit规则</h3>
+<h3 id="71-commit-规则">7.1 Commit 规则</h3>
 <ol>
-<li>commit记录以commit类型作为开头：
+<li>commit 记录以 commit 类型作为开头：
 <ol>
-<li>feat      新特性</li>
-<li>fix       bug修复</li>
-<li>hotfix    对生产代码的紧急修复</li>
-<li>docs      文档改动</li>
-<li>style     格式化</li>
-<li>refactor  重构代码</li>
-<li>test      项目测试</li>
+<li>feat 新特性</li>
+<li>fix bug 修复</li>
+<li>hotfix 对生产代码的紧急修复</li>
+<li>docs 文档改动</li>
+<li>style 格式化</li>
+<li>refactor 重构代码</li>
+<li>test 项目测试</li>
 </ol>
 </li>
-<li>commit的粒度是一个小功能点或一个bugfix，将恢复的误伤操作降到最低</li>
-<li>commit记录中，用一句简练的话概括，然后空一行阐述提交增加或修改的地方</li>
-<li>commit要有独立性，如果是多个功能相同或相近的commit可以使用rebase -i合并或调整；如果是对上一个commit的修正可以用amend修复；<strong>禁止无意义的commit</strong></li>
-<li>如果有临时但暂时不需要提交的改动，可以用stash暂存代码</li>
-<li>在有多个commit，功能开发到达一个里程碑节点或是完成功能再push，以整洁origin/master，尽可能一个push就是一个feat</li>
+<li>commit 的粒度是一个小功能点或一个 bugfix，将恢复的误伤操作降到最低</li>
+<li>commit 记录中，用一句简练的话概括，然后空一行阐述提交增加或修改的地方</li>
+<li>commit 要有独立性，如果是多个功能相同或相近的 commit 可以使用 rebase -i 合并或调整；如果是对上一个 commit 的修正可以用 amend 修复；<strong>禁止无意义的 commit</strong></li>
+<li>如果有临时但暂时不需要提交的改动，可以用 stash 暂存代码</li>
+<li>在有多个 commit，功能开发到达一个里程碑节点或是完成功能再 push，以整洁 origin/master，尽可能一个 push 就是一个 feat</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1831,14 +1837,14 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="72-开发规则">7.2 开发规则</h3>
-<p>我们需要一个干净整洁的work tree</p>
+<p>我们需要一个干净整洁的 work tree</p>
 <ol>
-<li>所有的项目开发都会在dev分支上进行，生产代码会保留在master分支上，非hotfix等紧急情况禁止向master分支提交</li>
-<li>所有新feature的开发都需要建立一个新的、以该feature命名的分支，然后在该分支上进行提交后，将其<code>merge</code>到dev分支上</li>
-<li>项目更新一律使用rebase，即<code>git pull --rebase</code></li>
+<li>所有的项目开发都会在 dev 分支上进行，生产代码会保留在 master 分支上，非 hotfix 等紧急情况禁止向 master 分支提交</li>
+<li>所有新 feature 的开发都需要建立一个新的、以该 feature 命名的分支，然后在该分支上进行提交后，将其 <code>merge</code> 到 dev 分支上</li>
+<li>项目更新一律使用 rebase，即 <code>git pull --rebase</code></li>
 </ol>
 <h3 id="73-其余规范">7.3 其余规范</h3>
 <ol>
-<li>谁提交了.idea或者.vscode文件夹，谁请喝奶茶</li>
+<li>谁提交了.idea 或者.vscode 文件夹，谁请喝奶茶</li>
 </ol>
 ]]></description></item></channel></rss>

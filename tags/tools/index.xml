@@ -1,6 +1,6 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>tools - Tag - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/tags/tools/</link><description>tools - Tag - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 16:16:54 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/tags/tools/" rel="self" type="application/rss+xml"/><item><title>Hugo个人博客搭建</title><link>https://nil-zhuang.github.io/2022/10/hugo/</link><pubDate>Fri, 28 Oct 2022 16:16:54 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/10/hugo/</guid><description><![CDATA[<div class="featured-image">
                 <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202210281638413.png" referrerpolicy="no-referrer">
-            </div><h1 id="hugo">Hugo</h1>
+            </div><h1 id="hugo-个人博客搭建">Hugo 个人博客搭建</h1>
 <p>使用 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer ">The world’s fastest framework for building websites | Hugo</a> 结合 <a href="https://hugoloveit.com/" target="_blank" rel="noopener noreffer ">LoveIt</a> 主题，部署自己的 GitPage 博客 <a href="https://nil-zhuang.github.io/" target="_blank" rel="noopener noreffer ">抓鱼</a></p>
 <p>方案核心部分：</p>
 <ol>
@@ -179,7 +179,7 @@
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后我们需要建立一个 <code>PERSONAL_TOKEN</code>，开启 <code>repo</code> 与 <code>workflow</code> 权限，在仓库的 Action Secrets 中添加对应 Token，就可以触发推送了。</p>
-]]></description></item><item><title>Git使用教程</title><link>https://nil-zhuang.github.io/2022/10/git/</link><pubDate>Fri, 28 Oct 2022 15:12:02 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/git/</guid><description><![CDATA[<h1 id="git">Git</h1>
+]]></description></item><item><title>Git使用教程</title><link>https://nil-zhuang.github.io/2022/10/git/</link><pubDate>Fri, 28 Oct 2022 15:12:02 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/git/</guid><description><![CDATA[<h1 id="git-使用教程">Git 使用教程</h1>
 <p>这篇文章记录了 zzy 因为在 git 操作上疯狂翻车最后选择去过一遍 Learn Git Branching</p>
 <h2 id="基础篇">基础篇</h2>
 <h3 id="commit">Commit</h3>

@@ -1,4 +1,4 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Basic - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/basic/</link><description>Basic - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 15:12:02 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/basic/" rel="self" type="application/rss+xml"/><item><title>Git使用教程</title><link>https://nil-zhuang.github.io/2022/10/git/</link><pubDate>Fri, 28 Oct 2022 15:12:02 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/git/</guid><description><![CDATA[<h1 id="git">Git</h1>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Basic - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/basic/</link><description>Basic - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 15:12:02 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/basic/" rel="self" type="application/rss+xml"/><item><title>Git使用教程</title><link>https://nil-zhuang.github.io/2022/10/git/</link><pubDate>Fri, 28 Oct 2022 15:12:02 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/git/</guid><description><![CDATA[<h1 id="git-使用教程">Git 使用教程</h1>
 <p>这篇文章记录了 zzy 因为在 git 操作上疯狂翻车最后选择去过一遍 Learn Git Branching</p>
 <h2 id="基础篇">基础篇</h2>
 <h3 id="commit">Commit</h3>
@@ -337,7 +337,7 @@
 </div>
 </div><p>将 foo^解析为一个位置，上传所有未被包含到远程仓库的 master 分支的提交记录。</p>
 <p>如果你要推送到的目的分支不存在会怎么样呢？没问题！Git 会在远程仓库中根据你提供的名称帮你创建这个分支！<code>git push origin master:newBranch</code></p>
-]]></description></item><item><title>Cpp读写记录</title><link>https://nil-zhuang.github.io/2022/10/cpp_io/</link><pubDate>Fri, 28 Oct 2022 15:08:05 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/cpp_io/</guid><description><![CDATA[<h1 id="cpp_io">cpp_io</h1>
+]]></description></item><item><title>C++读写方法</title><link>https://nil-zhuang.github.io/2022/10/cpp_io/</link><pubDate>Fri, 28 Oct 2022 15:08:05 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/cpp_io/</guid><description><![CDATA[<h1 id="c-读写方法">C++ 读写方法</h1>
 <h2 id="输入输出流-iostream">输入输出流 Iostream</h2>
 <h3 id="标准输入流">标准输入流</h3>
 <div class="highlight"><div class="chroma">
