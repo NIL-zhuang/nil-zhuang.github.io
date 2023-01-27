@@ -1,9 +1,10 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>study - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/study/</link><description>study - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Mon, 14 Nov 2022 11:50:04 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/study/" rel="self" type="application/rss+xml"/><item><title>⚡️+🤗：Transformers + Pytorch Lightning 最佳实战</title><link>https://nil-zhuang.github.io/2022/11/hf_pl/</link><pubDate>Mon, 14 Nov 2022 11:50:04 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/11/hf_pl/</guid><description><![CDATA[<div class="featured-image">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>深度学习 - Tag - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link><description>深度学习 - Tag - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Mon, 14 Nov 2022 11:50:04 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml"/><item><title>⚡️+🤗：Transformers + Pytorch Lightning 最佳实战</title><link>https://nil-zhuang.github.io/2022/11/hf_pl/</link><pubDate>Mon, 14 Nov 2022 11:50:04 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/11/hf_pl/</guid><description><![CDATA[<div class="featured-image">
                 <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202211141605838.png" referrerpolicy="no-referrer">
-            </div><h2 id="背景">背景</h2>
-<p>Pytorch Lightning是pytorch的一个上层封装，类似于Keras之于tensorflow。我们希望使用这样一个优秀的框架来实现对huggingface模型的快速训练和开发测试。</p>
+            </div><h1 id="hf_pl">hf_pl</h1>
+<h2 id="背景">背景</h2>
+<p>Pytorch Lightning 是 pytorch 的一个上层封装，类似于 Keras 之于 tensorflow。我们希望使用这样一个优秀的框架来实现对 huggingface 模型的快速训练和开发测试。</p>
 <h2 id="数据集-dataset">数据集 Dataset</h2>
-<p>对于任何一个dataset，将其拆分为有监督训练的src和tgt两个label</p>
+<p>对于任何一个 dataset，将其拆分为有监督训练的 src 和 tgt 两个 label</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -104,7 +105,7 @@
 </span></span><span class="line"><span class="cl">        <span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后构建dataset module，组合training data和valid data</p>
+</div><p>然后构建 dataset module，组合 training data 和 valid data</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -238,7 +239,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="模型">模型</h2>
-<p>我们以T5为例</p>
+<p>我们以 T5 为例</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -332,7 +333,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="训练">训练</h2>
-<p>首先我们需要构建一个HFModel的基础框架，给pytorch lightning调用</p>
+<p>首先我们需要构建一个 HFModel 的基础框架，给 pytorch lightning 调用</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -471,7 +472,7 @@
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>transformers最大的不同在于它的checkpoint，需要save_pretrained和from_pretrained，因此我们要设计一个单独的checkpoint方法，即HFTrainer</p>
+</div><p>transformers 最大的不同在于它的 checkpoint，需要 save_pretrained 和 from_pretrained，因此我们要设计一个单独的 checkpoint 方法，即 HFTrainer</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1

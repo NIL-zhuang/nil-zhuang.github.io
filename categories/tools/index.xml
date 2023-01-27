@@ -1,0 +1,521 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Tools - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/tools/</link><description>Tools - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 16:16:54 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/tools/" rel="self" type="application/rss+xml"/><item><title>Hugo个人博客搭建</title><link>https://nil-zhuang.github.io/2022/10/hugo/</link><pubDate>Fri, 28 Oct 2022 16:16:54 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/10/hugo/</guid><description><![CDATA[<div class="featured-image">
+                <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202210281638413.png" referrerpolicy="no-referrer">
+            </div><h1 id="hugo">Hugo</h1>
+<p>使用 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer ">The world’s fastest framework for building websites | Hugo</a> 结合 <a href="https://hugoloveit.com/" target="_blank" rel="noopener noreffer ">LoveIt</a> 主题，部署自己的 GitPage 博客 <a href="https://nil-zhuang.github.io/" target="_blank" rel="noopener noreffer ">抓鱼</a></p>
+<p>方案核心部分：</p>
+<ol>
+<li>在 Github 托管个人博客源仓库，对所有的博客文章进行版本管理，并使用 GitHub Action 进行 CI/CD 部署，自动向 GitHub Pages 仓库进行静态页面的发布</li>
+<li>GitHub Pages 通过 <code>github.io</code> 网址进行博客网页托管和发布</li>
+<li>Hugo 主题仓库，使用 <code>git submodule</code> 方法链接到博客源仓库</li>
+</ol>
+<h2 id="前言">前言</h2>
+<blockquote>
+<p>Hugo is one of the most popular open-source static site generators. With its amazing speed and flexibility, Hugo makes building websites fun again.</p>
+</blockquote>
+<p>Hugo 是基于 Go 的博客工具，用 markdown 进行文章编辑。</p>
+<p>相较于使用 node 的 Hexo 而言，具有编译更快、模块更轻量（众所周知，node_modules 是地球上最重的东西）、发布更简单的优点。而且更不需要使用愚蠢的 node 和 npm 进行管理，实在是令人心动。</p>
+<h2 id="安装--配置">安装 &amp; 配置</h2>
+<p>本文基于 macos 系统描述，其他操作系统请参考项目源文档。</p>
+<h3 id="基本安装方法">基本安装方法</h3>
+<p>对 hugo 程序的安装，使用 mac 最标准的 <code>homebrew</code> 进行程序安装和管理。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">brew install hugo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后可以使用 <code>hugo version</code> 验证安装成功。</p>
+<p>完成安装后，可以用下列命令进行网页的创建</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">hugo new site blog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="主题配置">主题配置</h3>
+<p>选择 <a href="https://hugoloveit.com/" target="_blank" rel="noopener noreffer ">LoveIt</a> 主题进行主题配置，参考 <a href="https://hugoloveit.com/theme-documentation-basics/" target="_blank" rel="noopener noreffer ">Theme Documentation - Basics - LoveIt</a>j 进行细节配置</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">cd</span> blog
+</span></span><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">git submodule add https://github.com/dillonzq/LoveIt.git themes/LoveIt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>[!note]
+动态资源放在 asserts 下方，例如头像 <code>avatar.jpeg</code>
+静态资源放在 static 下方，例如 params.app.svgFavicon，</p>
+</blockquote>
+<h4 id="更新主题">更新主题</h4>
+<p>如果需要对主题仓库进行同步和更新，可以使用 <code>git submodule update --remote</code></p>
+<h4 id="文章发布">文章发布</h4>
+<p>hugo 创建文章使用 <code>hugo new posts/POST_NAME.md</code> 进行发布，使用 <code>archetype/default.md</code> 的默认配置，参考 <a href="https://hugoloveit.com/theme-documentation-content/" target="_blank" rel="noopener noreffer ">Theme Documentation - Content - LoveIt</a></p>
+<h4 id="本地调试">本地调试</h4>
+<p>Hugo 会生成静态网页，本地可以使用 <code>hugo server</code> 进行实时调试预览，无须每次重新生成。注意，post 文件里，<code>draft=true</code> 的 post 不会被渲染，需要使用 <code>hugo server -D</code> 才能显示出来。</p>
+<p>运行服务后，可以通过浏览器 <code>http://localhost:1313</code> 访问预览网页</p>
+<h2 id="gitpage-发布">GitPage 发布</h2>
+<h3 id="仓库构建">仓库构建</h3>
+<p>在 github 中创建一个&lt;USER_NAME&gt;.github.io 的特殊仓库，然后将配置文件 <code>config.toml</code> 中的 <code>baseURL</code> 改为自己的自定义域名，这样博客就能访问对应的 gitpage 网页。</p>
+<p>完成上述准备工作后，我们现在已经可以通过自定义域名来访问我们的 GitHub Pages 页面了，目前因为项目仓库是空的，访问后会报 <code>404</code> 页面。</p>
+<p>我们希望 Hugo 生成的静态网站能通过 GitHub Pages 服务进行托管，而无需自己维护服务，更稳定、安全，因此我们需要上传 Hugo 生成的静态网页文件至 GitHub Page 项目仓库。</p>
+<h3 id="手动发布">手动发布</h3>
+<p>可以执行 <code>hugo</code> 在本地的 public 目录下创建静态网页，通过将 <code>public</code> 目录初始化为 git 仓库，并关联 gitpage 远程仓库，就可以推送网页静态文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">git remote add origin git@github.com:&lt;username&gt;/&lt;username&gt;.github.io
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;add test&#34;</span>
+</span></span><span class="line"><span class="cl">git push origin main
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="自动发布">自动发布</h3>
+<p>我们的博客基于 GitHub 与 GitHub Pages，可以通过官方提供的 GitHub Action 进行 CI 自动发布。</p>
+<p>在仓库目录下建立 <code>.github/workflows/deploy.yml</code>，自动发布示例如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">github pages</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">main </span><span class="w"> </span><span class="c"># Set a branch to deploy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-22.04</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">submodules</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c"># Fetch Hugo themes (true OR recursive)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">    </span><span class="c"># Fetch all history for .GitInfo and .Lastmod</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Setup Hugo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-hugo@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">hugo-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;latest&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">extended</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/cache@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">/tmp/hugo_cache</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ runner.os }}-hugomod-${{ hashFiles(&#39;**/go.sum&#39;) }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">restore-keys</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            </span><span class="w">            </span><span class="l">${{ runner.os }}-hugomod-</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build Web</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">hugo --minify</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy Web</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">PERSONAL_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.PERSONAL_TOKEN }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">external_repository</span><span class="p">:</span><span class="w"> </span><span class="l">NIL-zhuang/nil-zhuang.github.io</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_branch</span><span class="p">:</span><span class="w"> </span><span class="l">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">commit_message</span><span class="p">:</span><span class="w"> </span><span class="l">${{ github.event.head_commit.message }}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后我们需要建立一个 <code>PERSONAL_TOKEN</code>，开启 <code>repo</code> 与 <code>workflow</code> 权限，在仓库的 Action Secrets 中添加对应 Token，就可以触发推送了。</p>
+]]></description></item><item><title>Git使用教程</title><link>https://nil-zhuang.github.io/2022/10/git/</link><pubDate>Fri, 28 Oct 2022 15:12:02 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/git/</guid><description><![CDATA[<h1 id="git">Git</h1>
+<p>这篇文章记录了 zzy 因为在 git 操作上疯狂翻车最后选择去过一遍 Learn Git Branching</p>
+<h2 id="基础篇">基础篇</h2>
+<h3 id="commit">Commit</h3>
+<p>Git 仓库中的提交记录保存的是你的目录下所有文件的快照，就像是把整个目录复制，然后再粘贴一样，但比复制粘贴优雅许多！</p>
+<p>Git 希望提交记录尽可能地轻量，因此在你每次进行提交时，它并不会盲目地复制整个目录。条件允许的情况下，它会将当前版本与仓库中的上一个版本进行对比，并把所有的差异打包到一起作为一个提交记录。</p>
+<p>Git 还保存了提交的历史记录。这也是为什么大多数提交记录的上面都有父节点的原因——我们会在图示中用箭头来表示这种关系。对于项目组的成员来说，维护提交历史对大家都有好处。</p>
+<h3 id="branch">Branch</h3>
+<p>Git 的分支也非常轻量。它们只是简单地指向某个提交纪录——仅此而已。所以许多 Git 爱好者传颂：</p>
+<p><strong>早建分支！多用分支！</strong></p>
+<p>这是因为即使创建再多的分支也不会造成储存或内存上的开销，并且按逻辑分解工作到不同的分支要比维护那些特别臃肿的分支简单多了。</p>
+<p>在将分支和提交记录结合起来后，我们会看到两者如何协作。现在只要记住使用分支其实就相当于在说：“我想基于这个提交以及它所有的父提交进行新的工作。”</p>
+<p><code>git branch newImage</code> 就是创建了一个新分支，然后要 checkout 到新分支上，也可以直接 <code>git checkout -b newImage</code> 创建并切换分支</p>
+<h3 id="merge">Merge</h3>
+<p>接下来咱们看看如何将两个分支合并到一起。就是说我们新建一个分支，在其上开发某个新功能，开发完成后再合并回主线。</p>
+<p>咱们先来看一下第一种方法——<code>git merge</code>。在 Git 中合并两个分支时会产生一个特殊的提交记录，它有两个父节点。翻译成自然语言相当于：“我要把这两个父节点本身及它们所有的祖先都包含进来。”</p>
+<p>我们准备了两个分支，每个分支上各有一个独有的提交。这意味着没有一个分支包含了我们修改的所有内容。咱们通过合并这两个分支来解决这个问题。要把 bugFix 合并到当前分支，就是 <code>git merge bugFix</code></p>
+<p>首先，<code>master</code> 现在指向了一个拥有两个父节点的提交记录。假如从 <code>master</code> 开始沿着箭头向上看，在到达起点的路上会经过所有的提交记录。这意味着 <code>master</code> 包含了对代码库的所有修改</p>
+<p>如果执行 <code>git checkout bugFix; git merge master</code>，只会改变 bugFix 的指向，而不会有新的内容产生。因为 <code>master</code> 继承自 <code>bugFix</code>，Git 什么都不用做，只是简单地把 <code>bugFix</code> 移动到 <code>master</code> 所指向的那个提交记录。</p>
+<h3 id="rebase">Rebase</h3>
+<p>第二种合并分支的方法是 <code>git rebase</code>。Rebase 实际上就是取出一系列的提交记录，“复制”它们，然后在另外一个地方逐个的放下去。</p>
+<p>Rebase 的优势就是可以创造更线性的提交历史，这听上去有些难以理解。如果只允许使用 Rebase 的话，代码库的提交历史将会变得异常清晰。</p>
+<p>我们想要把 bugFix 分支里的工作直接移到 master 分支上。移动以后会使得两个分支的功能看起来像是按顺序开发，但实际上它们是并行开发的。</p>
+<p>执行 <code>git rebase master</code> 后，现在 bugFix 分支上的工作在 master 的最顶端，同时我们也得到了一个更线性的提交序列。注意，提交记录 C3 依然存在（树上那个半透明的节点），而 C3&rsquo; 是我们 Rebase 到 master 分支上的 C3 的副本。</p>
+<p>最后在 master 分支上执行 <code>git rebase bugFix</code>。由于 <code>bugFix</code> 继承自 <code>master</code>，所以 Git 只是简单的把 <code>master</code> 分支的引用向前移动了一下而已。</p>
+<h2 id="高级篇">高级篇</h2>
+<p><code>git checkout</code> 移动的是 HEAD，<code>git branch</code> 移动的是分支，需要 -f 才能动已有分支，否则是创建分支</p>
+<h3 id="分离-head">分离 HEAD</h3>
+<p>HEAD 是一个对当前检出记录的符号引用——也就是指向你正在其基础上进行工作的提交记录。HEAD 总是指向当前分支上最近一次提交记录。大多数修改提交树的 Git 命令都是从改变 HEAD 的指向开始的。HEAD 通常情况下是指向分支名的（如 bugFix）。在你提交时，改变了 bugFix 的状态，这一变化通过 HEAD 变得可见。例如 <code>git checkout commit1</code></p>
+<h3 id="相对引用">相对引用</h3>
+<p>通过指定提交记录哈希值的方式在 Git 中移动不太方便。在实际应用时，并不得不用 <code>git log</code> 来查查看提交记录的哈希值。并且哈希值在真实的 Git 世界中也会更长。比较令人欣慰的是，Git 对哈希的处理很智能。你只需要提供能够唯一标识提交记录的前几个字符即可。因此我可以仅输入 <code>fed2</code> 而不是上面的一长串字符。</p>
+<p>所以 Git 引入了相对引用。这个就很厉害了!使用相对引用的话，你就可以从一个易于记忆的地方（比如 <code>bugFix</code> 分支或 <code>HEAD</code>）开始计算。相对引用非常给力，这里我介绍两个简单的用法：</p>
+<ul>
+<li>使用 <code>^</code> 向上移动 1 个提交记录</li>
+<li>使用 <code>~&lt;num&gt;</code> 向上移动多个提交记录，如 <code>~3</code></li>
+</ul>
+<p>首先看看操作符 (^)。把这个符号加在引用名称的后面，表示让 Git 寻找指定提交记录的父提交。所以 <code>master^</code> 相当于“<code>master</code> 的父节点”。<code>master^^</code> 是 <code>master</code> 的第二个父节点</p>
+<p>如果你想在提交树中向上移动很多步的话，敲那么多 <code>^</code> 貌似也挺烦人的，Git 当然也考虑到了这一点，于是又引入了操作符 <code>~</code>。该操作符后面可以跟一个数字（可选，不跟数字时与 <code>^</code> 相同，向上移动一次），指定向上移动多少次。</p>
+<p>我使用相对引用最多的就是移动分支。可以直接使用 <code>-f</code> 选项让分支指向另一个提交。例如:<code>git branch -f master HEAD~3</code>。上面的命令会将 master 分支强制指向 HEAD 的第 3 级父提交。</p>
+<h3 id="撤销变更">撤销变更</h3>
+<p>在 Git 里撤销变更的方法很多。和提交一样，撤销变更由底层部分（暂存区的独立文件或者片段）和上层部分（变更到底是通过哪种方式被撤销的）组成。主要有两种方法用来撤销变更——一是 <code>git reset</code>，还有就是 <code>git revert</code>。</p>
+<p><code>git reset</code> 通过把分支记录回退几个提交记录来实现撤销改动。你可以将这想象成“改写历史”。<code>git reset</code> 向上移动分支，原来指向的提交记录就跟从来没有提交过一样。<code>git reset HEAD~1</code> 把 master 分支移回到 <code>C1</code>；现在我们的本地代码库根本就不知道有 <code>C2</code> 这个提交了。在 reset 后，<code>C2</code> 所做的变更还在，但是处于未加入暂存区状态。</p>
+<p>虽然在你的本地分支中使用 <code>git reset</code> 很方便，但是这种“改写历史”的方法对大家一起使用的远程分支是无效的哦！为了撤销更改并 <strong>分享</strong> 给别人，我们需要使用 <code>git revert</code>。<code>git revert HEAD</code> 在我们要撤销的提交记录后面居然多了一个新提交！这是因为新提交记录 <code>C2'</code> 引入了 <strong>更改</strong>——这些更改刚好是用来撤销 <code>C2</code> 这个提交的。也就是说 <code>C2'</code> 的状态与 <code>C1</code> 是相同的。revert 之后就可以把你的更改推送到远程仓库与别人分享啦。</p>
+<h2 id="移动提交记录">移动提交记录</h2>
+<h3 id="cherry-pick">Cherry-pick</h3>
+<p><code>git cherry-pick &lt;提交号&gt;…</code> 如果你想将一些提交复制到当前所在的位置（<code>HEAD</code>）下面的话，Cherry-pick 是最直接的方式了。执行 <code>git cherry-pick C2 C4</code> 我们只需要提交记录 <code>C2</code> 和 <code>C4</code>，所以 Git 就将被它们抓过来放到当前分支下了。</p>
+<h3 id="交互式-rebase">交互式 Rebase</h3>
+<p>当你知道你所需要的提交记录（<strong>并且</strong> 还知道这些提交记录的哈希值）时, 用 cherry-pick 再好不过了——没有比这更简单的方式了。但是如果你不清楚你想要的提交记录的哈希值呢? 幸好 Git 帮你想到了这一点, 我们可以利用交互式的 rebase——如果你想从一系列的提交记录中找到想要的记录, 这就是最好的方法了。</p>
+<p>交互式 rebase 指的是使用带参数 <code>--interactive</code> 的 rebase 命令, 简写为 <code>-i</code>。如果你在命令后增加了这个选项, Git 会打开一个 UI 界面并列出将要被复制到目标分支的备选提交记录，它还会显示每个提交记录的哈希值和提交说明，提交说明有助于你理解这个提交进行了哪些更改。</p>
+<p>当 rebase UI 界面打开时, 你能做 3 件事:</p>
+<ul>
+<li>调整提交记录的顺序</li>
+<li>删除你不想要的提交</li>
+<li>合并提交。</li>
+</ul>
+<h2 id="杂项">杂项</h2>
+<h3 id="只取一个提交记录">只取一个提交记录</h3>
+<p>本地栈式提交：来看一个在开发中经常会遇到的情况：我正在解决某个特别棘手的 Bug，为了便于调试而在代码中添加了一些调试命令并向控制台打印了一些信息。这些调试和打印语句都在它们各自的提交记录里。最后我终于找到了造成这个 Bug 的根本原因，解决掉以后觉得沾沾自喜！最后就差把 <code>bugFix</code> 分支里的工作合并回 <code>master</code> 分支了。你可以选择通过 fast-forward 快速合并到 <code>master</code> 分支上，但这样的话 <code>master</code> 分支就会包含我这些调试语句了。你肯定不想这样，应该还有更好的方式……</p>
+<p>实际我们只要让 Git 复制解决问题的那一个提交记录就可以了。跟之前我们在“整理提交记录”中学到的一样，我们可以使用 <code>git rebase -i</code>，<code>git cherry-pick</code> 来达到目的。</p>
+<h3 id="提交的技巧1">提交的技巧#1</h3>
+<p>你之前在 <code>newImage</code> 分支上进行了一次提交，然后又基于它创建了 <code>caption</code> 分支，然后又提交了一次。此时你想对的某个以前的提交记录进行一些小小的调整。比如设计师想修改一下 <code>newImage</code> 中图片的分辨率，尽管那个提交记录并不是最新的了。</p>
+<p>我们可以通过下面的方法来克服困难：</p>
+<ul>
+<li>先用 <code>git rebase -i</code> 将提交重新排序，然后把我们想要修改的提交记录挪到最前</li>
+<li>然后用 <code>git commit --amend</code> 来进行一些小修改</li>
+<li>接着再用 <code>git rebase -i</code> 来将他们调回原来的顺序</li>
+<li>最后我们把 master 移到修改的最前端（用你自己喜欢的方法），就大功告成啦！</li>
+</ul>
+<p>当然完成这个任务的方法不止上面提到的一种（我知道你在看 cherry-pick 啦），之后我们会多点关注这些技巧啦，但现在暂时只专注上面这种方法。最后有必要说明一下目标状态中的那几个 <code>'</code>——我们把这个提交移动了两次，每移动一次会产生一个 <code>'</code>；而 C2 上多出来的那个是我们在使用了 amend 参数提交时产生的，所以最终结果就是这样了。</p>
+<p>也就是说，我在对比结果的时候只会对比提交树的结构，对于 <code>'</code> 的数量上的不同，并不纳入对比范围内。只要你的 <code>master</code> 分支结构与目标结构相同，我就算你通过。</p>
+<h3 id="提交的技巧">提交的技巧</h3>
+<p>我们可以使用 <code>rebase -i</code> 对提交记录进行重新排序。只要把我们想要的提交记录挪到最前端，我们就可以很轻松的用 <code>--amend</code> 修改它，然后把它们重新排成我们想要的顺序。但这样做就唯一的问题就是要进行两次排序，而这有可能造成由 rebase 而导致的冲突。下面还是看看 <code>git cherry-pick</code> 是怎么做的吧。</p>
+<p>要在心里牢记 cherry-pick 可以将提交树上任何地方的提交记录取过来追加到 HEAD 上（只要不是 HEAD 上游的提交就没问题）。</p>
+<ul>
+<li><code>git rebase -i</code></li>
+<li><code>git commit --amend</code></li>
+<li><code>git cherry-pick</code></li>
+</ul>
+<h3 id="git-tag">Git Tag</h3>
+<p>分支很容易被人为移动，并且当有新的提交时，它也会移动。分支很容易被改变，大部分分支还只是临时的，并且还一直在变。你可能会问了：有没有什么可以 <em>永远</em> 指向某个提交记录的标识呢，比如软件发布新的大版本，或者是修正一些重要的 Bug 或是增加了某些新特性，有没有比分支更好的可以永远指向这些提交的方法呢？</p>
+<p>当然有了！Git 的 tag 就是干这个用的啊，它们可以（在某种程度上——因为标签可以被删除后重新在另外一个位置创建同名的标签）永久地将某个特定的提交命名为里程碑，然后就可以像分支一样引用了。更难得的是，它们并不会随着新的提交而移动。你也不能检出到某个标签上面进行修改提交，它就像是提交树上的一个锚点，标识了某个特定的位置。</p>
+<p><code>git tag v1 C1</code> 将这个标签命名为 <code>v1</code>，并且明确地让它指向提交记录 <code>C1</code>，如果你不指定提交记录，Git 会用 <code>HEAD</code> 所指向的位置。</p>
+<p>可以直接 checkout 到 commit 上或是简单的 checkout 到 tag 上。</p>
+<h3 id="git-describe">Git Describe</h3>
+<p>由于标签在代码库中起着“锚点”的作用，Git 还为此专门设计了一个命令用来 <strong>描述</strong> 离你最近的锚点（也就是标签），它就是 <code>git describe</code>！Git Describe 能帮你在提交历史中移动了多次以后找到方向；当你用 <code>git bisect</code>（一个查找产生 Bug 的提交记录的指令）找到某个提交记录时，或者是当你坐在你那刚刚度假回来的同事的电脑前时，可能会用到这个命令。</p>
+<p><code>git describe</code> 的语法是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git describe &lt;ref&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>&lt;ref&gt;</code> 可以是任何能被 Git 识别成提交记录的引用，如果你没有指定的话，Git 会以你目前所检出的位置（<code>HEAD</code>）。</p>
+<p>它输出的结果是这样的：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">&lt;tag&gt;_&lt;numCommits&gt;_g&lt;hash&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>tag</code> 表示的是离 <code>ref</code> 最近的标签，<code>numCommits</code> 是表示这个 <code>ref</code> 与 <code>tag</code> 相差有多少个提交记录，<code>hash</code> 表示的是你所给定的 <code>ref</code> 所表示的提交记录哈希值的前几位。</p>
+<p>当 <code>ref</code> 提交记录上有某个标签时，则只输出标签名称</p>
+<h3 id="两个父节点">两个父节点</h3>
+<p>操作符 <code>^</code> 与 <code>~</code> 符一样，后面也可以跟一个数字。但是该操作符后面的数字与 <code>~</code> 后面的不同，并不是用来指定向上返回几代，而是指定合并提交记录的某个父提交。还记得前面提到过的一个合并提交有两个父提交吧，所以遇到这样的节点时该选择哪条路径就不是很清晰了。Git 默认选择合并提交的“第一个”父提交，在操作符 <code>^</code> 后跟一个数字可以改变这一默认行为。</p>
+<p>这里有一个合并提交记录。<code>git checkout master^</code>，如果不加数字修改符直接检出 <code>master^</code>，会回到第一个父提交记录。<code>git checkout master^2</code> 会跑到另一个父提交上。</p>
+<p>使用 <code>^</code> 和 <code>~</code> 能自由的在提交树中移动，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git checkout HEAD~<span class="p">;</span> git checkout HEAD^2<span class="p">;</span> git checkout HEAD~2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>操作符支持链式操作，上面的命令等价于 <code>git checkout HEAD~^2~2</code></p>
+<h2 id="远程仓库">远程仓库</h2>
+<p>远程仓库并不复杂, 在如今的云计算盛行的世界很容易把远程仓库想象成一个富有魔力的东西, 但实际上它们只是你的仓库在另个一台计算机上的拷贝。你可以通过因特网与这台计算机通信——也就是增加或是获取提交记录</p>
+<p>话虽如此, 远程仓库却有一系列强大的特性</p>
+<ul>
+<li>首先也是最重要的的点, 远程仓库是一个强大的备份。本地仓库也有恢复文件到指定版本的能力, 但所有的信息都是保存在本地的。有了远程仓库以后，即使丢失了本地所有数据, 你仍可以通过远程仓库拿回你丢失的数据。</li>
+<li>还有就是, 远程让代码社交化了! 既然你的项目被托管到别的地方了, 你的朋友可以更容易地为你的项目做贡献 (或者拉取最新的变更)</li>
+</ul>
+<p>现在用网站来对远程仓库进行可视化操作变得越发流行了 (像 <a href="https://github.com/" target="_blank" rel="noopener noreffer ">GitHub</a> 或 <a href="http://phabricator.org/" target="_blank" rel="noopener noreffer ">Phabricator</a>), 但远程仓库 <strong>永远</strong> 是这些工具的顶梁柱, 因此理解其概念非常的重要!</p>
+<h3 id="clone">Clone</h3>
+<p>从技术上来讲，<code>git clone</code> 命令在真实的环境下的作用是在 <strong>本地</strong> 创建一个远程仓库的拷贝（比如从 github.com）。</p>
+<h3 id="远程分支">远程分支</h3>
+<p>我们的本地仓库多了一个名为 <code>o/master</code> 的分支, 这种类型的分支就叫 <strong>远程</strong> 分支。由于远程分支的特性导致其拥有一些特殊属性。</p>
+<p>远程分支反映了远程仓库 (在你上次和它通信时) 的 <strong>状态</strong>。这会有助于你理解本地的工作与公共工作的差别——这是你与别人分享工作成果前至关重要的一步.</p>
+<p>远程分支有一个特别的属性，在你检出时自动进入分离 HEAD 状态。Git 这么做是出于不能直接在这些分支上进行操作的原因, 你必须在别的地方完成你的工作,（更新了远程分支之后）再用远程分享你的工作成果。</p>
+<p>你可能想问这些远程分支的前面的 <code>o/</code> 是什么意思呢？好吧, 远程分支有一个命名规范——它们的格式是:</p>
+<ul>
+<li><code>&lt;remote name&gt;/&lt;branch name&gt;</code></li>
+</ul>
+<p>因此，如果你看到一个名为 <code>o/master</code> 的分支，那么这个分支就叫 <code>master</code>，远程仓库的名称就是 <code>o</code>。</p>
+<p>大多数的开发人员会将它们主要的远程仓库命名为 <code>origin</code>，并不是 <code>o</code>。这是因为当你用 <code>git clone</code> 某个仓库时，Git 已经帮你把远程仓库的名称设置为 <code>origin</code> 了</p>
+<p>当执行 <code>git checkout origin/master; git commit</code>，Git 变成了分离 HEAD 状态，当添加新的提交时 <code>o/master</code> 也不会更新。这是因为 <code>o/master</code> 只有在远程仓库中相应的分支更新了以后才会更新。</p>
+<h3 id="fetch">Fetch</h3>
+<p>Git 远程仓库相当的操作实际可以归纳为两点：向远程仓库传输数据以及从远程仓库获取数据。既然我们能与远程仓库同步，那么就可以分享任何能被 Git 管理的更新（因此可以分享代码、文件、想法、情书等等）。从远程仓库获取数据——命令如其名，它就是 <code>git fetch</code>。你会看到当我们从远程仓库获取数据时, 远程分支也会更新以反映最新的远程仓库。</p>
+<h4 id="fetch-做了什么">Fetch 做了什么</h4>
+<p><code>git fetch</code> 完成了仅有的但是很重要的两步:</p>
+<ul>
+<li>从远程仓库下载本地仓库中缺失的提交记录</li>
+<li>更新远程分支指针 (如 <code>o/master</code>)</li>
+</ul>
+<p><code>git fetch</code> 实际上将本地仓库中的远程分支更新成了远程仓库相应分支最新的状态。</p>
+<p>如果你还记得上一节课程中我们说过的，远程分支反映了远程仓库在你 <strong>最后一次与它通信时</strong> 的状态，<code>git fetch</code> 就是你与远程仓库通信的方式了！希望我说的够明白了，你已经了解 <code>git fetch</code> 与远程分支之间的关系了吧。</p>
+<p><code>git fetch</code> 通常通过互联网（使用 <code>http://</code> 或 <code>git://</code> 协议) 与远程仓库通信。</p>
+<h4 id="fetch-不做什么">Fetch 不做什么</h4>
+<p><code>git fetch</code> 并不会改变你本地仓库的状态。它不会更新你的 <code>master</code> 分支，也不会修改你磁盘上的文件。</p>
+<p>理解这一点很重要，因为许多开发人员误以为执行了 <code>git fetch</code> 以后，他们本地仓库就与远程仓库同步了。它可能已经将进行这一操作所需的所有数据都下载了下来，但是 <strong>并没有</strong> 修改你本地的文件。我们在后面的课程中将会讲解能完成该操作的命令 :D</p>
+<p>所以, 你可以将 <code>git fetch</code> 的理解为单纯的下载操作。</p>
+<h3 id="pull">Pull</h3>
+<p>既然我们已经知道了如何用 <code>git fetch</code> 获取远程的数据, 现在我们学习如何将这些变化更新到我们的工作当中。其实有很多方法的——当远程分支中有新的提交时，你可以像合并本地分支那样来合并远程分支。也就是说就是你可以执行以下命令:</p>
+<ul>
+<li><code>git cherry-pick o/master</code></li>
+<li><code>git rebase o/master</code></li>
+<li><code>git merge o/master</code></li>
+<li>等等</li>
+</ul>
+<p>实际上，由于先抓取更新再合并到本地分支这个流程很常用，因此 Git 提供了一个专门的命令来完成这两个操作。它就是我们要讲的 <code>git pull</code>。</p>
+<p>我们先来看看 <code>fetch</code>、<code>merge</code> 依次执行的效果 <code>git fetch; git merge o/master</code>——我们用 <code>fetch</code> 下载了 <code>C3</code>, 然后通过 <code>git merge o/master</code> 合并了这一提交记录。现在我们的 <code>master</code> 分支包含了远程仓库中的更新（在本例中远程仓库名为 <code>origin</code>）。<code>git pull</code> 就是 git fetch 和 git merge 的缩写！</p>
+<h3 id="push">Push</h3>
+<p>上传自己分享内容与下载他人的分享刚好相反，那与 <code>git pull</code> 相反的命令是什么呢？<code>git push</code>！<code>git push</code> 负责将 <strong>你的</strong> 变更上传到指定的远程仓库，并在远程仓库上合并你的新提交记录。一旦 <code>git push</code> 完成, 你的朋友们就可以从这个远程仓库下载你分享的成果了！你可以将 <code>git push</code> 想象成发布你成果的命令。</p>
+<ul>
+<li>注意——<code>git push</code> 不带任何参数时的行为与 Git 的一个名为 <code>push.default</code> 的配置有关。它的默认值取决于你正使用的 Git 的版本。</li>
+</ul>
+<p><code>git push</code> 之后，远程仓库接收了 <code>C2</code>，远程仓库中的 <code>master</code> 分支也被更新到指向 <code>C2</code> 了，我们的远程分支 (o/master) 也同样被更新了。所有的分支都同步了！</p>
+<h3 id="有冲突的-push">有冲突的 Push</h3>
+<p>在 push 前 rebase</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git fetch
+</span></span><span class="line"><span class="cl">git rebase origin/master
+</span></span><span class="line"><span class="cl">git push
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们用 <code>git fetch</code> 更新了本地仓库中的远程分支，然后用 rebase 将我们的工作移动到最新的提交记录下，最后再用 <code>git push</code> 推送到远程仓库。</p>
+<p>还可以用 <code>git merge</code>。尽管 <code>git merge</code> 不会移动你的工作（它会创建新的合并提交），但是它会告诉 Git 你已经合并了远程仓库的所有变更。这是因为远程分支现在是你本地分支的祖先，也就是说你的提交已经包含了远程分支的所有变化。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git fetch
+</span></span><span class="line"><span class="cl">git merge origin/master
+</span></span><span class="line"><span class="cl">git push
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们用 <code>git fetch</code> 更新了本地仓库中的远程分支，然后 <strong>合并</strong> 了新变更到我们的本地分支（为了包含远程仓库的变更），最后我们用 <code>git push</code> 把工作推送到远程仓库。</p>
+<p>为了简便命令，<code>git pull</code> 是 <code>fetch</code> 和 <code>merge</code> 的简写，<code>git pull --rebase</code> 是 <code>fetch</code> 和 <code>rebase</code> 的简写。</p>
+<h3 id="锁定的-master">锁定的 Master</h3>
+<p>如果你是在一个大的合作团队中工作, 很可能是 master 被锁定了, 需要一些 Pull Request 流程来合并修改。如果你直接提交 (commit) 到本地 master, 然后试图推送 (push) 修改, 你将会收到这样类似的信息:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> ! [远程服务器拒绝] master -&gt; master (TF402455: 不允许推送(push)这个分支; 你必须使用pull request来更新这个分支.)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>远程服务器拒绝直接推送 (push) 提交到 master, 因为策略配置要求 pull requests 来提交更新。你应该按照流程,新建一个分支, 推送 (push) 这个分支并申请 pull request,但是你忘记并直接提交给了 master.现在你卡住并且无法推送你的更新.</p>
+<p>解决方法是新建一个分支 feature, 推送到远程服务器. 然后 reset 你的 master 分支和远程服务器保持一致, 否则下次你 pull 并且他人的提交和你冲突的时候就会有问题。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git reset HEAD^ <span class="c1"># 这是把master放到老的提交，把feature作为一个新分支</span>
+</span></span><span class="line"><span class="cl">git checkout -b feature C2
+</span></span><span class="line"><span class="cl">git push
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="git-远程仓库高级操作">Git 远程仓库高级操作</h2>
+<h3 id="推送主分支">推送主分支</h3>
+<p>对于本地和远程仓库之间的交互而言，主分支用 origin/master 来标记，如果要合并多个分支，可以 fetch 之后处理，最后再 push，比随便的 pull &ndash;rebase 或者 merge 来得更加好操作。同时注意好推送推的是 master 的位置</p>
+<h3 id="合并远程仓库">合并远程仓库</h3>
+<p>为了 push 新变更到远程仓库，你要做的就是 <strong>包含</strong> 远程仓库中最新变更。意思就是只要你的本地分支包含了远程分支（如 <code>o/master</code>）中的最新变更就可以了，至于具体是用 rebase 还是 merge，并没有限制。</p>
+<p>那么既然没有规定限制，为何前面几节都在着重于 rebase 呢？为什么在操作远程分支时不喜欢用 <code>merge</code> 呢？在开发社区里，有许多关于 merge 与 rebase 的讨论。以下是关于 rebase 的优缺点：</p>
+<p>优点：Rebase 使你的提交树变得很干净, 所有的提交都在一条线上</p>
+<p>缺点：Rebase 修改了提交树的历史</p>
+<p>比如, 提交 C1 可以被 rebase 到 C3 之后。这看起来 C1 中的工作是在 C3 之后进行的，但实际上是在 C3 之前。一些开发人员喜欢保留提交历史，因此更偏爱 merge。而其他人可能更喜欢干净的提交树，于是偏爱 rebase。仁者见仁，智者见智。</p>
+<h3 id="远程追踪">远程追踪</h3>
+<p>在前几节课程中有件事儿挺神奇的，Git 好像知道 <code>master</code> 与 <code>o/master</code> 是相关的。当然这些分支的名字是相似的，可能会让你觉得是依此将远程分支 master 和本地的 master 分支进行了关联。这种关联在以下两种情况下可以清楚地得到展示：</p>
+<ul>
+<li>pull 操作时, 提交记录会被先下载到 o/master 上，之后再合并到本地的 master 分支。隐含的合并目标由这个关联确定的。</li>
+<li>push 操作时, 我们把工作从 <code>master</code> 推到远程仓库中的 <code>master</code> 分支 (同时会更新远程分支 <code>o/master</code>)。这个推送的目的地也是由这种关联确定的！</li>
+</ul>
+<p>直接了当地讲，<code>master</code> 和 <code>o/master</code> 的关联关系就是由分支的“remote tracking”属性决定的。<code>master</code> 被设定为跟踪 <code>o/master</code>——这意味着为 <code>master</code> 分支指定了推送的目的地以及拉取后合并的目标。</p>
+<p>你可能想知道 <code>master</code> 分支上这个属性是怎么被设定的，你并没有用任何命令指定过这个属性呀！好吧, 当你克隆仓库的时候, Git 就自动帮你把这个属性设置好了。</p>
+<p>当你克隆时, Git 会为远程仓库中的每个分支在本地仓库中创建一个远程分支（比如 <code>o/master</code>）。然后再创建一个跟踪远程仓库中活动分支的本地分支，默认情况下这个本地分支会被命名为 <code>master</code>。</p>
+<p>克隆完成后，你会得到一个本地分支（如果没有这个本地分支的话，你的目录就是“空白”的），但是可以查看远程仓库中所有的分支（如果你好奇心很强的话）。这样做对于本地仓库和远程仓库来说，都是最佳选择。</p>
+<p>这也解释了为什么会在克隆的时候会看到下面的输出：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">local branch &#34;master&#34; set to track remote branch &#34;o/master&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你可以让任意分支跟踪 <code>o/master</code>, 然后该分支会像 <code>master</code> 分支一样得到隐含的 push 目的地以及 merge 的目标。这意味着你可以在分支 <code>totallyNotMaster</code> 上执行 <code>git push</code>，将工作推送到远程仓库的 <code>master</code> 分支上。</p>
+<h4 id="通过远程分支检出一个新的分支">通过远程分支检出一个新的分支</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git checkout -b totallyNotMaster o/master
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就可以创建一个名为 <code>totallyNotMaster</code> 的分支，它跟踪远程分支 <code>o/master</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git checkout -b foo origin/master
+</span></span><span class="line"><span class="cl">git pull
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以跟踪远程仓库的 master,我们使用了隐含的目标 <code>o/master</code> 来更新 <code>foo</code> 分支。需要注意的是 master 并未被更新！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">git checkout -b foo origin/master
+</span></span><span class="line"><span class="cl">git commit
+</span></span><span class="line"><span class="cl">git push
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将一个不叫 master 的分支上的工作推送到了 <code>master</code> 分支上。</p>
+<h4 id="设置远程追踪分支">设置远程追踪分支</h4>
+<p><em>这个我不会</em></p>
+<p>执行：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git branch -u o/master foo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样 <code>foo</code> 就会跟踪 <code>o/master</code> 了。如果当前就在 foo 分支上, 还可以省略 foo：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git branch -u o/master
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="push-1">Push</h3>
+<p>你已经学到了 Git 是通过当前检出分支的属性来确定远程仓库以及要 push 的目的地的。这是未指定参数时的行为，我们可以为 push 指定参数，语法是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git push &lt;remote&gt; &lt;place&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>git push origin master</code> 把这个命令翻译过来就是：* 切到本地仓库中的“master”分支，获取所有的提交，再到远程仓库“origin”中找到“master”分支，将远程仓库中没有的提交记录都添加上去，搞定之后告诉我。* 我们通过“place”参数来告诉 Git 提交记录来自于 master, 要推送到远程仓库中的 master。它实际就是要同步的两个仓库的位置。需要注意的是，因为我们通过指定参数告诉了 Git 所有它需要的信息, 所以它就忽略了我们所检出的分支的属性！</p>
+<p>当为 git push 指定 place 参数为 <code>master</code> 时，我们同时指定了提交记录的来源和去向。你可能想问——如果来源和去向分支的名称不同呢，要同时为源和目的地指定 <code>&lt;place&gt;</code> 的话，只需要用冒号 <code>:</code> 将二者连起来就可以了：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git push origin &lt;source&gt;:&lt;destination&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个参数实际的值是个 refspec，“refspec” 是一个自造的词，意思是 Git 能识别的位置（比如分支 <code>foo</code> 或者 <code>HEAD~1</code>）。一旦你指定了独立的来源和目的地，就可以组织出言简意赅的远程操作命令了，让我们看看演示！</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">git push origin foo^:master
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将 foo^解析为一个位置，上传所有未被包含到远程仓库的 master 分支的提交记录。</p>
+<p>如果你要推送到的目的分支不存在会怎么样呢？没问题！Git 会在远程仓库中根据你提供的名称帮你创建这个分支！<code>git push origin master:newBranch</code></p>
+]]></description></item></channel></rss>

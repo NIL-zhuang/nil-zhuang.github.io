@@ -1,0 +1,145 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>基础知识 - Tag - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link><description>基础知识 - Tag - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 15:08:05 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/tags/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="self" type="application/rss+xml"/><item><title>Cpp读写记录</title><link>https://nil-zhuang.github.io/2022/10/cpp_io/</link><pubDate>Fri, 28 Oct 2022 15:08:05 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/cpp_io/</guid><description><![CDATA[<h1 id="cpp_io">cpp_io</h1>
+<h2 id="输入输出流-iostream">输入输出流 Iostream</h2>
+<h3 id="标准输入流">标准输入流</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="c1">// 输入n个数字
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 输入n个数字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 输入未知个数的数字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 提取输入中的数字
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 提取输入中的坐标(0,0),(1,1)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">c</span> <span class="o">&gt;&gt;</span> <span class="n">x0</span> <span class="o">&gt;&gt;</span> <span class="n">c</span> <span class="o">&gt;&gt;</span> <span class="n">y0</span> <span class="o">&gt;&gt;</span> <span class="n">c</span> <span class="o">&gt;&gt;</span> <span class="n">c</span> <span class="o">&gt;&gt;</span> <span class="n">c</span> <span class="o">&gt;&gt;</span> <span class="n">x1</span> <span class="o">&gt;&gt;</span> <span class="n">c</span> <span class="o">&gt;&gt;</span> <span class="n">y1</span> <span class="o">&gt;&gt;</span> <span class="n">c</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="cout-格式化输出">Cout 格式化输出</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iomanip&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="mi">10</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>  <span class="c1">// 输出16进制
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">oct</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>   <span class="c1">// 输出8进制
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">setprecision</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">1.11111111</span><span class="p">;</span>  <span class="c1">// 设置输出精度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">setw</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">right</span> <span class="o">&lt;&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// 输出指定宽度\右（左）对齐
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">year</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;-&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">setw</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">setfill</span><span class="p">(</span><span class="sc">&#39;0&#39;</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">month</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;-&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setw</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setfill</span><span class="p">(</span><span class="sc">&#39;0&#39;</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">day</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// 输出年月日
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="字符串">字符串</h3>
+<p>主要的表示方法有以下四种：</p>
+<ul>
+<li>string 需要引入头文件</li>
+<li>char * 指向字符串的指针，实质上是指向字符串的首字母</li>
+<li>const char* 指向一个常量类型的字符类型（不可修改</li>
+<li>char[] 字符数组，对应一个字符串</li>
+</ul>
+<h4 id="字符串读取">字符串读取</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">s</span><span class="p">;</span>   <span class="c1">//不能读入空格，以空格，制表符，回车为结束标志
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">str</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">getline</span><span class="p">(</span><span class="n">cin</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span> <span class="c1">//可以读入空格和制表符，以回车作为结束标志,要注意getline的尾部是有一个回车的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">getline</span><span class="p">(</span><span class="n">cin</span><span class="p">,</span> <span class="n">str</span><span class="p">,</span> <span class="sc">&#39; &#39;</span><span class="p">);</span> <span class="c1">// 表示以&#39; &#39;作为结束
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="常见操作">常见操作</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C++" data-lang="C++"><span class="line"><span class="cl"><span class="n">str</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">str</span><span class="p">[</span><span class="n">index</span><span class="p">];</span> <span class="c1">// 从string中获取char字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">str1</span> <span class="o">=</span> <span class="s">&#34;this is a testing string.&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">string</span> <span class="n">str2</span> <span class="o">=</span> <span class="s">&#34;n example&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">str1</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">str2</span><span class="p">);</span> <span class="c1">// 第9个字符开始5个字符被str2代替， this is an example string
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">str</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>    <span class="c1">//擦除第10个字符开始的8个字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">str</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">str2</span><span class="p">);</span> <span class="c1">//在第6个位置插入str2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 比较
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="n">str1</span> <span class="o">&lt;</span> <span class="n">str2</span><span class="p">)</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;hey&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">str1</span><span class="p">.</span><span class="n">compare</span><span class="p">(</span><span class="n">str2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;hey&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 连接两个string串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">str0</span> <span class="o">=</span> <span class="n">str1</span> <span class="o">+</span> <span class="n">str2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">str0</span> <span class="o">=</span> <span class="n">str1</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">str2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">str</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>  <span class="c1">//长度
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 查找
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">str</span> <span class="o">=</span> <span class="s">&#34;abcabc&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">str</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#34;ab&#34;</span><span class="p">);</span> <span class="c1">//找到第一个 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">str</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#34;ab&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>    <span class="c1">//找到第二个 4
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">str</span><span class="p">.</span><span class="n">rfind</span><span class="p">(</span><span class="s">&#34;ab&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>   <span class="c1">// 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">string</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">str</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>   <span class="c1">// 从0开始取5个字符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">//转换
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">str</span> <span class="o">=</span> <span class="s">&#34;123&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">stoi</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">long</span> <span class="n">l</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">stol</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">float</span> <span class="n">f</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">stof</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">stof</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>]]></description></item></channel></rss>
