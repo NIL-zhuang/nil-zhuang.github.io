@@ -1,4 +1,33 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/</link><description>ZZY的博客</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Sun, 05 Mar 2023 11:09:02 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Pycharm Debug 无监视变量</title><link>https://nil-zhuang.github.io/2023/03/pycharm_debug/</link><pubDate>Sun, 05 Mar 2023 11:09:02 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/03/pycharm_debug/</guid><description><![CDATA[<h1 id="pycharm-debug-无监视变量--gevent-compatible">Pycharm Debug 无监视变量 → Gevent Compatible</h1>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/</link><description>ZZY的博客</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Mon, 29 May 2023 19:58:16 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>RL Solution 1 - 导论</title><link>https://nil-zhuang.github.io/2023/05/rl_solution1/</link><pubDate>Mon, 29 May 2023 19:58:16 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/05/rl_solution1/</guid><description><![CDATA[<div class="featured-image">
+                <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202305291959549.png" referrerpolicy="no-referrer">
+            </div><h1 id="rl-solution-1---导论">RL Solution 1 - 导论</h1>
+<p>第一章讲述了强化学习导论和它的基本概念。</p>
+<h2 id="左右互搏">左右互搏</h2>
+<blockquote>
+<p>假设上面的强化学习算法不是对战随机对手，而是以左右互搏的方式与自己对战来训练自己。你认为在这种情况下会发生怎样的事情?它是否会学习到不同的策略?</p>
+</blockquote>
+<p>强化学习可以通过左右互搏与自己对战来提升智能。相比于随机的对手，agent 可以通过不断的自我学习和提升，最终实现平局的结果，达到较强的攻防一体能力，正如 alpha-zero 对 alpha-go 的碾压能力一样。</p>
+<h2 id="对称性">对称性</h2>
+<blockquote>
+<p>由于对称性，井字棋的很多位置看起来不同但其实是相同的。我们如何利用这一点来修改上面提到的学习过程呢?这种改变会怎样改善学习过程?假设对方没有利用对称性，那我们应该利用吗?对称相等的位置是否必然具有相同的价值呢?</p>
+</blockquote>
+<p>可以通过对称性来压缩算法的空间复杂度，例如让点 <code>(x,y)</code> 的 value 等同于点 <code>(abs(x),abs(y))</code>，可以帮助降低算法复杂度和提升效率。
+但是要考虑到对手是否收到对称性的影响。如果对手的落子有一定的行为偏好，例如他就摁盯着左下方下棋，我们也不应该利用对称性。也就是说我们会学到对应的 environment 的偏见，此处的 environment 就是我们的对手。</p>
+<h2 id="贪心策略">贪心策略</h2>
+<blockquote>
+<p>假设强化学习的玩家是贪心的，也就是说，他,总是把棋子移动到他认为最好的位置，而从不进行试探。比起一个非贪心的玩家，他会玩得更好，还是更差呢?可能会出现什么问题?</p>
+</blockquote>
+<p>贪心的结果通常会比 RL 更差，因为贪心不能从长期的探索中获取更优的效益。RL agent 可以通过探索新行为获得长期累积收益最大和当前最大优势的权衡，贪心非常的短视。
+但如果贪心算法可以获得每一个状态的全局得分，那相当于是做一个凸优化类的算法，贪心直接可以获得当前最优收益。但很多情况都不能获得这样的效果。</p>
+<h2 id="从试探中学习">从试探中学习</h2>
+<blockquote>
+<p>假设学习更新发生在包括试探动作在内的所有动作之后，如果步长参数随着时间而适当减小 (试探的趋势并不减弱)，那么状态的价值将收敛到一组概率。我们从试探性的行动中学习，或者不从中学习，计算出两组概率 (从概念上说)，分别会是什么?假设我们继续进行试探性的行动，哪一组概率对于学习来说可能更好?哪一组更可能带来更大的胜率?</p>
+</blockquote>
+<p>试探是让模型采取一些非当前最优的结果（个人理解是类似于退火算法的跳出当前局部最优的尝试）。如果从试探中学习，可以让模型学到更全局的概率分布。
+如果学习过试探后的所有动作情况下，试探的效果更好，因为它避免了收益曲线的波动，容易带来更高的胜率。</p>
+<h2 id="其他提升">其他提升</h2>
+<p>暴力递归/ab 剪枝就能拿到全局最优。从 RL 的角度，可以根据对手来调整 lr 等学习策略，学习你的环境来提升自己的能力。</p>
+]]></description></item><item><title>Pycharm Debug 无监视变量</title><link>https://nil-zhuang.github.io/2023/03/pycharm_debug/</link><pubDate>Sun, 05 Mar 2023 11:09:02 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/03/pycharm_debug/</guid><description><![CDATA[<h1 id="pycharm-debug-无监视变量--gevent-compatible">Pycharm Debug 无监视变量 → Gevent Compatible</h1>
 <p>在 Pycharm 调试远程代码时，尤其是调试深度学习代码，pycharm 常常出现调试卡住、进程非常缓慢、一直在 collecting data 或直接显示无监视变量等问题。</p>
 <p>解决方案之一是在 Pycharm Settings → Build, Execution, Deployment → Python Debugger → Gevent compatible，打开这个选项即可。
 
