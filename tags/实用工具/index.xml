@@ -1,4 +1,26 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>tools - Tag - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/tags/tools/</link><description>tools - Tag - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 28 Oct 2022 16:16:54 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/tags/tools/" rel="self" type="application/rss+xml"/><item><title>Hugo个人博客搭建</title><link>https://nil-zhuang.github.io/2022/10/hugo/</link><pubDate>Fri, 28 Oct 2022 16:16:54 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/10/hugo/</guid><description><![CDATA[<div class="featured-image">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>实用工具 - Tag - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/</link><description>实用工具 - Tag - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Sun, 05 Mar 2023 11:09:02 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" rel="self" type="application/rss+xml"/><item><title>Pycharm Debug 无监视变量</title><link>https://nil-zhuang.github.io/2023/03/pycharm_debug/</link><pubDate>Sun, 05 Mar 2023 11:09:02 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/03/pycharm_debug/</guid><description><![CDATA[<h1 id="pycharm-debug-无监视变量--gevent-compatible">Pycharm Debug 无监视变量 → Gevent Compatible</h1>
+<p>在 Pycharm 调试远程代码时，尤其是调试深度学习代码，pycharm 常常出现调试卡住、进程非常缓慢、一直在 collecting data 或直接显示无监视变量等问题。</p>
+<p>解决方案之一是在 Pycharm Settings → Build, Execution, Deployment → Python Debugger → Gevent compatible，打开这个选项即可。
+
+在 pycharm 中，即使我们没有使用 gevent 的代码，但调用的标准库很可能使用了 Gevent-monkeypatched 代码。开启这个选项能够帮助我们更好的调试。</p>
+<p>还有一种可能，是在 pytorch dataloader 时，选择了多个 num_workers，把它设置为 0 也可以优化这个问题（该方法未经过验证）</p>
+]]></description></item><item><title>Mac软件安装的斗智斗勇</title><link>https://nil-zhuang.github.io/2023/01/mac_software_install/</link><pubDate>Fri, 27 Jan 2023 14:59:43 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/01/mac_software_install/</guid><description><![CDATA[<div class="featured-image">
+                <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202301271540904.png" referrerpolicy="no-referrer">
+            </div><h1 id="mac-安装软件的斗智斗勇">Mac 安装软件的斗智斗勇</h1>
+<p>mac 最标准的软件安装渠道是 App Store，然而上面要么软件不全，要么对应软件功能比官网下载版本有缺失（如 parallel desktop），因此大多数软件的安装我会选择 <code>brew</code> 或官网下载，这种方法本质是 dmg 安装。
+感谢 <a href="https://b23.tv/GFmJgTa" target="_blank" rel="noopener noreffer ">在 Mac 上装软件，要学会和苹果斗智斗勇</a> 提供的指导，推荐大家从 <a href="https://macapp.org.cn/" target="_blank" rel="noopener noreffer ">MacApp分享频道</a> 搞一些破解软件。</p>
+<p>通常遇到的一些问题来自 <a href="https://en.wikipedia.org/wiki/Gatekeeper_%28macOS%29" target="_blank" rel="noopener noreffer ">Gatekeeper (macOS) - Wikipedia</a>，对应解决方法如下。</p>
+<p>无法打开 XXX，因为无法验证开发者 → 因为开发者没有给软件做公证</p>
+<ol>
+<li>系统 → 隐私与安全性 → 仍要打开 XXX 软件</li>
+<li><code>/Application/XXX</code> 右键仍要打开</li>
+<li>开启系统 → 隐私与安全性 → 任何来源 <code>sudo spctl --master-disable</code>，如果任何来源权限切换回去，又会被关掉</li>
+</ol>
+<p>软件已损坏，因为对应的隔离属性和本机信息对不上</p>
+<ol>
+<li>删除软件隔离属性 <code>sudo xattr -r -d com.apple.quarantine /Application/XXX</code></li>
+</ol>
+]]></description></item><item><title>Hugo个人博客搭建</title><link>https://nil-zhuang.github.io/2022/10/hugo/</link><pubDate>Fri, 28 Oct 2022 16:16:54 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/10/hugo/</guid><description><![CDATA[<div class="featured-image">
                 <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202210281638413.png" referrerpolicy="no-referrer">
             </div><h1 id="hugo-个人博客搭建">Hugo 个人博客搭建</h1>
 <p>使用 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer ">The world’s fastest framework for building websites | Hugo</a> 结合 <a href="https://hugoloveit.com/" target="_blank" rel="noopener noreffer ">LoveIt</a> 主题，部署自己的 GitPage 博客 <a href="https://nil-zhuang.github.io/" target="_blank" rel="noopener noreffer ">抓鱼</a></p>
@@ -179,6 +201,384 @@
 </span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>然后我们需要建立一个 <code>PERSONAL_TOKEN</code>，开启 <code>repo</code> 与 <code>workflow</code> 权限，在仓库的 Action Secrets 中添加对应 Token，就可以触发推送了。</p>
+]]></description></item><item><title>Spark集群搭建</title><link>https://nil-zhuang.github.io/2022/10/spark_build/</link><pubDate>Fri, 28 Oct 2022 15:12:56 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/spark_build/</guid><description><![CDATA[<h1 id="spark_build">spark_build</h1>
+<h2 id="写在前面">写在前面</h2>
+<p>本文档是俩叫 nil 和 mark 的靓仔和 yyds 李传艺老师，在 yyds 的办公室倒腾一整个下午之后，总结出的血泪教训。</p>
+<p>本文是在 manjaro 和 Ubuntu 两个 Linux 发行版的个人 PC 上，启动 hadoop hdfs 集群和 spark 集群的操作过程。涉及到不同 <strong>username</strong> 和不同 <strong>hostname</strong> 的物理机，在真实网络情况下 (宿舍路由器局域网) 的配置操作，仅供参考。</p>
+<!-- more -->
+<p>其中 DataNode 机器的配置如下（夹带私货，欢迎加入 manjaro 邪教）。本文档所有命令都可以在 manjaro/ArchLinux 下执行，Ubuntu 或其他系统请自行寻找对照命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">OS: Manjaro 20.1.1 Mikah
+</span></span><span class="line"><span class="cl">Kernel: x86_64 Linux 5.8.11-1-MANJARO
+</span></span><span class="line"><span class="cl">Shell: zsh 5.8
+</span></span><span class="line"><span class="cl">CPU: Intel Core i7-8550U @ 8x 4GHz
+</span></span><span class="line"><span class="cl">Disk: 196G / 482G (42%)
+</span></span><span class="line"><span class="cl">GPU: Mesa Intel(R) UHD Graphics 620 (KBL GT2)
+</span></span><span class="line"><span class="cl">RAM: 5227MiB / 15896MiB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><table>
+<thead>
+<tr>
+<th style="text-align:center">机器类型</th>
+<th style="text-align:center">局域网 IP</th>
+<th style="text-align:center">hostname</th>
+<th style="text-align:center">username</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">master/slaver</td>
+<td style="text-align:center">192.168.1.103</td>
+<td style="text-align:center">mark-pc</td>
+<td style="text-align:center">mark</td>
+</tr>
+<tr>
+<td style="text-align:center">slaver</td>
+<td style="text-align:center">192.168.1.104</td>
+<td style="text-align:center">nil-PC</td>
+<td style="text-align:center">nil</td>
+</tr>
+</tbody>
+</table>
+<p>集群环境是</p>
+<ul>
+<li>Hadoop 2.7.7</li>
+<li>Spark version 3.0.1</li>
+<li>Scala version 2.12.10</li>
+<li>OpenJDK 64-Bit Server VM, Java 1.8.0_265</li>
+</ul>
+<h2 id="操作流程">操作流程</h2>
+<ol>
+<li>创建镜像 or 还原点 (可选，推荐)</li>
+<li>搭建 ssh 环境</li>
+<li>修改 hosts 文件</li>
+<li>安装 java 环境</li>
+<li>安装 hadoop</li>
+<li>安装 spark</li>
+<li>启动集群，运行命令</li>
+<li>开汽水庆祝</li>
+</ol>
+<h2 id="搭建-ssh-环境">搭建 Ssh 环境</h2>
+<p>首先配置好自己的 ssh 环境</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">ssh-keygen -t rsa
+</span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.ssh/authorized_keys
+</span></span><span class="line"><span class="cl">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">文件目录如下
+</span></span><span class="line"><span class="cl">.ssh
+</span></span><span class="line"><span class="cl">├── authorized_keys
+</span></span><span class="line"><span class="cl">├── config
+</span></span><span class="line"><span class="cl">├── id_rsa
+</span></span><span class="line"><span class="cl">├── id_rsa.pub
+</span></span><span class="line"><span class="cl">└── known_hosts
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>用 <code>ifconfig</code> 或 <code>ip address show</code> 查看 ip 地址后，ping 一下你要连接的电脑的 ip，保证网络通畅。</p>
+<ul>
+<li>免密登录：将其他机器的 id_rsa.pub 里的内容添加到本机的 authorized_keys 里 (用 <code>cat &gt;&gt;</code> 追加)</li>
+</ul>
+<p>测试 ssh 连接。如果出现 <code>ssh：connect to host port 22：Connection refused</code>，那记得运行命令 <code>systemctl start sshd</code> 打开 sshd.service。</p>
+<p>如果我在 nil-PC 上连接 mark-pc，直接 <code>ssh 192.168.1.103</code> 会失败，因为的登录用户名是 nil，而 mark-pc 里没有 nil 这个用户。正确做法是 <code>ssh mark@192.168.1.103</code>，接收对方 fingerprint 到 known_hosts 里后，就可以免密登录。</p>
+<h2 id="修改-hosts-文件">修改 Hosts 文件</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">这是个栗子
+</span></span><span class="line"><span class="cl"># Host addresses
+</span></span><span class="line"><span class="cl"># 127.0.0.1  localhost
+</span></span><span class="line"><span class="cl"># 127.0.1.1  nil-PC
+</span></span><span class="line"><span class="cl">::1        localhost ip6-localhost ip6-loopback
+</span></span><span class="line"><span class="cl">ff02::1    ip6-allnodes
+</span></span><span class="line"><span class="cl">ff02::2    ip6-allrouters
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">192.168.1.103 mark-pc
+</span></span><span class="line"><span class="cl">192.168.1.104 nil-PC
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Notice：</p>
+<ol>
+<li>将 127.0.0.1 和 127.0.1.1 的路径都去掉，否则在 hadoop 启动的时候，会优先在 localhost 提交出错</li>
+<li>在 ip 后面，要写的是 <strong>hostname</strong>，可以执行 <code>hostname</code> 看到，<strong>不是 username</strong></li>
+<li>在修改完后，一定要刷新 hosts，运行命令 <code>systemctl restart NetworkManager</code> 或是注销重启</li>
+</ol>
+<p>修改后检查：</p>
+<ol>
+<li>ping mark-pc 成功</li>
+<li>ssh mark@mark-pc 可以登录</li>
+</ol>
+<h2 id="安装-java-环境">安装 Java 环境</h2>
+<p>正常安装 java8，java home 不出意外在 <code>/usr/lib/jvm/</code> 下，本机路径是 <code>/usr/lib/jvm/java-8-openjdk/</code>，可以在 bin 目录下执行 <code>./javac -version</code> 看到 java 版本是 javac 1.8.0_265(好像 1.8.0 后的小小版本不影响，mark 是 261 也运行正常)</p>
+<p>将 java 添加至环境变量，在/etc/profile 文件追加如下内容 (具体内容因人而异)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span>/usr/lib/jvm/java-8-openjdk
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CLASSPATH</span><span class="o">=</span>:<span class="nv">$JAVA_HOME</span>/lib:<span class="nv">$JAVA_HOME</span>/jre/lib:<span class="nv">$CLASSPATH</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$JAVA_HOME</span>/jre/bin:<span class="nv">$PATH</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每一次修改后都要 <code>source /etc/profile</code> 刷新环境变量。在命令行输入 <code>echo $JAVA_HOME</code> 进行检验</p>
+<h2 id="安装-hadoop">安装 Hadoop</h2>
+<ol>
+<li>选择了 hadoop-2.7.7，也可以选最新文件。我将其解压在了/usr/lib/hadoop-2.7.7 下（这个随便，但是不建议放在/home 里面，涉及到用户权限）</li>
+</ol>
+<p>notice:<strong>所有机器上，hadoop 和 spark 的绝对位置和内容要保持严格一致</strong></p>
+<ol>
+<li>将 hadoop 添加到环境变量，追加了（具体内容因人而异）</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">HADOOP_HOME</span><span class="o">=</span>/usr/lib/hadoop-2.7.7
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HADOOP_HOME</span>/bin:<span class="nv">$HADOOP_HOME</span>/sbin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>验证安装，执行 <code>hadoop version</code></li>
+</ol>
+<h3 id="修改配置文件">修改配置文件</h3>
+<p>注意，这里的 <strong>mark-pc 都要改成期望作为 master 的电脑的 hostname</strong>，<strong>绝对路径也要做相应的修改</strong></p>
+<ol>
+<li>在 $HADOOP_HOME 下添加目录 tmp, hdfs, hdfs/name, hdfs/data</li>
+<li>$HADOOP_HOME/etc/hadoop/core-site.xml</li>
+</ol>
+<p>注意，在集群模式下，<strong>fs.defaultFS 要写集群里 namenode 的 ip 和端口</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;configuration&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c">&lt;!-- 指定namenode的地址 --&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;name&gt;</span>fs.defaultFS<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;value&gt;</span>hdfs://mark-pc:9000<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- 用来指定使用hadoop时产生文件的存放目录 --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;name&gt;</span>hadoop.tmp.dir<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;value&gt;</span>/usr/lib/hadoop-2.7.7/tmp<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/configuration&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>$HADOOP_HOME/etc/hadoop/hdfs-site.xml</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;configuration&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;name&gt;</span>dfs.namenode.secondary.http-address<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;value&gt;</span>mark-pc:50090<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- 指定hdfs保存数据的副本数量 --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;name&gt;</span>dfs.replication<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;name&gt;</span>dfs.namenode.name.dir<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;value&gt;</span>file:/usr/lib/hadoop-2.7.7/hdfs/name<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;property&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;name&gt;</span>dfs.datanode.data.dir<span class="nt">&lt;/name&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;value&gt;</span>file:/usr/lib/hadoop-2.7.7/hdfs/data<span class="nt">&lt;/value&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/property&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/configuration&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>$HADOOP_HOME/etc/hadoop/slaves</li>
+</ol>
+<p>注意，只有这里是要写 <strong>用户名@主机名</strong> 的，否则 namenode 在登录 datanode 的时候，用的是 namenode 当前的用户名，造成出错</p>
+<p>注意，slaves 文件只存 datanode 的 host，当然鉴于 namenode 都不干啥事，建议把 master 主机也作为 slaver 一起执行计算任务，符合社会主义核心价值观（雾）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">mark@mark-pc
+</span></span><span class="line"><span class="cl">nil@nil-PC
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="验证-hadoop-集群安装成功">验证 Hadoop 集群安装成功</h3>
+<ol>
+<li>格式化文件系统 <code>hdfs namenode -format</code>，看到最后几行有 ExitCode=0 这样的字眼就说明格式化成功了，如果有误，可以检查一下 xml 文件的配置</li>
+<li>在 $HADOOP_HOME/sbin 下运行 start-all.sh，唤起 namenode 和 datanode，分别在 master 和 slaver 上执行 <code>jps</code>，如果看到以下内容就说明成功了</li>
+</ol>
+<p>master 上看到：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">xxxx Jps
+</span></span><span class="line"><span class="cl">xxxx SecondaryNameNode
+</span></span><span class="line"><span class="cl">xxxx NameNode
+</span></span><span class="line"><span class="cl">xxxx DataNode
+</span></span><span class="line"><span class="cl">xxxx NodeManager
+</span></span><span class="line"><span class="cl">xxxx ResourceManager (似乎这个是可有可无)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>slaver 上看到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">xxxx Jps
+</span></span><span class="line"><span class="cl">xxxx DataNode
+</span></span><span class="line"><span class="cl">xxxx NodeManager
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样就说明 hadoop 集群运行成功了</p>
+<p>Notice：如果在 start-all 的时候发现 datanode 没有被唤起，大概率是 datanode 的 id 和 master 上的 id 不同，因为你执行 format 命令多次。解决方案是在所有的机器上都删除 $HADOOP_HOME/hdfs/data/current 文件夹，重新 format 即可。</p>
+<h3 id="验证-hadoop-集群运行状态">验证 Hadoop 集群运行状态</h3>
+<ol>
+<li>访问 <code>http://192.168.1.103:50070</code> (这里的 ip 是 master 的 ip 地址)，看到 DataNodes 数量符合</li>
+<li>在 master 上运行 <code>hdfs dfs -mkdir /hadoop</code> 后，可以在网页的文件管理页面上找到新建的目录，就大功告成了！</li>
+</ol>
+<h2 id="安装-spark">安装 Spark</h2>
+<ol>
+<li>先装一个 scala，配置好 SCALA_HOME，运行 <code>scala</code> 看到 repl 即可</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SCALA_HOME</span><span class="o">=</span>/usr/lib/scala-2.13.3
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SCALA_HOME</span>/bin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>将 spark 一样的解压到/usr/lib 下，配置 SPARK_HOME</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SPARK_HOME</span><span class="o">=</span>/usr/lib/spark-3.0.1-bin-hadoop2.7
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SPARK_HOME</span>/bin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>$SPARK_HOME/conf/slaves</li>
+</ol>
+<p>和 $HADOOP_HOME/etc/hadoop/slaves 内容是一样的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">mark@mark-pc
+</span></span><span class="line"><span class="cl">nil@nil-PC
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>**先启动 hadoop!**启动 Spark，在 SPARK_HOME 的 sbin 目录下执行 start-all.sh，会唤起所有的节点，此时 master 中运行 jps 在原有基础上新增了 Master，slaver 里新增了 Worker</li>
+<li>进入 <code>http://192.168.1.103:8080</code> 看到 spark 监控网页，并且 slaver 数量正常，就说明正常启动</li>
+</ol>
+<h2 id="启动集群运行命令">启动集群，运行命令</h2>
+<ol>
+<li>运行代码 <code>$SPARK_HOME/bin/run-example SparkPi 10</code>，能够正确执行计算出 $\pi$，说明本地运行是 ok 的</li>
+<li>向集群提交任务，执行</li>
+</ol>
+<p><code>./spark-submit --class org.apache.spark.examples.JavaSparkPi --master spark://mark-pc:7077 ../examples/jars/spark-examples_2.12-3.0.1.jar</code></p>
+<p>在 8088 端口看到 application 和运行的机器，那就大功告成啦</p>
 ]]></description></item><item><title>Git使用教程</title><link>https://nil-zhuang.github.io/2022/10/git/</link><pubDate>Fri, 28 Oct 2022 15:12:02 +0800</pubDate><author>Nil Zhuang</author><guid>https://nil-zhuang.github.io/2022/10/git/</guid><description><![CDATA[<h1 id="git-使用教程">Git 使用教程</h1>
 <p>这篇文章记录了 zzy 因为在 git 操作上疯狂翻车最后选择去过一遍 Learn Git Branching</p>
 <h2 id="基础篇">基础篇</h2>

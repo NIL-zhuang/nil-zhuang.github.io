@@ -1,4 +1,4 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Tools - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/tools/</link><description>Tools - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 27 Jan 2023 14:59:43 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/tools/" rel="self" type="application/rss+xml"/><item><title>Mac软件安装的斗智斗勇</title><link>https://nil-zhuang.github.io/2023/01/mac_software_install/</link><pubDate>Fri, 27 Jan 2023 14:59:43 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/01/mac_software_install/</guid><description><![CDATA[<div class="featured-image">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Tools - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/tools/</link><description>Tools - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Fri, 27 Jan 2023 14:59:43 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/tools/" rel="self" type="application/rss+xml"/><item><title>Mac软件安装的斗智斗勇</title><link>https://nil-zhuang.github.io/2023/01/mac_software_install/</link><pubDate>Fri, 27 Jan 2023 14:59:43 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/01/mac_software_install/</guid><description><![CDATA[<div class="featured-image">
                 <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202301271540904.png" referrerpolicy="no-referrer">
             </div><h1 id="mac-安装软件的斗智斗勇">Mac 安装软件的斗智斗勇</h1>
 <p>mac 最标准的软件安装渠道是 App Store，然而上面要么软件不全，要么对应软件功能比官网下载版本有缺失（如 parallel desktop），因此大多数软件的安装我会选择 <code>brew</code> 或官网下载，这种方法本质是 dmg 安装。
@@ -263,7 +263,7 @@
 <li>启动集群，运行命令</li>
 <li>开汽水庆祝</li>
 </ol>
-<h2 id="搭建-ssh-环境">搭建 ssh 环境</h2>
+<h2 id="搭建-ssh-环境">搭建 Ssh 环境</h2>
 <p>首先配置好自己的 ssh 环境</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -303,7 +303,7 @@
 </ul>
 <p>测试 ssh 连接。如果出现 <code>ssh：connect to host port 22：Connection refused</code>，那记得运行命令 <code>systemctl start sshd</code> 打开 sshd.service。</p>
 <p>如果我在 nil-PC 上连接 mark-pc，直接 <code>ssh 192.168.1.103</code> 会失败，因为的登录用户名是 nil，而 mark-pc 里没有 nil 这个用户。正确做法是 <code>ssh mark@192.168.1.103</code>，接收对方 fingerprint 到 known_hosts 里后，就可以免密登录。</p>
-<h2 id="修改-hosts-文件">修改 hosts 文件</h2>
+<h2 id="修改-hosts-文件">修改 Hosts 文件</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -341,7 +341,7 @@
 <li>ping mark-pc 成功</li>
 <li>ssh mark@mark-pc 可以登录</li>
 </ol>
-<h2 id="安装-java-环境">安装 java 环境</h2>
+<h2 id="安装-java-环境">安装 Java 环境</h2>
 <p>正常安装 java8，java home 不出意外在 <code>/usr/lib/jvm/</code> 下，本机路径是 <code>/usr/lib/jvm/java-8-openjdk/</code>，可以在 bin 目录下执行 <code>./javac -version</code> 看到 java 版本是 javac 1.8.0_265(好像 1.8.0 后的小小版本不影响，mark 是 261 也运行正常)</p>
 <p>将 java 添加至环境变量，在/etc/profile 文件追加如下内容 (具体内容因人而异)</p>
 <div class="highlight"><div class="chroma">
@@ -357,7 +357,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>每一次修改后都要 <code>source /etc/profile</code> 刷新环境变量。在命令行输入 <code>echo $JAVA_HOME</code> 进行检验</p>
-<h2 id="安装-hadoop">安装 hadoop</h2>
+<h2 id="安装-hadoop">安装 Hadoop</h2>
 <ol>
 <li>选择了 hadoop-2.7.7，也可以选最新文件。我将其解压在了/usr/lib/hadoop-2.7.7 下（这个随便，但是不建议放在/home 里面，涉及到用户权限）</li>
 </ol>
@@ -477,7 +477,7 @@
 </span></span><span class="line"><span class="cl">nil@nil-PC
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="验证-hadoop-集群安装成功">验证 hadoop 集群安装成功</h3>
+</div><h3 id="验证-hadoop-集群安装成功">验证 Hadoop 集群安装成功</h3>
 <ol>
 <li>格式化文件系统 <code>hdfs namenode -format</code>，看到最后几行有 ExitCode=0 这样的字眼就说明格式化成功了，如果有误，可以检查一下 xml 文件的配置</li>
 <li>在 $HADOOP_HOME/sbin 下运行 start-all.sh，唤起 namenode 和 datanode，分别在 master 和 slaver 上执行 <code>jps</code>，如果看到以下内容就说明成功了</li>
@@ -516,12 +516,12 @@
 </div>
 </div><p>这样就说明 hadoop 集群运行成功了</p>
 <p>Notice：如果在 start-all 的时候发现 datanode 没有被唤起，大概率是 datanode 的 id 和 master 上的 id 不同，因为你执行 format 命令多次。解决方案是在所有的机器上都删除 $HADOOP_HOME/hdfs/data/current 文件夹，重新 format 即可。</p>
-<h3 id="验证-hadoop-集群运行状态">验证 hadoop 集群运行状态</h3>
+<h3 id="验证-hadoop-集群运行状态">验证 Hadoop 集群运行状态</h3>
 <ol>
 <li>访问 <code>http://192.168.1.103:50070</code> (这里的 ip 是 master 的 ip 地址)，看到 DataNodes 数量符合</li>
 <li>在 master 上运行 <code>hdfs dfs -mkdir /hadoop</code> 后，可以在网页的文件管理页面上找到新建的目录，就大功告成了！</li>
 </ol>
-<h2 id="安装-spark">安装 spark</h2>
+<h2 id="安装-spark">安装 Spark</h2>
 <ol>
 <li>先装一个 scala，配置好 SCALA_HOME，运行 <code>scala</code> 看到 repl 即可</li>
 </ol>

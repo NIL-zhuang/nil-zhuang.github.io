@@ -1,4 +1,272 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>AI - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/ai/</link><description>AI - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Mon, 14 Nov 2022 11:50:04 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/ai/" rel="self" type="application/rss+xml"/><item><title>⚡️+🤗：Transformers + Pytorch Lightning 最佳实战</title><link>https://nil-zhuang.github.io/2022/11/hf_pl/</link><pubDate>Mon, 14 Nov 2022 11:50:04 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/11/hf_pl/</guid><description><![CDATA[<div class="featured-image">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>AI - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/ai/</link><description>AI - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Wed, 25 Jan 2023 16:21:21 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/ai/" rel="self" type="application/rss+xml"/><item><title>设计模式-以深度学习为例-创建型模式</title><link>https://nil-zhuang.github.io/2023/01/design_pattern_dl_generator/</link><pubDate>Wed, 25 Jan 2023 16:21:21 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/01/design_pattern_dl_generator/</guid><description><![CDATA[<div class="featured-image">
+                <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202301251625395.png" referrerpolicy="no-referrer">
+            </div><h1 id="设计模式---以深度学习为例---创建型模式">设计模式 - 以深度学习为例 - 创建型模式</h1>
+<p>在 <a href="https://refactoringguru.cn/design-patterns" target="_blank" rel="noopener noreffer ">常用设计模式</a> 中，介绍了一系列创建型模式、结构型模式和行为模式的设计模式，对日常代码质量提升有很大帮助。但它们往往以 JAVA 语言的工程项目为例，我们在这里以深度学习的模型搭建、训练、推理、部署为例，解释面向对象编程中 22 中设计模式的基本原理。</p>
+<p>设计模式分为</p>
+<ul>
+<li>创建型模式：工厂方法，抽象工厂，生成器，原型，单例</li>
+<li>结构型模式：适配器，桥接，组合，装饰，外观，享元，代理</li>
+<li>行为模式：责任链，命令，迭代器，中介者，备忘录，观察者，状态，策略，模板方法，访问者</li>
+</ul>
+<p>本文介绍创建型模式在深度学习中的应用。创建型模式提供创建对象的机制，能够提升已有代码的灵活性和可复用性。</p>
+<hr>
+<h2 id="工厂方法-factory-method">工厂方法 Factory Method</h2>
+<p>工厂方法在父类中提供一个创建对象的方法，允许子类决定实例化对象的类型。
+</p>
+<ul>
+<li>产品 Product 对接口进行声明，对于创建者或者由其子类构建的对象，接口是通用的</li>
+<li>创建者类声明返回 Product 对象的工厂方法，返回类型和产品接口相匹配</li>
+</ul>
+<h3 id="使用场景">使用场景</h3>
+<ol>
+<li>将产品的创建与实际的使用分离 → 只需要开发新的 ConcreteCreator，重写其 <code>createProduct</code> 方法。</li>
+<li>利用继承扩展软件库和框架默认行为</li>
+</ol>
+<h3 id="效果">效果</h3>
+<ol>
+<li>避免创建者和具体产品之间的耦合</li>
+<li>单一职责原则，将产品创建代码放在程序的单一位置，使代码更易维护</li>
+<li>开闭原则，无需修改现有客户端代码，就可以引入新的产品类型</li>
+<li>但是工厂方法会引入很多新的子类，代码变得复杂</li>
+</ol>
+<h3 id="深度学习例子">深度学习例子</h3>
+<p>例如我们在整合模型到同一个框架中，其一是自回归模型 Transformer，其二是对抗网络 GAN，二者的结构不同，所以训练过程差异很大。Transformer 只有一个模型，而 GAN 包含了 Generator 和 Discriminator。但同时，两个任务有相同的超参初始化，checkpoint 保存，数据集读取等任务。</p>
+<p>在模型构建中，我们有一个公共 Product <code>nn.Module</code>，基于此构建了 <code>Transformer</code> 和 <code>GAN</code> 两个具体产品。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Transformer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Transformer&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GAN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;GAN&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在模型训练中，我们使用一个公共方法 <code>Trainer</code>，包含了 <code>build_model</code> 方法来创建相应的模型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Trainer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_model</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># train the model</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GANTrainer</span><span class="p">(</span><span class="n">Trainer</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_model</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">GAN</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TransformerTrainer</span><span class="p">(</span><span class="n">Trainer</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_model</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Transformer</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在实际使用中，通过调用 trainer 的模型训练接口，就可以实现训练。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">train_my_model</span><span class="p">(</span><span class="n">trainer</span><span class="p">:</span><span class="n">Trainer</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">trainer</span><span class="o">.</span><span class="n">train_model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="抽象工厂-abstract-factory">抽象工厂 Abstract Factory</h2>
+<p></p>
+<ul>
+<li>抽象产品 Abstract Product 是构成系列产品的不同但相关的产品声明接口</li>
+<li>抽象工厂 Abstract Factory 接口声明一组创建抽象产品的方法</li>
+<li>具体工厂会对具体产品初始化，但构造方法的签名必须返回相应的抽象产品。客户端只需要调用抽象接口就能返回相应的抽象产品，客户端代码就不会和工厂创建的特定产品变体耦合。</li>
+</ul>
+<h3 id="使用场景-1">使用场景</h3>
+<ul>
+<li>代码需要和多个不同序列的相关产品交互，不希望代码基于产品的具体类进行构建</li>
+<li>有一个基于 <strong>一组抽象方法</strong> 的类抽象工厂提供一个接口来创建每个系列产品的对象</li>
+<li>以不同的产品类型变体维度绘制矩阵 → 为所有产品声明抽象产品接口，让具体产品实现具体接口 → 声明抽象工厂接口，每个具体工厂实现接口 → 将代码中产品构造函数替换成工厂方法的构造函数</li>
+</ul>
+<h3 id="效果-1">效果</h3>
+<ul>
+<li>单一职责原则 &amp; 开闭原则</li>
+<li>引入多种接口和类，代码变复杂</li>
+</ul>
+<h3 id="深度学习例子-1">深度学习例子</h3>
+<p>抽象工厂可以理解为多维的工厂方法，一系列相互依赖的对象。例如我们实现了 GAN 和 Transformer 两种模型，为了测试我们需要在两种数据集 translation 和 paraphrase 上测试，两个 trainer 就变成了 translation+transformer，paraphrase+GAN 这样两组相互依赖的对象。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Dataset</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_dataset</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Translation</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_dataset</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">translation_pairs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Paraphrase</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_dataset</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">paraphrase_lists</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于网络，如上定义两个深度学习模型 Transformer 和 GAN</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Transformer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;Transformer&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GAN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;GAN&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后，对于训练模型的 Trainer，我们需要同时实现数据集和网络两个不同维度模型的组合</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Trainer</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_network</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_dataset</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TransformerTranslationTrainer</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_network</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Transformer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_dataset</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Translation</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GANParaphraseTrainer</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_network</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">GAN</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">build_dataset</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">Paraphrase</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在实际的使用中，我们只需要创建一个相应的 Trainer，调用对应的训练 api 即可。</p>
+<p>例如在 [[Fairseq]] 框架中，对应的 Task 就是一个很好的抽象工厂模式，它调度了模型和数据集的搭建。</p>
+<h2 id="生成器-builder">生成器 Builder</h2>
+<p></p>
+<ul>
+<li>生成器 Builder 接口声明所有类型生成器中通用的产品构造步骤</li>
+<li>产品是最终生成的对象</li>
+<li>主管 Director 定义调用构造步骤的顺序</li>
+<li>客户端 Client 将某个生成器对象与 Director 关联</li>
+</ul>
+<h3 id="使用场景-2">使用场景</h3>
+<ol>
+<li>重叠的多种构造函数出现</li>
+<li>使用代码创建不同形式的产品，过程相似细节不同</li>
+<li>使用生成器构造组合树或其他复杂对象</li>
+</ol>
+<h3 id="效果-2">效果</h3>
+<ol>
+<li>分步创建对象，暂缓创建步骤</li>
+<li>生成不同形式的产品，复用相同制造代码</li>
+<li>单一直则原则，将复杂代码从业务逻辑分离</li>
+<li>会增加多个类，代码整体复杂度增加</li>
+</ol>
+<h3 id="深度学习例子-2">深度学习例子</h3>
+<p>例如普通分类模型，包括多种模型结构，如 Linear，MLP，CNN 等，都由 Linear 层和 Conv 层这两个基本单元构成。可以使用生成器模式来实现模型层级的搭建。</p>
+<p>首先定义一个 Network 类和 Builder 类，来处理向基类中添加层</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Network</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">this</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Builder</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">addLinearLayer</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">addConvLayer</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="原型-prototype">原型 Prototype</h2>
+<h3 id="使用场景-3">使用场景</h3>
+<h3 id="效果-3">效果</h3>
+<h3 id="深度学习例子-3">深度学习例子</h3>
+<h2 id="单例-singleton">单例 Singleton</h2>
+<h3 id="使用场景-4">使用场景</h3>
+<h3 id="效果-4">效果</h3>
+<h3 id="深度学习例子-4">深度学习例子</h3>
+]]></description></item><item><title>⚡️+🤗：Transformers + Pytorch Lightning 最佳实战</title><link>https://nil-zhuang.github.io/2022/11/hf_pl/</link><pubDate>Mon, 14 Nov 2022 11:50:04 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2022/11/hf_pl/</guid><description><![CDATA[<div class="featured-image">
                 <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202211141605838.png" referrerpolicy="no-referrer">
             </div><h1 id="transformers--pytorch-lightning-最佳实战">⚡️+🤗：Transformers + Pytorch Lightning 最佳实战</h1>
 <h2 id="背景">背景</h2>
