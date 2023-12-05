@@ -1,4 +1,505 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>SE - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/se/</link><description>SE - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Wed, 25 Jan 2023 16:21:21 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/se/" rel="self" type="application/rss+xml"/><item><title>设计模式-以深度学习为例-创建型模式</title><link>https://nil-zhuang.github.io/2023/01/design_pattern_dl_generator/</link><pubDate>Wed, 25 Jan 2023 16:21:21 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/01/design_pattern_dl_generator/</guid><description><![CDATA[<div class="featured-image">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>SE - Category - 抓鱼 zzy's Blog</title><link>https://nil-zhuang.github.io/categories/se/</link><description>SE - Category - 抓鱼 zzy's Blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</managingEditor><webMaster>ziyuan.zhuang@smail.nju.edu.cn (Nil Zhuang)</webMaster><copyright>Ziyuan Zhuang 2022</copyright><lastBuildDate>Tue, 05 Dec 2023 15:48:27 +0800</lastBuildDate><atom:link href="https://nil-zhuang.github.io/categories/se/" rel="self" type="application/rss+xml"/><item><title>数据库滑动窗口 一题流</title><link>https://nil-zhuang.github.io/2023/12/sql_slide_window/</link><pubDate>Tue, 05 Dec 2023 15:48:27 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/12/sql_slide_window/</guid><description><![CDATA[<h1 id="一道题用明白-sql-滑动窗口">一道题用明白 SQL 滑动窗口</h1>
+<h2 id="题目描述">题目描述</h2>
+<p>写一个 SQL 查询语句，检索连续 3 天都做了核酸而且是阴性的用户</p>
+<p>例如对于表格 T</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">| uid |   tdate  | result |
+</span></span><span class="line"><span class="cl">| --- | -------- | ------ |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/1 |  neg   |
+</span></span><span class="line"><span class="cl">| 002 | 2023/1/1 |  neg   |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/2 |  neg   |
+</span></span><span class="line"><span class="cl">| 002 | 2023/1/2 |  neg   |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/3 |  neg   |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/4 |  neg   |
+</span></span><span class="line"><span class="cl">| 002 | 2023/1/4 |  neg   |
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们期望查询到用户 001 连续 3 天做了核酸，而 002 用户只连续做了两天，漏掉了 2023/1/3 的日期，不满足我们的要求。所以我们的查询结果是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">| uid |
+</span></span><span class="line"><span class="cl">| --- |
+</span></span><span class="line"><span class="cl">| 001 |
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="解法-1-多表连接">解法 1: 多表连接</h2>
+<p>我们可以使用三个表格的 self join 方法，每个表格代表同一用户在不同日期的核酸测试结果，我们可以使用 <code>t.result = 'neg'</code> 来筛选出阴性记录，并通过 DISTINCT 关键字来去除重复。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">uid</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="n">t1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">uid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">uid</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">t3</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">uid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t3</span><span class="p">.</span><span class="n">uid</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">t1</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">t3</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">tdate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DATE_SUB</span><span class="p">(</span><span class="n">t2</span><span class="p">.</span><span class="n">tdate</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">DAY</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">tdate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DATE_SUB</span><span class="p">(</span><span class="n">t3</span><span class="p">.</span><span class="n">tdate</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">DAY</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然，上面的 SQL 还有可以优化的空间，因为这样的多表链接存在大量的日期交错问题，表格的 <code>JOIN</code> 操作会有如下的很多冗余无意义结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">| t1.tdate  | t2.tdate  | t3.tdate  |
+</span></span><span class="line"><span class="cl">| -------- | -------- | -------- |
+</span></span><span class="line"><span class="cl">| 2023/1/1 | 2023/1/2 | 2023/1/3 |
+</span></span><span class="line"><span class="cl">| 2023/1/2 | 2023/1/1 | 2023/1/3 |
+</span></span><span class="line"><span class="cl">| 2023/1/1 | 2023/1/1 | 2023/1/1 |
+</span></span><span class="line"><span class="cl">……
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以使用日期条件进行 <code>JOIN</code> 操作，可以很大程度上避免重复，让查询更加简单且直观。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">uid</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="n">t1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">t2</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">ON</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">uid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">uid</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">AND</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">tdate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DATE_SUB</span><span class="p">(</span><span class="n">t2</span><span class="p">.</span><span class="n">tdate</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">DAY</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">t3</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">ON</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">uid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t3</span><span class="p">.</span><span class="n">uid</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">AND</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">tdate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DATE_SUB</span><span class="p">(</span><span class="n">t3</span><span class="p">.</span><span class="n">tdate</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">DAY</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">t1</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">t3</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在上面的 SQL 语句中，我们在 JOIN 操作的 ON 子句中加入了日期条件，即 <code>t1.tdate = DATE_SUB(t2.tdate, INTERVAL 1 DAY</code> 这样我们表连接出来的结果就是连续且自增的三天，相比于上面的判断语句减少了开销。</p>
+<h2 id="解法-2-日期与天数的差">解法 2: 日期与天数的差</h2>
+<p>上面的例子缺乏扩展性，如果我们更新了要求，需要你检查连续 7 天核酸或 15 天核酸，那么就需要写非常非常多的 join 操作，检索的成本和开销都会大幅提升。有没有什么更好的办法呢？
+我们可以观察到，如果是连续做核酸，那么用户做核酸的日期和一个递增的数字之差应该是相等的。我们可以看下面的 SQL 作为例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">tdate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">row_number</span><span class="p">()</span><span class="w"> </span><span class="n">over</span><span class="p">(</span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">uid</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">tdate</span><span class="p">)</span><span class="w"> </span><span class="n">date_rank</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">T</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">T</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以得到如下的表格</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">| uid | tdate    | date_rank |
+</span></span><span class="line"><span class="cl">| --- | -------- | --------- |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/1 | 1         |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/2 | 2         |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/3 | 3         |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/4 | 4         |
+</span></span><span class="line"><span class="cl">| 002 | 2023/1/1 | 1         |
+</span></span><span class="line"><span class="cl">| 002 | 2023/1/2 | 2         |
+</span></span><span class="line"><span class="cl">| 002 | 2023/1/4 | 3         |
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后，我们只需要获取每个核酸日期 (tdate) 中，日期与核酸日期 rank(date_rank) 之间的差值，例如对于 uid 001 的用户，他在 2023/1/3 的核酸日期中 3 号，与它的每日核酸次数排名 date_rank 3 做差值，得到 1
+对应的 SQL 如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">tdate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">date_rank</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="n">date_format</span><span class="p">(</span><span class="n">tdate</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;%e&#34;</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">date_rank</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">diff</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">tdate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">row_number</span><span class="p">()</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">uid</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">tdate</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="n">date_rank</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">T</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">WHERE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">T</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span><span class="n">T1</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以得到如下的结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">| uid | tdate    | date_rank | diff |
+</span></span><span class="line"><span class="cl">| --- | -------- | --------- | ---- |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/1 | 1         | 0    |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/2 | 2         | 0    |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/3 | 3         | 0    |
+</span></span><span class="line"><span class="cl">| 001 | 2023/1/4 | 4         | 0    |
+</span></span><span class="line"><span class="cl">| 002 | 2023/1/1 | 1         | 0    |
+</span></span><span class="line"><span class="cl">| 002 | 2023/1/2 | 2         | 0    |
+</span></span><span class="line"><span class="cl">| 002 | 2023/1/4 | 3         | 1    |
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>从上表我们可以发现，连续核酸日期的 diff 结果上相等的，例如可以是一系列的 0，一系列的 1 或 2 等。那么我们就可以非常简单的获取用户的连续核酸天数，即只需要对这个表格按照 uid 和 diff 进行 count 聚合就可以。
+对应的 SQL 如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-SQL" data-lang="SQL"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">diff</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">count</span><span class="p">(</span><span class="n">tdate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">cont_days</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">tdate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">date_rank</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">(</span><span class="n">date_format</span><span class="p">(</span><span class="n">tdate</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;%e&#34;</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">date_rank</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">diff</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FROM</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">tdate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">row_number</span><span class="p">()</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">uid</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">tdate</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">)</span><span class="w"> </span><span class="n">date_rank</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">T</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">WHERE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">T</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="n">T1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span><span class="n">T2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">diff</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们可以查到形如下面的表格</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">| uid | diff | cont_days |
+</span></span><span class="line"><span class="cl">| --- | ---- | --------- |
+</span></span><span class="line"><span class="cl">| 001 | 0    | 4         |
+</span></span><span class="line"><span class="cl">| 002 | 0    | 2         |
+</span></span><span class="line"><span class="cl">| 002 | 1    | 1         |
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个表格表示，在这个时间段，用户 001 连续做了 4 天核酸，而用户 002 首先连续做了 2 天核酸，然后漏做了 1 天，之后又做了 1 次核酸。
+那么最后，我们只需要按照用户的连续核酸天数进行筛选，就可以得到我们的需求目标，SQL 如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">uid</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">diff</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">count</span><span class="p">(</span><span class="n">tdate</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">cont_days</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FROM</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">tdate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">date_rank</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">(</span><span class="n">date_format</span><span class="p">(</span><span class="n">tdate</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;%e&#34;</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">date_rank</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">diff</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">FROM</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">tdate</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">row_number</span><span class="p">()</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">uid</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">tdate</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">)</span><span class="w"> </span><span class="n">date_rank</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">T</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">WHERE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">T</span><span class="p">.</span><span class="k">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;neg&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="n">T1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="n">T2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">uid</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">diff</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">cont_days</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过这样的方式，我们就获得了连续 3 天做了核酸的用户，而且也可以非常灵活的扩展到连续 N 天做了核酸的用户。</p>
+<h2 id="扩展连续出现-n-次的数字">扩展：连续出现 N 次的数字</h2>
+<p>上面通过日期和序列做差的方法是利用了日期的自增特性，那么对于更加广泛的场景，只要存在序列化信息，我们都能用上述的方法实现连续出现内容的统计。
+在这个问题场景中，我们需要使用 SQL 来检索连续出现 N 次的数字，例如连续出现 3 次，如下表 NUM 所示：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">|  id  | num |
+</span></span><span class="line"><span class="cl">| ---  | --- |
+</span></span><span class="line"><span class="cl">|  1   | 1   |
+</span></span><span class="line"><span class="cl">|  2   | 1   |
+</span></span><span class="line"><span class="cl">|  3   | 1   |
+</span></span><span class="line"><span class="cl">|  4   | 2   |
+</span></span><span class="line"><span class="cl">|  5   | 2   |
+</span></span><span class="line"><span class="cl">|  6   | 1   |
+</span></span><span class="line"><span class="cl">|  7   | 7   |
+</span></span><span class="line"><span class="cl">|  8   | 9   |
+</span></span><span class="line"><span class="cl">|  9   | 9   |
+</span></span><span class="line"><span class="cl">|  10  | 9   |
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们期望检索出连续出现 3 次的数字，结果为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">| num |
+</span></span><span class="line"><span class="cl">| --- |
+</span></span><span class="line"><span class="cl">|  1  |
+</span></span><span class="line"><span class="cl">|  9  |
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以仿照上述的方法，构造一个分组自增的 num_rank，与 id 做差，进行统计</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">WITH</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">num</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">num_rank</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">diff</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FROM</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">SELECT</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">num</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">row_number</span><span class="p">()</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">partition</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">num_rank</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">NUM</span><span class="w">    
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="n">T</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">num</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">V</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">num</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">diff</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">HAVING</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>在这里，我们把自增的信息从日期变为了 id，本质上还是将一个连续出现的数字组构造一系列组内自增信息，即 num_rank，与这里的全局 id 进行做差，找到不变的序列量。</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>本文中我们探讨了如何从数据库中检索一个连续出现 N 次的内容。在这里，我们由浅入深，从最直观的多表连接入手，然后使用窗口函数扩展到连续 N 天打卡，最后将这个连续自增信息从日期扩展到了 id 等一系列代表序列的内容，实现了检索连续出现 N 次的数字。</p>
+]]></description></item><item><title>设计模式-以深度学习为例-创建型模式</title><link>https://nil-zhuang.github.io/2023/01/design_pattern_dl_generator/</link><pubDate>Wed, 25 Jan 2023 16:21:21 +0800</pubDate><author>nil zhuang</author><guid>https://nil-zhuang.github.io/2023/01/design_pattern_dl_generator/</guid><description><![CDATA[<div class="featured-image">
                 <img src="https://lemonzzy.oss-cn-hangzhou.aliyuncs.com/typora/202301251625395.png" referrerpolicy="no-referrer">
             </div><h1 id="设计模式---以深度学习为例---创建型模式">设计模式 - 以深度学习为例 - 创建型模式</h1>
 <p>在 <a href="https://refactoringguru.cn/design-patterns" target="_blank" rel="noopener noreffer ">常用设计模式</a> 中，介绍了一系列创建型模式、结构型模式和行为模式的设计模式，对日常代码质量提升有很大帮助。但它们往往以 JAVA 语言的工程项目为例，我们在这里以深度学习的模型搭建、训练、推理、部署为例，解释面向对象编程中 22 中设计模式的基本原理。</p>
